@@ -4,6 +4,7 @@ using CarRepairGarage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRepairGarage.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230707225149_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -319,9 +321,6 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("Garage address");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
                         .HasComment("Garage Category");
@@ -343,13 +342,16 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasComment("Garage name");
 
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Garages");
 
@@ -671,19 +673,21 @@ namespace CarRepairGarage.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("CarRepairGarage.Data.Models.ApplicationUser", null)
-                        .WithMany("Garages")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("CarRepairGarage.Data.Models.Category", "Category")
                         .WithMany("Garages")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("CarRepairGarage.Data.Models.ApplicationUser", "Owner")
+                        .WithMany("Garages")
+                        .HasForeignKey("OwnerId");
+
                     b.Navigation("Address");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("CarRepairGarage.Data.Models.GarageService", b =>

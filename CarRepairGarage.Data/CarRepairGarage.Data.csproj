@@ -21,4 +21,8 @@
     <ProjectReference Include="..\CarRepairGarage.Data.Models\CarRepairGarage.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

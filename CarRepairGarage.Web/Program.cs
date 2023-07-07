@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using CarRepairGarage.Data;
 namespace CarRepairGarage.Web
 {
     using Microsoft.AspNetCore.Identity;
