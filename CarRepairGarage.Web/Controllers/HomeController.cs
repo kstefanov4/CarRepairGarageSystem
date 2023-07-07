@@ -1,9 +1,13 @@
-﻿using CarRepairGarage.Web.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿
 
 namespace CarRepairGarage.Web.Controllers
 {
+    using System.Diagnostics;
+
+    using Microsoft.AspNetCore.Mvc;
+
+    using CarRepairGarage.Web.Models;
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
