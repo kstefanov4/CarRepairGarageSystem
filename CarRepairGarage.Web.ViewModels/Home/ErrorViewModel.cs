@@ -1,4 +1,4 @@
-namespace CarRepairGarage.Web.Models
+namespace CarRepairGarage.Web.ViewModels.Home
 {
     public class ErrorViewModel
     {

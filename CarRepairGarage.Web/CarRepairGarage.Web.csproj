@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarRepairGarage.Common\CarRepairGarage.Common.csproj" />
+    <ProjectReference Include="..\CarRepairGarage.Data\CarRepairGarage.Data.csproj" />
+    <ProjectReference Include="..\CarRepairGarage.Web.ViewModels\CarRepairGarage.Web.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>

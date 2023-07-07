@@ -6,7 +6,7 @@ namespace CarRepairGarage.Web.Controllers
 
     using Microsoft.AspNetCore.Mvc;
 
-    using CarRepairGarage.Web.Models;
+    using CarRepairGarage.Web.ViewModels.Home;
 
     public class HomeController : Controller
     {
