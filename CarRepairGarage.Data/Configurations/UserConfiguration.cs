@@ -15,10 +15,10 @@
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasData(CreateUsers());
+            //builder.HasData(CreateUsers());
         }
 
-        private List<ApplicationUser> CreateUsers()
+        /*private List<ApplicationUser> CreateUsers()
         {
             var users = new List<ApplicationUser>();
             var hasher = new PasswordHasher<ApplicationUser>();
@@ -52,7 +52,7 @@
             users.Add(user);
 
             return users;
-        }
+        }*/
 
     }
 }

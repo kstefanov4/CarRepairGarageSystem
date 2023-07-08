@@ -32,7 +32,7 @@
         public string ImageUrl { get; set; } = null!;
         
         [Comment("Garage Owner")]
-        public string? UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser? Owner { get; set; }

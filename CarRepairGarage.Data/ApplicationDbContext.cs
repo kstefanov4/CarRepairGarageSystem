@@ -6,7 +6,7 @@
 
     using CarRepairGarage.Data.Configurations;
     using CarRepairGarage.Data.Models;
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

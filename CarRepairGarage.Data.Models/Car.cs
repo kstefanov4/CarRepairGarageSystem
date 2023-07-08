@@ -35,7 +35,7 @@
 
         [Required]
         [Comment("User of the car")]
-        public string UserId { get; set; } = null!;
+        public Guid UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser User { get; set; } = null!;

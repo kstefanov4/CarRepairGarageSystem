@@ -13,7 +13,7 @@ namespace CarRepairGarage.Data.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Application role deleted"),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date of deletion"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -30,7 +30,7 @@ namespace CarRepairGarage.Data.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is User Deleted"),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date of deletion"),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -112,7 +112,7 @@ namespace CarRepairGarage.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -133,7 +133,7 @@ namespace CarRepairGarage.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -155,7 +155,7 @@ namespace CarRepairGarage.Data.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -172,9 +172,9 @@ namespace CarRepairGarage.Data.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,7 +202,7 @@ namespace CarRepairGarage.Data.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -228,7 +228,7 @@ namespace CarRepairGarage.Data.Migrations
                     Make = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "Car Make"),
                     Model = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false, comment: "Primary Model"),
                     Year = table.Column<int>(type: "int", nullable: false, comment: "Car year of production"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "User of the car"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "User of the car"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -298,7 +298,7 @@ namespace CarRepairGarage.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Garage name"),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Garage Image"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "Garage Owner"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true, comment: "Garage Owner"),
                     CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Garage Category"),
                     AddressId = table.Column<int>(type: "int", nullable: false, comment: "Garage address"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -357,7 +357,7 @@ namespace CarRepairGarage.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Primary key"),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date of the appointment"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "User appointed"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "User appointed"),
                     GarageId = table.Column<int>(type: "int", nullable: false, comment: "Appointed garage"),
                     ServiceId = table.Column<int>(type: "int", nullable: false, comment: "Appointed service"),
                     GarageServiceServiceId = table.Column<int>(type: "int", nullable: false),
