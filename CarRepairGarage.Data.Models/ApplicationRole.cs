@@ -10,10 +10,10 @@
     [Comment("Extended Identity Role")]
     public class ApplicationRole : IdentityRole<string>, IDeletableEntity
     {
-        /*public ApplicationRole()
+        public ApplicationRole()
             : this(null)
         {
-        }*/
+        }
 
         public ApplicationRole(string name)
             : base(name)
