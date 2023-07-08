@@ -14,6 +14,8 @@ namespace CarRepairGarage.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Is Application role deleted"),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date of deletion"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -21,7 +23,8 @@ namespace CarRepairGarage.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
+                },
+                comment: "Extended Identity Role");
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
@@ -295,9 +298,9 @@ namespace CarRepairGarage.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Garage name"),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Garage Image"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "Garage Owner"),
                     CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Garage Category"),
                     AddressId = table.Column<int>(type: "int", nullable: false, comment: "Garage address"),
-                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -310,8 +313,8 @@ namespace CarRepairGarage.Data.Migrations
                         principalTable: "Addresses",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Garages_AspNetUsers_OwnerId",
-                        column: x => x.OwnerId,
+                        name: "FK_Garages_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -475,9 +478,9 @@ namespace CarRepairGarage.Data.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Garages_OwnerId",
+                name: "IX_Garages_UserId",
                 table: "Garages",
-                column: "OwnerId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GaragesServices_GarageId",

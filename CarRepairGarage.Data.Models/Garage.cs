@@ -7,6 +7,7 @@
 
     using CarRepairGarage.Common;
     using CarRepairGarage.Data.Common.Models;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     [Comment("Repair Garage")]
     public class Garage : BaseDeletableModel
@@ -29,6 +30,12 @@
         [Required]
         [Comment("Garage Image")]
         public string ImageUrl { get; set; } = null!;
+        
+        [Comment("Garage Owner")]
+        public string? UserId { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public virtual ApplicationUser? Owner { get; set; }
 
         [Comment("Garage Category")]
         public int CategoryId { get; set; }

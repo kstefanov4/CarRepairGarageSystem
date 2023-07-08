@@ -356,9 +356,6 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("Garage address");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
                         .HasComment("Garage Category");
@@ -380,13 +377,17 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasComment("Garage name");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("Garage Owner");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Garages");
 
@@ -681,19 +682,21 @@ namespace CarRepairGarage.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("CarRepairGarage.Data.Models.ApplicationUser", null)
-                        .WithMany("Garages")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("CarRepairGarage.Data.Models.Category", "Category")
                         .WithMany("Garages")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("CarRepairGarage.Data.Models.ApplicationUser", "Owner")
+                        .WithMany("Garages")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Address");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("CarRepairGarage.Data.Models.GarageService", b =>
