@@ -29,6 +29,7 @@ namespace CarRepairGarage.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
 
             WebApplication app = builder.Build();
 

@@ -4,6 +4,8 @@
     {
         public const int ReleaseYear = 2023;
         public const string ApplicationTitle = "Car Repair Garage";
+        public const string AdministratorRole = "Administrator";
+        public const string ManagerRole = "Manager";
 
         public static class DataValidations
         {

@@ -1,25 +1,36 @@
-﻿@using Microsoft.AspNetCore.Http.Features
+﻿@model bool
 
 @{
-    var consentFeature = this.Context.Features.Get<ITrackingConsentFeature>();
-    var showBanner = !consentFeature?.CanTrack ?? false;
-    var cookieString = consentFeature?.CreateConsentCookie();
+    var cookieConsent = (bool)Model;
+    var showCookieConsent = !cookieConsent; // Change this condition to control when to display the cookie consent
 }
 
-@if (showBanner)
+@if (showCookieConsent)
 {
-    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        We use cookies to understand how you use our site and to improve your experience. <a asp-area="" asp-controller="Home" asp-action="Privacy">Learn More</a>.
-        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Accept</span>
-        </button>
+    <div id="cookieConsent" class="alert alert-info cookieconsent" role="alert">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    This website uses cookies to ensure you get the best experience on our website.
+                    <a href="/privacy">Learn more</a>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <button id="btnAcceptCookie" class="btn btn-primary btn-sm">
+                        Accept
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
+}
+
+@section Scripts {
     <script>
-        (function () {
-            var button = document.querySelector("#cookieConsent button[data-cookie-string]");
-            button.addEventListener("click", function () {
-                document.cookie = button.dataset.cookieString;
-            }, false);
-        })();
+        document.getElementById('btnAcceptCookie').addEventListener('click', function () {
+            // Set a cookie to remember that the user has accepted the cookie consent
+            document.cookie = "cookieConsent=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+            // Hide the cookie consent
+            document.getElementById('cookieConsent').style.display = 'none';
+        });
     </script>
 }
