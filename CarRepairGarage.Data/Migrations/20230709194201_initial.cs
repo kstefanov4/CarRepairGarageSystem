@@ -226,7 +226,7 @@ namespace CarRepairGarage.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VIN = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Car VIN number"),
                     Make = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "Car Make"),
-                    Model = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false, comment: "Primary Model"),
+                    Model = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "Primary Model"),
                     Year = table.Column<int>(type: "int", nullable: false, comment: "Car year of production"),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "User of the car"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -250,9 +250,8 @@ namespace CarRepairGarage.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Primary key")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false, comment: "Service name"),
-                    Description = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false, comment: "Service description"),
-                    CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Service Category"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Service name"),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },

@@ -9,7 +9,7 @@
 
     using CarRepairGarage.Data.Models;
 
-    public class AccountsSeeder : ISeeder
+    public class AccountSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
@@ -38,8 +38,7 @@
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             string email,
-            string roleName = null,
-            string id = null)
+            string roleName = null)
         {
 
             var user = new ApplicationUser

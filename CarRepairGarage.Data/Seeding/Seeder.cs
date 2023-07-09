@@ -19,8 +19,15 @@
                 throw new ArgumentNullException(nameof(serviceProvider));
             }
 
-            await new RolesSeeder().SeedAsync(dbContext, serviceProvider);
-            await new AccountsSeeder().SeedAsync(dbContext, serviceProvider);
+            await new RoleSeeder().SeedAsync(dbContext, serviceProvider);
+            await new AccountSeeder().SeedAsync(dbContext, serviceProvider);
+            await new CarSeeder().SeedAsync(dbContext, serviceProvider);
+            await new CitySeeder().SeedAsync(dbContext, serviceProvider);
+            await new AddressSeeder().SeedAsync(dbContext, serviceProvider);
+            await new CategorySeeder().SeedAsync(dbContext, serviceProvider);
+            await new ServiceSeeder().SeedAsync(dbContext, serviceProvider);
+            await new GarageSeeder().SeedAsync(dbContext, serviceProvider);
+            await new GarageServiceSeeder().SeedAsync(dbContext, serviceProvider);
             
         }
     }

@@ -14,11 +14,6 @@ namespace CarRepairGarage.Data.Configurations
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder
-                .HasMany(x => x.Services)
-                .WithOne(x => x.Category)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder
                 .HasMany(x => x.Garages)
                 .WithOne(x => x.Category)
                 .OnDelete(DeleteBehavior.NoAction);

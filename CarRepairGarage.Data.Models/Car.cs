@@ -25,7 +25,7 @@
         public string Make { get; set; } = null!;
 
         [Required]
-        [StringLength(GeneralApplicationConstants.DataValidations.CarMakeMinLenght)]
+        [StringLength(GeneralApplicationConstants.DataValidations.CarMakeMaxLenght)]
         [Comment("Primary Model")]
         public string Model { get; set; } = null!;
 

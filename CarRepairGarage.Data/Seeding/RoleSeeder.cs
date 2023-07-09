@@ -9,7 +9,7 @@
 
     using CarRepairGarage.Data.Models;
 
-    internal class RolesSeeder : ISeeder
+    internal class RoleSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {

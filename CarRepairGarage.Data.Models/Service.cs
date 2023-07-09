@@ -21,19 +21,9 @@
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(GeneralApplicationConstants.DataValidations.NameMinLenght)]
+        [MaxLength(GeneralApplicationConstants.DataValidations.NameMaxLenght)]
         [Comment("Service name")]
         public string Name { get; set; } = null!;
-
-        [Required]
-        [MaxLength(GeneralApplicationConstants.DataValidations.DescriptionMaxLength)]
-        [Comment("Service description")]
-        public string Description { get; set; } = null!;
-        
-        [Comment("Service Category")]
-        public int CategoryId { get; set; }
-
-        public virtual Category Category { get; set; } = null!;
 
         public virtual ICollection<GarageService> Garages { get; set; }
 
