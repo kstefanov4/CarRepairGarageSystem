@@ -1,5 +1,4 @@
-﻿
-namespace CarRepairGarage.Data.Seeding
+﻿namespace CarRepairGarage.Data.Seeding
 {
     using CarRepairGarage.Data.Models;
     

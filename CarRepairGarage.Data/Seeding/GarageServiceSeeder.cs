@@ -1,12 +1,6 @@
-﻿using CarRepairGarage.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Data.Seeding
+﻿namespace CarRepairGarage.Data.Seeding
 {
+    using CarRepairGarage.Data.Models;
     public class GarageServiceSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
