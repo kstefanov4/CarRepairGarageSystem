@@ -10,9 +10,7 @@
     {
         public void Configure(EntityTypeBuilder<IdentityUserRole<Guid>> builder)
         {
-
-            
+                        
         }
-
     }
 }

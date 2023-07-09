@@ -2,12 +2,12 @@
 {
     using System;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
-    using CarRepairGarage.Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+
+    using CarRepairGarage.Data.Models;
 
     public class AccountsSeeder : ISeeder
     {
@@ -30,6 +30,7 @@
                 userManager,
                 roleManager,
                 "user@mail.com");
+
         }
 
         private static async Task CreateUser(
@@ -37,7 +38,8 @@
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             string email,
-            string roleName = null)
+            string roleName = null,
+            string id = null)
         {
 
             var user = new ApplicationUser

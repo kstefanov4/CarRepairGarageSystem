@@ -4,9 +4,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using CarRepairGarage.Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+
+    using CarRepairGarage.Data.Models;
 
     internal class RolesSeeder : ISeeder
     {

@@ -10,6 +10,8 @@ namespace CarRepairGarage.Web
     using Microsoft.Extensions.DependencyInjection;
     using CarRepairGarage.Data.Seeding;
     using Microsoft.Extensions.Logging;
+    using static System.Formats.Asn1.AsnWriter;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     public class Program
     {
@@ -26,12 +28,21 @@ namespace CarRepairGarage.Web
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedAccount = 
+                    builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
+                options.Password.RequireLowercase =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
+                options.Password.RequireUppercase =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
+                options.Password.RequireNonAlphanumeric =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
+                options.Password.RequiredLength =
+                    builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            builder.Services.AddTransient<Seeder>();
+            builder.Services.AddScoped<Seeder>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

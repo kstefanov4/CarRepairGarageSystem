@@ -63,6 +63,8 @@
                 .WithOne(x => x.Service)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.ApplyConfiguration(new UserConfiguration());
+
             base.OnModelCreating(builder);
         }
 
