@@ -12,10 +12,10 @@
             builder
                 .HasKey(x => new { x.ServiceId, x.GarageId });
 
-            builder
+            /*builder
                 .HasMany(x => x.Appointments)
                 .WithOne(x => x.GarageService)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.NoAction);*/
 
         }
     }

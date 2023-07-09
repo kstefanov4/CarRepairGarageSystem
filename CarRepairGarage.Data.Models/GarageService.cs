@@ -13,7 +13,7 @@
     {
         public GarageService()
         {
-            Appointments = new HashSet<Appointment>();
+            //Appointments = new HashSet<Appointment>();
         }
 
         [Key]
@@ -33,6 +33,6 @@
         [Comment("Is garage service available")]
         public bool Available { get; set; }
 
-        public virtual ICollection<Appointment> Appointments { get; set; }
+        //public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }

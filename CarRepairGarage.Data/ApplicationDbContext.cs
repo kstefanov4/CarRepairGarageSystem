@@ -20,6 +20,7 @@
             builder.ApplyConfiguration(new GarageConfiguration());
             builder.ApplyConfiguration(new GarageServiceConfiguration());
             builder.ApplyConfiguration(new ServiceConfiguration());
+            builder.ApplyConfiguration(new AppointmentConfiguration());
 
             base.OnModelCreating(builder);
         }

@@ -359,8 +359,6 @@ namespace CarRepairGarage.Data.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "User appointed"),
                     GarageId = table.Column<int>(type: "int", nullable: false, comment: "Appointed garage"),
                     ServiceId = table.Column<int>(type: "int", nullable: false, comment: "Appointed service"),
-                    GarageServiceServiceId = table.Column<int>(type: "int", nullable: false),
-                    GarageServiceGarageId = table.Column<int>(type: "int", nullable: false),
                     Confirmed = table.Column<bool>(type: "bit", nullable: true, comment: "Is appointment confirmed"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -380,8 +378,8 @@ namespace CarRepairGarage.Data.Migrations
                         principalTable: "Garages",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Appointments_GaragesServices_GarageServiceServiceId_GarageServiceGarageId",
-                        columns: x => new { x.GarageServiceServiceId, x.GarageServiceGarageId },
+                        name: "FK_Appointments_GaragesServices_GarageId_ServiceId",
+                        columns: x => new { x.GarageId, x.ServiceId },
                         principalTable: "GaragesServices",
                         principalColumns: new[] { "ServiceId", "GarageId" });
                     table.ForeignKey(
@@ -398,14 +396,9 @@ namespace CarRepairGarage.Data.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_GarageId",
+                name: "IX_Appointments_GarageId_ServiceId",
                 table: "Appointments",
-                column: "GarageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_GarageServiceServiceId_GarageServiceGarageId",
-                table: "Appointments",
-                columns: new[] { "GarageServiceServiceId", "GarageServiceGarageId" });
+                columns: new[] { "GarageId", "ServiceId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_ServiceId",

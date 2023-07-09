@@ -4,6 +4,7 @@ using CarRepairGarage.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRepairGarage.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230709205713_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,11 +210,11 @@ namespace CarRepairGarage.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GarageId");
-
                     b.HasIndex("ServiceId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("GarageId", "ServiceId");
 
                     b.ToTable("Appointments");
 
@@ -630,7 +632,15 @@ namespace CarRepairGarage.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CarRepairGarage.Data.Models.GarageService", "GarageService")
+                        .WithMany("Appointments")
+                        .HasForeignKey("GarageId", "ServiceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Garage");
+
+                    b.Navigation("GarageService");
 
                     b.Navigation("Service");
 
@@ -787,6 +797,11 @@ namespace CarRepairGarage.Data.Migrations
                     b.Navigation("Appointments");
 
                     b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("CarRepairGarage.Data.Models.GarageService", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("CarRepairGarage.Data.Models.Service", b =>
