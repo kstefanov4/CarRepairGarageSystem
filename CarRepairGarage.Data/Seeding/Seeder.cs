@@ -29,6 +29,7 @@
             await new GarageSeeder().SeedAsync(dbContext, serviceProvider);
             await new GarageServiceSeeder().SeedAsync(dbContext, serviceProvider);
             await new AppointmentSeeder().SeedAsync(dbContext, serviceProvider);
+            await new NoteSeeder().SeedAsync(dbContext, serviceProvider);
             
         }
     }
