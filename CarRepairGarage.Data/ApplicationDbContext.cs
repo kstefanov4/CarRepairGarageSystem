@@ -14,56 +14,12 @@
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder
-                .Entity<GarageService>()
-                .HasKey(x => new { x.ServiceId, x.GarageId });
-
-            builder.Entity<Address>()
-                .HasMany(x => x.Garages)
-                .WithOne(x => x.Address)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Category>()
-                .HasMany(x => x.Services)
-                .WithOne(x => x.Category)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Category>()
-                .HasMany(x => x.Garages)
-                .WithOne(x => x.Category)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<City>()
-                .HasMany(x => x.Addresses)
-                .WithOne(x => x.City)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Garage>()
-                .HasMany(x => x.Services)
-                .WithOne(x => x.Garage)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Garage>()
-                .HasMany(x => x.Appointments)
-                .WithOne(x => x.Garage)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<GarageService>()
-                .HasMany(x => x.Appointments)
-                .WithOne(x => x.GarageService)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Service>()
-                .HasMany(x => x.Garages)
-                .WithOne(x => x.Service)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Entity<Service>()
-                .HasMany(x => x.Appointments)
-                .WithOne(x => x.Service)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new AddressConfiguration());
+            builder.ApplyConfiguration(new CategoryConfiguration());
+            builder.ApplyConfiguration(new CityConfiguration());
+            builder.ApplyConfiguration(new GarageConfiguration());
+            builder.ApplyConfiguration(new GarageServiceConfiguration());
+            builder.ApplyConfiguration(new ServiceConfiguration());
 
             base.OnModelCreating(builder);
         }

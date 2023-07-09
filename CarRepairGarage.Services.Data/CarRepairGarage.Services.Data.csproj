@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarRepairGarage.Common\CarRepairGarage.Common.csproj" />
+    <ProjectReference Include="..\CarRepairGarage.Data.Common\CarRepairGarage.Data.Common.csproj" />
+    <ProjectReference Include="..\CarRepairGarage.Data.Models\CarRepairGarage.Data.Models.csproj" />
+    <ProjectReference Include="..\CarRepairGarage.Data\CarRepairGarage.Data.csproj" />
+    <ProjectReference Include="..\CarRepairGarage.Web.ViewModels\CarRepairGarage.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

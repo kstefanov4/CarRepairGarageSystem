@@ -9,12 +9,12 @@
     {
         public void Configure(EntityTypeBuilder<GarageService> builder)
         {
-            builder.HasKey(x => new { x.GarageId, x.ServiceId });
+            builder
+                .HasKey(x => new { x.ServiceId, x.GarageId });
 
             builder
-                .HasOne(gs => gs.Service)
-                .WithMany()
-                .HasForeignKey(gs => gs.ServiceId)
+                .HasMany(x => x.Appointments)
+                .WithOne(x => x.GarageService)
                 .OnDelete(DeleteBehavior.NoAction);
 
         }
