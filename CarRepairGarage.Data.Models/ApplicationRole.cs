@@ -15,7 +15,7 @@
     [Comment("Extended Identity Role")]
     public class ApplicationRole : IdentityRole<Guid>, IDeletableEntity
     {
-        /*public ApplicationRole()
+        public ApplicationRole()
             : this(null)
         {
         }
@@ -23,8 +23,8 @@
         public ApplicationRole(string name)
             : base(name)
         {
-            //Id = Guid.NewGuid().ToString();
-        }*/
+            
+        }
 
         [Comment("Is Application role deleted")]
         public bool IsDeleted { get; set; }

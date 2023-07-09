@@ -7,6 +7,9 @@ namespace CarRepairGarage.Web
     using Microsoft.EntityFrameworkCore;
     using CarRepairGarage.Data;
     using CarRepairGarage.Data.Models;
+    using Microsoft.Extensions.DependencyInjection;
+    using CarRepairGarage.Data.Seeding;
+    using Microsoft.Extensions.Logging;
 
     public class Program
     {
@@ -28,10 +31,19 @@ namespace CarRepairGarage.Web
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            builder.Services.AddTransient<Seeder>();
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
             WebApplication app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                new Seeder().SeedAsync(dbContext, scope.ServiceProvider).GetAwaiter().GetResult();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
