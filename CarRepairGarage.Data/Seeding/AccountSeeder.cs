@@ -8,6 +8,7 @@
     using Microsoft.Extensions.DependencyInjection;
 
     using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Data.Seeding.Contracts;
 
     public class AccountSeeder : ISeeder
     {

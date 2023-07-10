@@ -1,8 +1,44 @@
-﻿@{
+﻿@using CarRepairGarage.Web.ViewModels.Garage;
+@model IEnumerable<GarageViewModel>
+@{
     ViewData["Title"] = "Home Page";
+    bool first = true;
+}
+<div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white"
+     style="background-image: url('https://dailygazette.com/wp-content/uploads/fly-images/225075/090921_CarusosAutoRepair_WEB_EM-06-e1631461805723-940x940.jpg');" width="1087" height="400">
+    <h1 class="mb-3 h2">Jumbotron</h1>
+
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus praesentium
+        labore accusamus sequi, voluptate debitis tenetur in deleniti possimus modi voluptatum
+        neque maiores dolorem unde? Aut dolorum quod excepturi fugit.
+    </p>
+</div>
+
+@foreach (var garage in Model)
+{
+    <div class="container" style="display:inline">
+        <div class="row">
+            <div class="col-4">
+                <img class="card-img-top" style="width: 20rem;"
+                     src="@garage.ImageUrl" alt="House Image">
+            </div>
+            <div class="card col-8 border-0">
+                <p style="font-size:25px;"><u>@garage.Name</u></p>
+                <p>Located in: <b>@garage.City</b></p>
+                
+                <p>Category:<b>@garage.Category</b></p>
+                <p>Services:</p>
+                <div class="form-inline">
+                    @foreach(var service in garage.Services)
+                    {
+                        <p>--@service</p>
+                    }
+                </div>
+                <p></p>
+                
+            </div>
+        </div>
+    </div>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>

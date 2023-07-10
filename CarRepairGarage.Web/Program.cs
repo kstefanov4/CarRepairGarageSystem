@@ -12,6 +12,9 @@ namespace CarRepairGarage.Web
     using Microsoft.Extensions.Logging;
     using static System.Formats.Asn1.AsnWriter;
     using Microsoft.CodeAnalysis.CSharp.Syntax;
+    using CarRepairGarage.Data.Repositories.Contracts;
+    using CarRepairGarage.Data.Repositories;
+    using CarRepairGarage.Services.Data.Garage.Contracts;
 
     public class Program
     {
@@ -21,7 +24,7 @@ namespace CarRepairGarage.Web
 
             // Add services to the container.
             string connectionString =
-                builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                builder.Configuration.GetConnectionString("HomeConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -43,6 +46,8 @@ namespace CarRepairGarage.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddScoped<Seeder>();
+            builder.Services.AddScoped<IRepository, Repository>();
+            builder.Services.AddScoped<IGarageService, Services.Data.Garage.GarageService>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

@@ -1,25 +1,31 @@
-﻿
-
-namespace CarRepairGarage.Web.Controllers
+﻿namespace CarRepairGarage.Web.Controllers
 {
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
 
     using CarRepairGarage.Web.ViewModels.Home;
+    using CarRepairGarage.Data.Repositories.Contracts;
+    using Microsoft.AspNetCore.Authorization;
+    using CarRepairGarage.Services.Data.Garage.Contracts;
 
-    public class HomeController : Controller
+    [AllowAnonymous]
+    public class HomeController : BaseController
     {
+        private readonly IGarageService garageService;
+
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IGarageService service)
         {
             _logger = logger;
+            garageService = service;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await garageService.GetAllGaragesAsync();
+            return View(model);
         }
 
         public IActionResult Privacy()

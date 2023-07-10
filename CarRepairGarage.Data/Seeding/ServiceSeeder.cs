@@ -1,7 +1,8 @@
 ﻿namespace CarRepairGarage.Data.Seeding
 {
     using CarRepairGarage.Data.Models;
-    
+    using CarRepairGarage.Data.Seeding.Contracts;
+
     public class ServiceSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)

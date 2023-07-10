@@ -21,5 +21,13 @@
             public const int CarMakeMaxLenght = 30;
             public const int CarMakeMinLenght = 2;
         }
+
+        public static class Roles
+        {
+            public const string AdminRole = "Admin";
+            public const string ManagerRole = "Manager";
+            public const string SupervisorRole = "Supervisor";
+            public const string UserRole = "User";
+        }
     }
 }

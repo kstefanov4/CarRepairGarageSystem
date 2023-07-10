@@ -1,6 +1,7 @@
 ﻿namespace CarRepairGarage.Data.Seeding
 {
     using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Data.Seeding.Contracts;
 
     public class CitySeeder : ISeeder
     {

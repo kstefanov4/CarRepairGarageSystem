@@ -88,7 +88,7 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    TempData[SuccessMessage] = "User logged in.";
+                    TempData[SuccessMessage] = $"User {Input.Email} logged in.";
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

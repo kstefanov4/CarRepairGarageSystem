@@ -2,9 +2,10 @@
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
-    
+
     using CarRepairGarage.Data.Common.Helpers;
     using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Data.Seeding.Contracts;
 
     public class CarSeeder : ISeeder
     {

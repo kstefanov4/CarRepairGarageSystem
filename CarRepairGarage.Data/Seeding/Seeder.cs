@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using CarRepairGarage.Data;
+    using CarRepairGarage.Data.Seeding.Contracts;
 
     public class Seeder : ISeeder
     {

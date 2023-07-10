@@ -1,4 +1,4 @@
-﻿namespace CarRepairGarage.Data.Common.Repositories
+﻿namespace CarRepairGarage.Data.Repositories.Contracts
 {
     using System.Linq.Expressions;
 

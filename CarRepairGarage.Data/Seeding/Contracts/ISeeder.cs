@@ -1,4 +1,4 @@
-﻿namespace CarRepairGarage.Data.Seeding
+﻿namespace CarRepairGarage.Data.Seeding.Contracts
 {
     using System;
     using System.Threading.Tasks;

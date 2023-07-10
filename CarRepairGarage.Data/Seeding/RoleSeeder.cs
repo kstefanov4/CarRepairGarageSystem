@@ -8,6 +8,8 @@
     using Microsoft.Extensions.DependencyInjection;
 
     using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Common;
+    using CarRepairGarage.Data.Seeding.Contracts;
 
     internal class RoleSeeder : ISeeder
     {
@@ -15,9 +17,10 @@
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-            await SeedRoleAsync(dbContext, roleManager, "Admin");
-            await SeedRoleAsync(dbContext, roleManager, "Manager");
-            await SeedRoleAsync(dbContext, roleManager, "Supervisor");
+            await SeedRoleAsync(dbContext, roleManager, GeneralApplicationConstants.Roles.AdminRole);
+            await SeedRoleAsync(dbContext, roleManager, GeneralApplicationConstants.Roles.ManagerRole);
+            await SeedRoleAsync(dbContext, roleManager, GeneralApplicationConstants.Roles.SupervisorRole);
+            await SeedRoleAsync(dbContext, roleManager, GeneralApplicationConstants.Roles.UserRole);
         }
 
         private static async Task SeedRoleAsync(ApplicationDbContext dbContext, RoleManager<ApplicationRole> roleManager, string roleName)
