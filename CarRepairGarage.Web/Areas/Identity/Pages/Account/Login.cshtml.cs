@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using CarRepairGarage.Data.Models;
+using static CarRepairGarage.Common.NotificationsMessagesConstants;
 
 namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
 {
@@ -87,6 +88,7 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    TempData[SuccessMessage] = "User logged in.";
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -96,11 +98,13 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
+                    TempData[WarningMessage] = "User logged in.";
                     return RedirectToPage("./Lockout");
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    TempData[WarningMessage] = "Invalid login attempt.";
                     return Page();
                 }
             }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CarRepairGarage.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class unitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -325,32 +325,6 @@ namespace CarRepairGarage.Data.Migrations
                 comment: "Repair Garage");
 
             migrationBuilder.CreateTable(
-                name: "GaragesServices",
-                columns: table => new
-                {
-                    GarageId = table.Column<int>(type: "int", nullable: false, comment: "Garage"),
-                    ServiceId = table.Column<int>(type: "int", nullable: false, comment: "Service"),
-                    Available = table.Column<bool>(type: "bit", nullable: false, comment: "Is garage service available"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GaragesServices", x => new { x.ServiceId, x.GarageId });
-                    table.ForeignKey(
-                        name: "FK_GaragesServices_Garages_GarageId",
-                        column: x => x.GarageId,
-                        principalTable: "Garages",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_GaragesServices_Services_ServiceId",
-                        column: x => x.ServiceId,
-                        principalTable: "Services",
-                        principalColumn: "Id");
-                },
-                comment: "Garage Service");
-
-            migrationBuilder.CreateTable(
                 name: "Appointments",
                 columns: table => new
                 {
@@ -378,11 +352,6 @@ namespace CarRepairGarage.Data.Migrations
                         principalTable: "Garages",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Appointments_GaragesServices_GarageId_ServiceId",
-                        columns: x => new { x.GarageId, x.ServiceId },
-                        principalTable: "GaragesServices",
-                        principalColumns: new[] { "ServiceId", "GarageId" });
-                    table.ForeignKey(
                         name: "FK_Appointments_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
@@ -390,15 +359,41 @@ namespace CarRepairGarage.Data.Migrations
                 },
                 comment: "User Appointments");
 
+            migrationBuilder.CreateTable(
+                name: "GaragesServices",
+                columns: table => new
+                {
+                    GarageId = table.Column<int>(type: "int", nullable: false, comment: "Garage"),
+                    ServiceId = table.Column<int>(type: "int", nullable: false, comment: "Service"),
+                    Available = table.Column<bool>(type: "bit", nullable: false, comment: "Is garage service available"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GaragesServices", x => new { x.ServiceId, x.GarageId });
+                    table.ForeignKey(
+                        name: "FK_GaragesServices_Garages_GarageId",
+                        column: x => x.GarageId,
+                        principalTable: "Garages",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_GaragesServices_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "Id");
+                },
+                comment: "Garage Service");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_CityId",
                 table: "Addresses",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_GarageId_ServiceId",
+                name: "IX_Appointments_GarageId",
                 table: "Appointments",
-                columns: new[] { "GarageId", "ServiceId" });
+                column: "GarageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_ServiceId",
@@ -509,10 +504,10 @@ namespace CarRepairGarage.Data.Migrations
                 name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Notes");
+                name: "GaragesServices");
 
             migrationBuilder.DropTable(
-                name: "GaragesServices");
+                name: "Notes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

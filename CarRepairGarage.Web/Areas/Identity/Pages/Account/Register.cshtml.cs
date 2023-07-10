@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using static CarRepairGarage.Common.NotificationsMessagesConstants;
 
 namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
 {
@@ -84,6 +85,7 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    TempData[SuccessMessage] = "Success registration";
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
