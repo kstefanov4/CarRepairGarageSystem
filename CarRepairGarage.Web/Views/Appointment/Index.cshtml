@@ -1,1 +1,41 @@
-﻿
+﻿@using CarRepairGarage.Web.ViewModels.Appointment;
+@model CreateAppointmentViewModel
+
+<h1>Create Appointment</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="SelectedDateTime">Appointment Date and Time</label>
+        <input asp-for="SelectedDateTime" class="form-control" type="datetime-local" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
+        <span asp-validation-for="SelectedDateTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="UserId">User</label>
+        <select asp-for="UserId" class="form-control" required>
+            <option value="">-- Select User --</option>
+            <!-- Render the options for users -->
+        </select>
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GarageId">Garage</label>
+        <select asp-for="GarageId" class="form-control" required>
+            <option value="">-- Select Garage --</option>
+            <!-- Render the options for garages -->
+        </select>
+        <span asp-validation-for="GarageId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ServiceId">Service</label>
+        <select asp-for="ServiceId" class="form-control" required>
+            <option value="">-- Select Service --</option>
+            <!-- Render the options for services -->
+        </select>
+        <span asp-validation-for="ServiceId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

@@ -13,7 +13,7 @@ namespace CarRepairGarage.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var model = await categoryService.GetAllCategoryAsync(int.MaxValue);
+            var model = await categoryService.GetAllCategoryAsync();
             return View(model);
         }
     }

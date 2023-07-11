@@ -4,6 +4,6 @@
     
     public interface ICategoryService
     {
-        Task<IEnumerable<CategoryViewModel>> GetAllCategoryAsync(int count);
+        Task<IEnumerable<CategoryViewModel>> GetAllCategoryAsync();
     }
 }

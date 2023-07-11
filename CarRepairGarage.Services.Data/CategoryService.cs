@@ -17,7 +17,7 @@
         {
             this.repository = repository;
         }
-        public async Task<IEnumerable<CategoryViewModel>> GetAllCategoryAsync(int count)
+        public async Task<IEnumerable<CategoryViewModel>> GetAllCategoryAsync()
         {
             var model = await this.repository.AllReadonly<Category>()
                 .Where(x => x.IsDeleted == false)
