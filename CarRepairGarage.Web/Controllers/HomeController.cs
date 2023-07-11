@@ -5,9 +5,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using CarRepairGarage.Web.ViewModels.Home;
-    using CarRepairGarage.Data.Repositories.Contracts;
     using Microsoft.AspNetCore.Authorization;
-    using CarRepairGarage.Services.Data.Garage.Contracts;
+    using CarRepairGarage.Services.Contracts;
 
     [AllowAnonymous]
     public class HomeController : BaseController
@@ -24,7 +23,7 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await garageService.GetAllGaragesAsync();
+            var model = await garageService.GetAllGaragesAsync(3);
             return View(model);
         }
 

@@ -1,0 +1,52 @@
+﻿@using CarRepairGarage.Web.ViewModels.Garage;
+@model IEnumerable<GarageViewModel>
+
+@{
+    ViewData["Title"] = "Garage Page";
+}
+
+<div class="container">
+    @for (int i = 0; i < Model.Count(); i += 2)
+    {
+        <div class="row">
+            <div class="col">
+                <!-- Render the first object -->
+                @if (i < Model.Count())
+                {
+                    <div class="col-4">
+                        <img class="card-img-top" style="width: 20rem;"
+                             src="@Model.ElementAt(i).ImageUrl" alt="House Image">
+                    </div>
+                    <p style="font-size:25px;"><a asp-controller="Garage" asp-action="Detail" asp-route-id="@Model.ElementAt(i).Id">@Model.ElementAt(i).Name</a></p>
+                    <p>Located in:  @Model.ElementAt(i).City</p>
+                    <p>Services:</p>
+                    <div class="form-inline">
+                        @foreach (var service in Model.ElementAt(i).Services)
+                        {
+                            <p>* @service</p>
+                        }
+                    </div>
+                }
+            </div>
+            @if (i + 1 < Model.Count())
+            {
+                <div class="col">
+                    <!-- Render the second object -->
+                    <div class="col-4">
+                        <img class="card-img-top" style="width: 20rem;"
+                             src="@Model.ElementAt(i + 1).ImageUrl" alt="House Image">
+                    </div>
+                    <p style="font-size:25px;"><a asp-controller="Garage" asp-action="Detail" asp-route-id="@Model.ElementAt(i + 1).Id">@Model.ElementAt(i + 1).Name</a></p>
+                    <p>Located in:  @Model.ElementAt(i + 1).City</p>
+                    <p>Services:</p>
+                    <div class="form-inline">
+                        @foreach (var service in Model.ElementAt(i + 1).Services)
+                        {
+                            <p>* @service</p>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

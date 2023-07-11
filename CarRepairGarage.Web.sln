@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRepairGarage.Web.ViewMod
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{32B33832-3C99-43FE-BA3B-CF3429D4F226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRepairGarage.Services.Data", "CarRepairGarage.Services.Data\CarRepairGarage.Services.Data.csproj", "{4917C021-9CA6-4411-9F95-8BA864DE5A8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRepairGarage.Services", "CarRepairGarage.Services.Data\CarRepairGarage.Services.csproj", "{4917C021-9CA6-4411-9F95-8BA864DE5A8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

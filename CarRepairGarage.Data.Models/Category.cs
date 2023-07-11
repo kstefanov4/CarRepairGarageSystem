@@ -13,7 +13,6 @@
     {
         public Category()
         {
-            Services = new HashSet<Service>();
             Garages = new HashSet<Garage>();
         }
 
@@ -34,8 +33,6 @@
         [Required]
         [Comment("Category Image")]
         public string ImageUrl { get; set; } = null!;
-
-        public virtual ICollection<Service> Services { get; set; }
 
         public virtual ICollection<Garage> Garages { get; set; }
     }

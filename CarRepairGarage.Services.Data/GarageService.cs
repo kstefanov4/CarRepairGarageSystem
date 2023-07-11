@@ -1,33 +1,27 @@
-﻿using CarRepairGarage.Data.Repositories.Contracts;
-using CarRepairGarage.Services.Data.Garage.Contracts;
-using CarRepairGarage.Web.ViewModels;
-using CarRepairGarage.Web.ViewModels.Garage;
-using CarRepairGarage.Data.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using Microsoft.EntityFrameworkCore;
-
-namespace CarRepairGarage.Services.Data.Garage
+﻿namespace CarRepairGarage.Services
 {
+    using Microsoft.EntityFrameworkCore;
+
+    using CarRepairGarage.Data.Repositories.Contracts;
+    using CarRepairGarage.Web.ViewModels.Garage;
+    using CarRepairGarage.Services.Contracts;
+
     public class GarageService : IGarageService
     {
-        private readonly IRepository repo;
+        private readonly IRepository repository;
         public GarageService(IRepository repository)
         {
-            repo = repository;
+            this.repository = repository;
         }
 
-        public async Task<IEnumerable<GarageViewModel>> GetAllGaragesAsync()
+        public async Task<IEnumerable<GarageViewModel>> GetAllGaragesAsync(int count)
         {
-            var garages = await repo
-                            .AllReadonly<CarRepairGarage.Data.Models.Garage>()
+            var garages = await repository
+                            .AllReadonly<Data.Models.Garage>()
                             .Where(x => x.IsDeleted == false)
                             .Include(x => x.Services)
                             .OrderByDescending(x => x.Id)
-                            .Take(3)
+                            .Take(count)
                             .Select(x => new GarageViewModel()
                             {
                                 Id = x.Id,

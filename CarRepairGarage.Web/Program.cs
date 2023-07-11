@@ -1,20 +1,15 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using CarRepairGarage.Data;
 namespace CarRepairGarage.Web
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+
     using CarRepairGarage.Data;
     using CarRepairGarage.Data.Models;
-    using Microsoft.Extensions.DependencyInjection;
     using CarRepairGarage.Data.Seeding;
-    using Microsoft.Extensions.Logging;
-    using static System.Formats.Asn1.AsnWriter;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using CarRepairGarage.Data.Repositories.Contracts;
     using CarRepairGarage.Data.Repositories;
-    using CarRepairGarage.Services.Data.Garage.Contracts;
+    using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Services;
 
     public class Program
     {
@@ -24,7 +19,7 @@ namespace CarRepairGarage.Web
 
             // Add services to the container.
             string connectionString =
-                builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                builder.Configuration.GetConnectionString("HomeConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -47,7 +42,8 @@ namespace CarRepairGarage.Web
 
             builder.Services.AddScoped<Seeder>();
             builder.Services.AddScoped<IRepository, Repository>();
-            builder.Services.AddScoped<IGarageService, Services.Data.Garage.GarageService>();
+            builder.Services.AddScoped<IGarageService, Services.GarageService>();
+            builder.Services.AddScoped<ICategoryService, Services.CategoryService>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

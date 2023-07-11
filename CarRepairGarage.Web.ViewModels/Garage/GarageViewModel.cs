@@ -15,6 +15,9 @@ namespace CarRepairGarage.Web.ViewModels.Garage
 
         public string City { get; set; } = null!;
 
+        public string? Altitude { get; set; }
+        public string? Latitude { get; set; }
+
         public ICollection<string> Services { get; set; } = new List<string>();
     }
 }

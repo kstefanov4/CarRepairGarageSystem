@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CarRepairGarage.Services.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CarRepairGarage.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        public IActionResult Index()
+        private readonly ICategoryService categoryService;
+
+        public CategoryController(ICategoryService categoryService)
         {
-            return View();
+            this.categoryService = categoryService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var model = await categoryService.GetAllCategoryAsync(int.MaxValue);
+            return View(model);
         }
     }
 }

@@ -16,21 +16,7 @@
 <body onload="initMap()">
     <partial name="_NotificationsPartial" />
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <partial name="_MainMenuPartial" />
-                </div>
-            </div>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between align-text-end">
-                <img src="@Url.Content("~/Images/logo.png")" alt="Logo" width="30" height="24" class="d-inline-block align-items-center">
-            </div>
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
+        
         @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
         --<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Car Repair Garage Booking</a>--
@@ -59,7 +45,22 @@
         </nav>*@
     </header>
     <div class="container">
-        <div id="map" style="height: 400px; width: 100%;">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <partial name="_MainMenuPartial" />
+                </div>
+            </div>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between align-text-end">
+                <img src="@Url.Content("~/Images/logo.png")" alt="Logo" width="30" height="24" class="d-inline-block align-items-center">
+            </div>
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+        @*<div id="map" style="height: 400px; width: 100%;">
             <script>
                 function initMap() {
                     var map = new google.maps.Map(document.getElementById("map"), {
@@ -75,7 +76,7 @@
                     });
                 }
             </script>
-        </div>
+        </div>*@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

@@ -22,16 +22,12 @@
   <ItemGroup>
     <ProjectReference Include="..\CarRepairGarage.Common\CarRepairGarage.Common.csproj" />
     <ProjectReference Include="..\CarRepairGarage.Data\CarRepairGarage.Data.csproj" />
-    <ProjectReference Include="..\CarRepairGarage.Services.Data\CarRepairGarage.Services.Data.csproj" />
+    <ProjectReference Include="..\CarRepairGarage.Services.Data\CarRepairGarage.Services.csproj" />
     <ProjectReference Include="..\CarRepairGarage.Web.ViewModels\CarRepairGarage.Web.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
-    <Folder Include="Views\Garage\" />
-    <Folder Include="Views\Category\" />
-    <Folder Include="Views\Appointment\" />
-    <Folder Include="Views\Service\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
