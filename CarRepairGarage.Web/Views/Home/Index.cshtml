@@ -25,19 +25,19 @@
             </div>
             <div class="card col-8 border-0">
                 <p style="font-size:25px;"><u>@garage.Name</u></p>
+
                 <p>Located in: <b>@garage.City</b></p>
-                
+
                 <p>Category:<b>@garage.Category</b></p>
                 <p>Services:</p>
                 <div class="form-inline">
-                    @foreach(var service in garage.Services)
+                    @foreach (var service in garage.Services)
                     {
                         <p>--@service</p>
                     }
                 </div>
-                <p></p>
-                
             </div>
+
         </div>
     </div>
 }

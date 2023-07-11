@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CarRepairGarage.Web.styles.css" asp-append-version="true" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA55EWGUtCN7DkfQX5kVJjHhTAGEYPr-r4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body>
+<body onload="initMap()">
     <partial name="_NotificationsPartial" />
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -58,6 +59,23 @@
         </nav>*@
     </header>
     <div class="container">
+        <div id="map" style="height: 400px; width: 100%;">
+            <script>
+                function initMap() {
+                    var map = new google.maps.Map(document.getElementById("map"), {
+                        center: { lat: 37.7749, lng: -122.4194 },
+                        zoom: 12
+                    });
+
+                    var coordinates = { lat: 37.7749, lng: -122.4194 }; // Replace with your desired coordinates
+
+                    var marker = new google.maps.Marker({
+                        position: coordinates,
+                        map: map
+                    });
+                }
+            </script>
+        </div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

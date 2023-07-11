@@ -28,6 +28,10 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
+    <Folder Include="Views\Garage\" />
+    <Folder Include="Views\Category\" />
+    <Folder Include="Views\Appointment\" />
+    <Folder Include="Views\Service\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
