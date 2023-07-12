@@ -1,0 +1,22 @@
+﻿@using CarRepairGarage.Web.ViewModels.Car;
+@model IEnumerable<CarViewModel>
+
+@{
+    ViewData["Title"] = "Car Page";
+}
+
+@foreach (var car in Model)
+{
+    <div class="container" style="display:inline">
+        <div class="row">
+            <div class="card col-8 border-0">
+                <p style="font-size:25px;"><u>@car.VIN</u></p>
+
+                <p>Model: <b>@car.Make</b></p>
+                <p>Model:<b>@car.Model</b></p>
+                <p>Year:<b>@car.Year</b></p>
+            </div>
+
+        </div>
+    </div>
+}
