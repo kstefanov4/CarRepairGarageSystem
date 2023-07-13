@@ -11,6 +11,16 @@
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h2>Create a new account.</h2>
             <hr />
+            <label asp-for="Input.IsManager" class="control-label"></label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" asp-for="Input.IsManager" value="false" />
+                <label class="form-check-label" asp-for="Input.IsManager">Register as an User</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" asp-for="Input.IsManager" value="true" />
+                <label class="form-check-label" asp-for="Input.IsManager">Register as a Garage Manager</label>
+            </div>
+            <span asp-validation-for="Input.IsManager" class="text-danger"></span>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />

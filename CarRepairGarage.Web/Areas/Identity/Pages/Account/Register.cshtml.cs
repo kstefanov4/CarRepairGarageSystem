@@ -63,11 +63,16 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Role")]
+            public bool IsManager { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            Input = new InputModel { IsManager = false };
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -77,11 +82,18 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, GeneralApplicationConstants.Roles.UserRole);
+                { 
+                    if (Input.IsManager)
+                    {
+                        await _userManager.AddToRoleAsync(user, GeneralApplicationConstants.Roles.ManagerRole);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, GeneralApplicationConstants.Roles.UserRole);
+                    }
                     TempData[SuccessMessage] = $"Success registration! Welcome on board {user.UserName}!";
                     _logger.LogInformation("User created a new account with password.");
 
