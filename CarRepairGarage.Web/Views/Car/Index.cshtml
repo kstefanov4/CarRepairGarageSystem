@@ -4,7 +4,10 @@
 @{
     ViewData["Title"] = "Car Page";
 }
-
+@if (Model.Count() < 1)
+{
+    <p>Your Garege is empty. Please add cars!</p>
+}
 @foreach (var car in Model)
 {
     <div class="container" style="display:inline">
@@ -13,8 +16,13 @@
                 <p style="font-size:25px;"><u>@car.VIN</u></p>
 
                 <p>Model: <b>@car.Make</b></p>
-                <p>Model:<b>@car.Model</b></p>
+                <p>Model:<b>@car.CarModel</b></p>
                 <p>Year:<b>@car.Year</b></p>
+                <a asp-controller="Car" asp-action="Edit" asp-route-id="@car.Id"
+                   class="btn btn-warning">Edit</a>
+                   <p>  </p>
+                <a asp-controller="Car" asp-action="Remove" asp-route-id="@car.Id"
+                   class="btn btn-warning">Remove</a>
             </div>
 
         </div>

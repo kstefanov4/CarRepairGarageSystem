@@ -30,7 +30,8 @@
                 dbContext,
                 userManager,
                 roleManager,
-                "user@mail.com");
+                "user@mail.com",
+                "User");
 
         }
 

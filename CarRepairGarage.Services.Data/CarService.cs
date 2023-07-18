@@ -5,6 +5,7 @@
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Car;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Security.AccessControl;
@@ -12,26 +13,95 @@
 
     public class CarService : ICarService
     {
-        private readonly IRepository repository;
+        private readonly IRepository _repository;
+        private readonly ILogger _logger;
 
-        public CarService(IRepository repository)
+        public CarService(
+            IRepository repository,
+            ILogger<CarService> logger)
         {
-            this.repository = repository;
+            _repository = repository;
+            _logger = logger;
         }
-        public async Task<IEnumerable<CarViewModel>> GetAllCarsByIdAsync(Guid id)
+
+        public async Task AddCarAsync(AddCarViewModel carModel, ApplicationUser user)
         {
-            var cars = await repository.AllReadonly<Car>()
+            Car car = new Car()
+            {
+                VIN = carModel.VIN,
+                Make = carModel.Make,
+                Model = carModel.CarModel,
+                Year = carModel.Year,
+                User = user
+            };
+
+            try
+            {
+                await _repository.AddAsync(car);
+                await _repository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(nameof(AddCarAsync), ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }
+        }
+
+        public async Task Delete(int id)
+        {
+            var car = await _repository.GetByIdAsync<Car>(id);
+            car.IsDeleted = true;
+
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task Edit(int id, AddCarViewModel model)
+        {
+            Car car = await _repository.GetByIdAsync<Car>(id);
+            
+            car.VIN = model.VIN;
+            car.Make = model.Make;
+            car.Model = model.CarModel;
+            car.Year = model.Year;
+
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task<bool> Exist(int id)
+        {
+            return await _repository.AllReadonly<Car>()
+                .AnyAsync(x => x.Id == id);
+        }
+
+        public async Task<IEnumerable<CarViewModel>> GetAllCarsByUserIdAsync(Guid id)
+        {
+            var cars = await _repository.AllReadonly<Car>()
                 .Where(x => x.IsDeleted == false && x.User.Id == id)
                 .Select(x => new CarViewModel
                 {
                     Id = x.Id,
                     VIN = x.VIN,
                     Make = x.Make,
-                    Model = x.Model,
+                    CarModel = x.Model,
                     Year = x.Year,
                 }).ToListAsync();
 
             return cars;
+        }
+
+        public async Task<CarViewModel> GetCarByIdAsync(int id)
+        {
+            var car = await _repository.GetByIdAsync<Car>(id);
+
+            return new CarViewModel()
+            {
+                Id = car.Id,
+                VIN = car.VIN,
+                Make = car.Make,
+                CarModel = car.Model,
+                Year = car.Year,
+                UserId = car.UserId.ToString()
+            };
         }
     }
 }

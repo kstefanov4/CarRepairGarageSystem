@@ -17,8 +17,9 @@ namespace CarRepairGarage.Web.ViewModels.Car
         public string Make { get; set; } = null!;
         [Required]
         [StringLength(30, MinimumLength = 2)]
-        public string Model { get; set; } = null!;
+        public string CarModel { get; set; } = null!;
         [Required]
+        [Range(1900,2023)]
         public int Year { get; set; }
     }
 }

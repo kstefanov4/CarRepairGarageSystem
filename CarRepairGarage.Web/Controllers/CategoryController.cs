@@ -16,5 +16,7 @@ namespace CarRepairGarage.Web.Controllers
             var model = await categoryService.GetAllCategoryAsync();
             return View(model);
         }
+
+
     }
 }

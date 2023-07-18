@@ -1,20 +1,25 @@
 ﻿using CarRepairGarage.Data.Models;
 using CarRepairGarage.Services.Contracts;
+using CarRepairGarage.Web.ViewModels.Car;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using static CarRepairGarage.Common.NotificationsMessagesConstants;
 
 namespace CarRepairGarage.Web.Controllers
 {
+    [Authorize(Roles = "User")]
     public class CarController : BaseController
     {
-        private readonly ICarService carService;
+        private readonly ICarService _carService;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public CarController(
             ICarService carService, 
             UserManager<ApplicationUser> userManager)
         {
-            this.carService = carService; 
+            _carService = carService; 
             _userManager = userManager;
         }
         public async Task<IActionResult> Index()
@@ -26,8 +31,144 @@ namespace CarRepairGarage.Web.Controllers
                 return RedirectToPage("/Account/Login");
             }
 
-            var model = await carService.GetAllCarsByIdAsync(user.Id);
+            var model = await _carService.GetAllCarsByUserIdAsync(user.Id);
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            AddCarViewModel model = new AddCarViewModel();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddCarViewModel carModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(carModel);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+
+            try
+            {
+                await _carService.AddCarAsync(carModel, user);
+                TempData[SuccessMessage] = $"Your car {carModel.Make} {carModel.CarModel} was successfully created.";
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
+                return View(carModel);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            if ((await _carService.Exist(id)) == false)
+            {
+                TempData[ErrorMessage] = "This car does not exist!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            var car = await _carService.GetCarByIdAsync(id);
+
+            if (car.UserId != user.Id.ToString())
+            {
+                TempData[ErrorMessage] = "You are not the owner of this car. Please contact our support team!";
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }
+
+            return View(car);
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, AddCarViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            var car = await _carService.GetCarByIdAsync(id);
+
+            if (car == null)
+            {
+                TempData[ErrorMessage] = "Car does not exist!";
+                return View(model);
+            }
+
+            if (car.UserId != user.Id.ToString())
+            {
+                TempData[ErrorMessage] = "You are not the owner of this car. Please contact our support team!";
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }
+
+            await _carService.Edit(id, model);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Remove(int id)
+        {
+            if ((await _carService.Exist(id)) == false)
+            {
+                TempData[ErrorMessage] = "This car does not exist!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            var car = await _carService.GetCarByIdAsync(id);
+            var carDetails = new CarDetailsViewModel()
+            {
+                Make = car.Make,
+                CarModel = car.CarModel,
+                Year = car.Year
+            };
+
+            if (car.UserId != user.Id.ToString())
+            {
+                TempData[ErrorMessage] = "You are not the owner of this car. Please contact our support team!";
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }
+
+            return View(carDetails);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Remove(int id, CarDetailsViewModel model)
+        {
+            /*if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            var car = await _carService.GetCarByIdAsync(id);
+
+            if (car == null)
+            {
+                TempData[ErrorMessage] = "Car does not exist!";
+                return View(model);
+            }
+
+            if (car.UserId != user.Id.ToString())
+            {
+                TempData[ErrorMessage] = "You are not the owner of this car. Please contact our support team!";
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }*/
+
+            await _carService.Delete(id);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
