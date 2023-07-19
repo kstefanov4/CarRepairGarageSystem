@@ -4,6 +4,6 @@
     public interface IGarageService
     {
         Task<IEnumerable<GarageViewModel>> GetAllGaragesAsync(int count);
-        Task<List<string>> GetAllServicesByGarageIdAsync(int garageId);
+        Task<List<GarageServicesModel>> GetAllServicesByGarageIdAsync(int garageId);
     }
 }

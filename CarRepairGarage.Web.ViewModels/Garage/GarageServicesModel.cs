@@ -8,6 +8,7 @@ namespace CarRepairGarage.Web.ViewModels.Garage
 {
     public class GarageServicesModel
     {
-        public ICollection<string> Services { get; set; } = new List<string>();
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

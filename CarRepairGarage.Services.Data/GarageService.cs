@@ -35,12 +35,15 @@
             return garages;
         }
 
-        public async Task<List<string>> GetAllServicesByGarageIdAsync(int garageId)
+        public async Task<List<GarageServicesModel>> GetAllServicesByGarageIdAsync(int garageId)
         {
-            var services = await _repository.AllReadonly<Garage>()
-                .Where(x => x.Id == garageId)
-                .Include(x => x.Services)
-                .Select(x => x.Services.Select(n => n.Service.Name).ToList()).FirstAsync();
+            var services = await _repository.AllReadonly<Data.Models.GarageService>()
+                .Where(x => x.GarageId == garageId && x.IsDeleted == false)
+                .Select(x => new GarageServicesModel()
+                {
+                    Id = x.Service.Id,
+                    Name = x.Service.Name
+                }).ToListAsync();
 
             return services;
         }

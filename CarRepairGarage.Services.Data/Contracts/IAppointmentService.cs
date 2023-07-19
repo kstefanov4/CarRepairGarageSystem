@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CarRepairGarage.Data.Models;
+using CarRepairGarage.Web.ViewModels.Appointment;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +11,6 @@ namespace CarRepairGarage.Services.Contracts
     public interface IAppointmentService
     {
         Task<List<string>> GetAllAvailableHours(DateTime dateTime, int garageId);
+        Task CreateAppointmentAsync(CreateAppointmentViewModel model, ApplicationUser user);
     }
 }

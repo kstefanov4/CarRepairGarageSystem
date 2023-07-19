@@ -18,9 +18,9 @@ namespace CarRepairGarage.Web.ViewModels.Appointment
         [Display(Name = "Appointment Time")]
         public DateTime SelectedTime { get; set; }
 
-        [Required]
+        /*[Required]
         [Display(Name = "User")]
-        public Guid UserId { get; set; }
+        public Guid UserId { get; set; }*/
 
         [Required]
         [Display(Name = "Garage")]
@@ -30,6 +30,6 @@ namespace CarRepairGarage.Web.ViewModels.Appointment
         [Display(Name = "Service")]
         public int ServiceId { get; set; }
 
-        public List<DateTime> AvailableDates { get; set; }
+        //public List<DateTime> AvailableDates { get; set; }
     }
 }
