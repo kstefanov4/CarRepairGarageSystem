@@ -44,24 +44,24 @@ namespace CarRepairGarage.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddCarViewModel carModel)
+        public async Task<IActionResult> Add(AddCarViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(carModel);
+                return View(model);
             }
 
             var user = await _userManager.GetUserAsync(User);
 
             try
             {
-                await _carService.AddCarAsync(carModel, user);
-                TempData[SuccessMessage] = $"Your car {carModel.Make} {carModel.CarModel} was successfully created.";
+                await _carService.AddCarAsync(model, user);
+                TempData[SuccessMessage] = $"Your car {model.Make} {model.CarModel} was successfully created.";
             }
             catch (Exception)
             {
                 TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
-                return View(carModel);
+                return View(model);
             }
 
             return RedirectToAction("Index");
@@ -116,7 +116,7 @@ namespace CarRepairGarage.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        
         public async Task<IActionResult> Remove(int id)
         {
             if ((await _carService.Exist(id)) == false)
@@ -127,12 +127,13 @@ namespace CarRepairGarage.Web.Controllers
 
             var user = await _userManager.GetUserAsync(User);
             var car = await _carService.GetCarByIdAsync(id);
-            var carDetails = new CarDetailsViewModel()
+            /*var carDetails = new AddCarViewModel()
             {
+                VIN = car.VIN,
                 Make = car.Make,
                 CarModel = car.CarModel,
                 Year = car.Year
-            };
+            };*/
 
             if (car.UserId != user.Id.ToString())
             {
@@ -140,13 +141,16 @@ namespace CarRepairGarage.Web.Controllers
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
             }
 
-            return View(carDetails);
+            /*return View(carDetails);*/
+            await _carService.Delete(id);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Remove(int id, CarDetailsViewModel model)
+        /*[HttpPost]
+        public async Task<IActionResult> Remove(int id, AddCarViewModel model)
         {
-            /*if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -164,11 +168,11 @@ namespace CarRepairGarage.Web.Controllers
             {
                 TempData[ErrorMessage] = "You are not the owner of this car. Please contact our support team!";
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
-            }*/
+            }
 
             await _carService.Delete(id);
 
             return RedirectToAction(nameof(Index));
-        }
+        }*/
     }
 }

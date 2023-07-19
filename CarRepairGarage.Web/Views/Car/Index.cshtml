@@ -22,9 +22,15 @@
                    class="btn btn-warning">Edit</a>
                    <p>  </p>
                 <a asp-controller="Car" asp-action="Remove" asp-route-id="@car.Id"
-                   class="btn btn-warning">Remove</a>
+                   class="btn btn-warning" onclick="return confirmDelete()">Remove</a>
+                @*@Html.ActionLink("Delete", "Remove", "Car", new { id = car.Id }, new { onclick = "return confirm('Are you sure you want to delete this element?');" })*@
             </div>
 
         </div>
     </div>
 }
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this element?");
+    }
+</script>

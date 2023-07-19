@@ -184,8 +184,8 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("bit")
                         .HasComment("Is appointment confirmed");
 
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2")
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("Date")
                         .HasComment("Date of the appointment");
 
                     b.Property<DateTime?>("DeletedOn")
@@ -201,6 +201,10 @@ namespace CarRepairGarage.Data.Migrations
                     b.Property<int>("ServiceId")
                         .HasColumnType("int")
                         .HasComment("Appointed service");
+
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("Time")
+                        .HasComment("Time of the appointment");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier")
@@ -463,9 +467,6 @@ namespace CarRepairGarage.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
@@ -479,8 +480,6 @@ namespace CarRepairGarage.Data.Migrations
                         .HasComment("Service name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Services");
 
@@ -692,13 +691,6 @@ namespace CarRepairGarage.Data.Migrations
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("CarRepairGarage.Data.Models.Service", b =>
-                {
-                    b.HasOne("CarRepairGarage.Data.Models.Category", null)
-                        .WithMany("Services")
-                        .HasForeignKey("CategoryId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("CarRepairGarage.Data.Models.ApplicationRole", null)
@@ -773,8 +765,6 @@ namespace CarRepairGarage.Data.Migrations
             modelBuilder.Entity("CarRepairGarage.Data.Models.Category", b =>
                 {
                     b.Navigation("Garages");
-
-                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("CarRepairGarage.Data.Models.City", b =>

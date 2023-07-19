@@ -21,7 +21,12 @@
         public string Id { get; set; } = null!;
 
         [Comment("Date of the appointment")]
-        public DateTime DateTime { get; set; }
+        [Column(TypeName = "Date")]
+        public DateTime Date { get; set; }
+
+        [Comment("Time of the appointment")]
+        [Column(TypeName = "Time")]
+        public TimeSpan Time { get; set; }
 
         [Required]
         [Comment("User appointed")]

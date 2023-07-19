@@ -5,18 +5,19 @@
     using CarRepairGarage.Data.Repositories.Contracts;
     using CarRepairGarage.Web.ViewModels.Garage;
     using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Data.Models;
 
     public class GarageService : IGarageService
     {
-        private readonly IRepository repository;
+        private readonly IRepository _repository;
         public GarageService(IRepository repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
         public async Task<IEnumerable<GarageViewModel>> GetAllGaragesAsync(int count)
         {
-            var garages = await repository
+            var garages = await _repository
                             .AllReadonly<Data.Models.Garage>()
                             .Where(x => x.IsDeleted == false)
                             .Include(x => x.Services)
@@ -32,6 +33,16 @@
                                 ImageUrl = x.ImageUrl
                             }).ToListAsync();
             return garages;
+        }
+
+        public async Task<List<string>> GetAllServicesByGarageIdAsync(int garageId)
+        {
+            var services = await _repository.AllReadonly<Garage>()
+                .Where(x => x.Id == garageId)
+                .Include(x => x.Services)
+                .Select(x => x.Services.Select(n => n.Service.Name).ToList()).FirstAsync();
+
+            return services;
         }
     }
 }

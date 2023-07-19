@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CarRepairGarage.Data.Migrations
 {
-    public partial class unitial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -105,6 +105,22 @@ namespace CarRepairGarage.Data.Migrations
                     table.PrimaryKey("PK_Notes", x => x.Id);
                 },
                 comment: "Garage Notes");
+
+            migrationBuilder.CreateTable(
+                name: "Services",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "Primary key")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Service name"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Services", x => x.Id);
+                },
+                comment: "Garage service");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
@@ -245,28 +261,6 @@ namespace CarRepairGarage.Data.Migrations
                 comment: "User Car");
 
             migrationBuilder.CreateTable(
-                name: "Services",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false, comment: "Primary key")
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Service name"),
-                    CategoryId = table.Column<int>(type: "int", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Services", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Services_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id");
-                },
-                comment: "Garage service");
-
-            migrationBuilder.CreateTable(
                 name: "Addresses",
                 columns: table => new
                 {
@@ -329,7 +323,8 @@ namespace CarRepairGarage.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Primary key"),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date of the appointment"),
+                    Date = table.Column<DateTime>(type: "Date", nullable: false, comment: "Date of the appointment"),
+                    Time = table.Column<TimeSpan>(type: "Time", nullable: false, comment: "Time of the appointment"),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "User appointed"),
                     GarageId = table.Column<int>(type: "int", nullable: false, comment: "Appointed garage"),
                     ServiceId = table.Column<int>(type: "int", nullable: false, comment: "Appointed service"),
@@ -473,11 +468,6 @@ namespace CarRepairGarage.Data.Migrations
                 name: "IX_GaragesServices_GarageId",
                 table: "GaragesServices",
                 column: "GarageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Services_CategoryId",
-                table: "Services",
-                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

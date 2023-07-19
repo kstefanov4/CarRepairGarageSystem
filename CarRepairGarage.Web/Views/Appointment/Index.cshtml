@@ -1,29 +1,24 @@
 ﻿@using CarRepairGarage.Web.ViewModels.Appointment;
 @model CreateAppointmentViewModel
+@inject CarRepairGarage.Services.Contracts.IGarageService garageService;
+
+@{
+    ViewData["Title"] = "Appointment Page";
+
+    var garages = await garageService.GetAllGaragesAsync(int.MaxValue);
+}
 
 <h1>Create Appointment</h1>
 
 <form asp-action="Create" method="post">
     <div class="form-group">
-        <label asp-for="SelectedDateTime">Appointment Date and Time</label>
-        <input asp-for="SelectedDateTime" class="form-control" type="datetime-local" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
-        <span asp-validation-for="SelectedDateTime" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="UserId">User</label>
-        <select asp-for="UserId" class="form-control" required>
-            <option value="">-- Select User --</option>
-            <!-- Render the options for users -->
-        </select>
-        <span asp-validation-for="UserId" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
         <label asp-for="GarageId">Garage</label>
         <select asp-for="GarageId" class="form-control" required>
             <option value="">-- Select Garage --</option>
-            <!-- Render the options for garages -->
+            @foreach (var garage in garages)
+            {
+                <option value="@garage.Id">@garage.Name</option>
+            }
         </select>
         <span asp-validation-for="GarageId" class="text-danger"></span>
     </div>
@@ -37,5 +32,93 @@
         <span asp-validation-for="ServiceId" class="text-danger"></span>
     </div>
 
+    <div class="form-group">
+        <label asp-for="SelectedDate">Appointment Date</label>
+        <input asp-for="SelectedDate" class="form-control" type="date" required />
+        <span asp-validation-for="SelectedDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Select Appointment Time</label>
+        <select asp-for="SelectedTime" class="form-control" id="availableTimes" required>
+            <option value="">Select Time</option>
+        </select>
+        <span asp-validation-for="SelectedTime" class="text-danger"></span>
+    </div>
+
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var selectGarage = document.querySelector('#GarageId');
+            var selectService = document.querySelector('#ServiceId');
+
+            selectGarage.addEventListener('change', function () {
+                var selectedGarageId = this.value;
+
+                loadGarageServices(selectedGarageId);
+            });
+
+            function loadGarageServices(selectedGarageId) {
+                // Make an AJAX request to the controller action
+                $.ajax({
+                    url: '@Url.Action("GetGarageServices", "Appointment")',
+                    type: 'GET',
+                    data: { garageId: selectedGarageId },
+                    success: function (data) {
+                        // Clear existing options
+                        selectService.innerHTML = '<option value="">-- Select Service --</option>';
+
+                        // Populate garage services
+                        for (var i = 0; i < data.length; i++) {
+                            var service = data[i];
+                            var option = document.createElement('option');
+                            option.value = service.Id;
+                            option.text = service.Name;
+                            selectService.appendChild(option);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var selectDate = document.querySelector('#SelectedDate');
+            var selectTime = document.querySelector('#availableTimes');
+            var selectGarage = document.querySelector('#GarageId');
+
+            selectDate.addEventListener('change', function () {
+                var selectedDate = this.value;
+                var selectedGarageId = selectGarage.value; // Get the selected GarageId
+
+                loadAvailableTimes(selectedDate, selectedGarageId);
+            });
+
+            function loadAvailableTimes(selectedDate, selectedGarageId) {
+                // Make an AJAX request to the controller action
+                $.ajax({
+                    url: '@Url.Action("GetAvailableTimes", "Appointment")',
+                    type: 'GET',
+                    data: { selectedDate: selectedDate, garageId: selectedGarageId }, // Pass the selectedGarageId as a parameter
+                    success: function (data) {
+                        // Clear existing options
+                        selectTime.innerHTML = '<option value="">Select Time</option>';
+
+                        // Populate available times
+                        for (var i = 0; i < data.length; i++) {
+                            var time = data[i];
+                            var option = document.createElement('option');
+                            option.value = time;
+                            option.text = time;
+                            selectTime.appendChild(option);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+}

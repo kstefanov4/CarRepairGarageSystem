@@ -51,6 +51,7 @@
         {
             var car = await _repository.GetByIdAsync<Car>(id);
             car.IsDeleted = true;
+            car.DeletedOn = DateTime.Now;
 
             await _repository.SaveChangesAsync();
         }

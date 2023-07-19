@@ -11,8 +11,12 @@ namespace CarRepairGarage.Web.ViewModels.Appointment
     public class CreateAppointmentViewModel
     {
         [Required]
-        [Display(Name = "Appointment Date and Time")]
-        public DateTime SelectedDateTime { get; set; }
+        [Display(Name = "Appointment Date")]
+        public DateTime SelectedDate { get; set; }
+
+        [Required]
+        [Display(Name = "Appointment Time")]
+        public DateTime SelectedTime { get; set; }
 
         [Required]
         [Display(Name = "User")]

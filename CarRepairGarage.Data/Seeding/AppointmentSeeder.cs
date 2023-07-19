@@ -34,12 +34,13 @@ namespace CarRepairGarage.Data.Seeding
 
                 appointments.Add(new Appointment
                 {
-                    DateTime = DateTime.Now.AddDays(15),
+                    Date = DateTime.Now.AddDays(15),
+                    Time = new TimeSpan(10, 0, 0),
                     GarageId = garage.Id,
-                    ServiceId = service.ServiceId,
+                    ServiceId = service!.ServiceId,
                     UserId = userGuid,
                     IsDeleted = false
-                });
+                }); 
             }
 
 
