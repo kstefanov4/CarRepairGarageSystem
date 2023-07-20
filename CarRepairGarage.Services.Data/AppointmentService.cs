@@ -46,6 +46,29 @@ namespace CarRepairGarage.Services
             }
         }
 
+        public async Task Delete(Guid id)
+        {
+            var appointment = await _repository.GetByIdAsync<Appointment>(id.ToString());
+            appointment.IsDeleted = true;
+            appointment.DeletedOn = DateTime.Now;
+
+            try
+            {
+                await _repository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(nameof(Delete), ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }
+        }
+
+        public async Task<bool> Exist(Guid id)
+        {
+            return await _repository.AllReadonly<Appointment>()
+                .AnyAsync(x => x.Id == id.ToString());
+        }
+
         public async Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByUserIdAsync(Guid id)
         {
             var appointments = await _repository.AllReadonly<Appointment>()
@@ -74,6 +97,21 @@ namespace CarRepairGarage.Services
                 .ToListAsync();
             
             return hours;
+        }
+
+        public async Task<AppointmentModel> GetAppointmentByIdAsync(Guid id)
+        {
+            var appointment = await _repository.GetByIdAsync<Appointment>(id.ToString());
+
+            return new AppointmentModel()
+            {
+                GarageId = appointment.GarageId,
+                SelectedDate = appointment.Date.ToString(@"yyyy-MM-dd"),
+                SelectedTime = appointment.Time.ToString(@"hh\:mm"),
+                ServiceId = appointment.ServiceId,
+                UserId = appointment.UserId
+
+            };
         }
     }
 }

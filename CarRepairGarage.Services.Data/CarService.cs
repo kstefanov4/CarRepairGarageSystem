@@ -52,8 +52,16 @@
             var car = await _repository.GetByIdAsync<Car>(id);
             car.IsDeleted = true;
             car.DeletedOn = DateTime.Now;
-
-            await _repository.SaveChangesAsync();
+            
+            try
+            {
+                await _repository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(nameof(Delete), ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }
         }
 
         public async Task Edit(int id, AddCarViewModel model)

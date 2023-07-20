@@ -1,4 +1,5 @@
 ﻿using CarRepairGarage.Data.Models;
+using CarRepairGarage.Services;
 using CarRepairGarage.Services.Contracts;
 using CarRepairGarage.Web.ViewModels.Car;
 using Microsoft.AspNetCore.Authorization;
@@ -135,38 +136,18 @@ namespace CarRepairGarage.Web.Controllers
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
             }
 
-            /*return View(carDetails);*/
-            await _carService.Delete(id);
+            try
+            {
+                await _carService.Delete(id);
+                TempData[SuccessMessage] = $"Your appointment was successfully deleted.";
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
+                return RedirectToAction(nameof(Index));
+            }
 
             return RedirectToAction(nameof(Index));
         }
-
-        /*[HttpPost]
-        public async Task<IActionResult> Remove(int id, AddCarViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await _userManager.GetUserAsync(User);
-            var car = await _carService.GetCarByIdAsync(id);
-
-            if (car == null)
-            {
-                TempData[ErrorMessage] = "Car does not exist!";
-                return View(model);
-            }
-
-            if (car.UserId != user.Id.ToString())
-            {
-                TempData[ErrorMessage] = "You are not the owner of this car. Please contact our support team!";
-                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
-            }
-
-            await _carService.Delete(id);
-
-            return RedirectToAction(nameof(Index));
-        }*/
     }
 }

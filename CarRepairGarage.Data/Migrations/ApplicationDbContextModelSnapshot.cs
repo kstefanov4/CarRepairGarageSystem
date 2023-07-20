@@ -176,8 +176,9 @@ namespace CarRepairGarage.Data.Migrations
 
             modelBuilder.Entity("CarRepairGarage.Data.Models.Appointment", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
                         .HasComment("Primary key");
 
                     b.Property<bool?>("Confirmed")

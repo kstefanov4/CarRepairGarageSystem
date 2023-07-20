@@ -7,7 +7,7 @@
 
 @if (Model.Count() < 1)
 {
-    <p>Your Garege is empty. Please add cars!</p>
+    <p>Your do not have any appointments!</p>
 }
 <div class="container">
     <div class="row">
@@ -20,16 +20,17 @@
                         <p>Service: <b>@appointment.ServiceName</b></p>
                         <p>Date: <b>@appointment.SelectedDate</b></p>
                         <p>Time: <b>@appointment.SelectedTime</b></p>
-                        @if(appointment.IsApproved == null)
+                        @if (appointment.IsApproved == null)
                         {
-                            <p>Status: <b>Pending</b></p>
+                            <p>Status: <b style="color: yellow;">Pending</b></p>
                         }
                         else if (appointment.IsApproved == true)
                         {
-                            <p>Status: <b>Approved</b></p>
-                        }else
+                            <p>Status: <b style="color: green;">Approved</b></p>
+                        }
+                        else
                         {
-                            <p>Status: <b>Rejected</b></p>
+                            <p>Status: <b style="color: red;">Rejected</b></p>
                         }
                         <a asp-controller="Appointment" asp-action="Remove" asp-route-id="@appointment.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove</a>
                     </div>

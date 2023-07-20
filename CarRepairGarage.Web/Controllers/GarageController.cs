@@ -6,14 +6,14 @@
 
     public class GarageController : Controller
     {
-        private readonly IGarageService garageService;
+        private readonly IGarageService _garageService;
         public GarageController(IGarageService garageService)
         {
-            this.garageService = garageService;
+            _garageService = garageService;
         }
         public async Task<IActionResult> Index()
         {
-            var model = await garageService.GetAllGaragesAsync(int.MaxValue);
+            var model = await _garageService.GetAllGaragesAsync(int.MaxValue);
             return View(model);
         }
     }

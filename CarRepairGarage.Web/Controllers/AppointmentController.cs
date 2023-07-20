@@ -46,6 +46,39 @@ namespace CarRepairGarage.Web.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Remove(Guid id)
+        {
+            if ((await _appointmentService.Exist(id)) == false)
+            {
+                TempData[ErrorMessage] = "This appointment does not exist!";
+                return RedirectToAction(nameof(GetAll));
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            var appointment = await _appointmentService.GetAppointmentByIdAsync(id);
+
+
+            if (appointment.UserId != user.Id)
+            {
+                TempData[ErrorMessage] = "You are not the owner of this car. Please contact our support team!";
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }
+            
+            try
+            {
+                await _appointmentService.Delete(id);
+                TempData[SuccessMessage] = $"Your appointment was successfully deleted.";
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
+                return RedirectToAction(nameof(GetAll));
+            }
+            
+
+            return RedirectToAction(nameof(GetAll));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateAppointmentModel model)
         {
@@ -77,7 +110,7 @@ namespace CarRepairGarage.Web.Controllers
 
             List<string> availableTimes = new List<string>()
             {
-                "09:00", "10:00", "11:00"/*, "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"*/
+                "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"
             };
 
             availableTimes.RemoveAll(x => bookedHours.Contains(x));
