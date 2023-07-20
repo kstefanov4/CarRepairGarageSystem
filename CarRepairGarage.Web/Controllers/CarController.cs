@@ -127,13 +127,7 @@ namespace CarRepairGarage.Web.Controllers
 
             var user = await _userManager.GetUserAsync(User);
             var car = await _carService.GetCarByIdAsync(id);
-            /*var carDetails = new AddCarViewModel()
-            {
-                VIN = car.VIN,
-                Make = car.Make,
-                CarModel = car.CarModel,
-                Year = car.Year
-            };*/
+            
 
             if (car.UserId != user.Id.ToString())
             {
