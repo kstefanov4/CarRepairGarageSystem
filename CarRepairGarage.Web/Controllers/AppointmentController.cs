@@ -33,8 +33,21 @@ namespace CarRepairGarage.Web.Controllers
             return View();
         }
 
+        public async Task<IActionResult> GetAll()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return RedirectToPage("/Account/Login");
+            }
+
+            var model = await _appointmentService.GetAllAppointmentsByUserIdAsync(user.Id);
+            return View(model);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAppointmentViewModel model)
+        public async Task<IActionResult> Create(CreateAppointmentModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -58,9 +71,9 @@ namespace CarRepairGarage.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAvailableTimes(DateTime selectedDate, int garageId)
+        public async Task<IActionResult> GetAvailableTimes(DateTime selectedDate, int garageId, int serviceId)
         {
-            List<string> bookedHours = await _appointmentService.GetAllAvailableHours(selectedDate,garageId);
+            List<string> bookedHours = await _appointmentService.GetAllAvailableHours(selectedDate,garageId, serviceId);
 
             List<string> availableTimes = new List<string>()
             {

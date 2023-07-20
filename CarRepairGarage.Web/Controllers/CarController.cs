@@ -9,7 +9,7 @@ using static CarRepairGarage.Common.NotificationsMessagesConstants;
 
 namespace CarRepairGarage.Web.Controllers
 {
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = Common.GeneralApplicationConstants.Roles.UserRole)]
     public class CarController : BaseController
     {
         private readonly ICarService _carService;

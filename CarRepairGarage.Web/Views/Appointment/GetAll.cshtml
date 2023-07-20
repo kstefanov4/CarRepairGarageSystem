@@ -1,0 +1,41 @@
+﻿@using CarRepairGarage.Web.ViewModels.Appointment;
+@model IEnumerable<AppointmentDetailsViewModel>;
+
+@{
+    ViewData["Title"] = "Appointments Page";
+}
+
+@if (Model.Count() < 1)
+{
+    <p>Your Garege is empty. Please add cars!</p>
+}
+<div class="container">
+    <div class="row">
+        @foreach (var appointment in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p>Garage: <b>@appointment.GarageName</b></p>
+                        <p>Service: <b>@appointment.ServiceName</b></p>
+                        <p>Date: <b>@appointment.SelectedDate</b></p>
+                        <p>Time: <b>@appointment.SelectedTime</b></p>
+                        @if(appointment.IsApproved == null)
+                        {
+                            <p>Status: <b>Pending</b></p>
+                        }
+                        else if (appointment.IsApproved == true)
+                        {
+                            <p>Status: <b>Approved</b></p>
+                        }else
+                        {
+                            <p>Status: <b>Rejected</b></p>
+                        }
+                        <a asp-controller="Car" asp-action="Edit" asp-route-id="@appointment.Id" class="btn btn-warning">Edit</a>
+                        <a asp-controller="Car" asp-action="Remove" asp-route-id="@appointment.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

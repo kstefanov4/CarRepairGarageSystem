@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace CarRepairGarage.Web.ViewModels.Appointment
 {
-    public class CreateAppointmentViewModel
+    public class CreateAppointmentModel
     {
         [Required]
         [Display(Name = "Appointment Date")]
@@ -18,10 +18,6 @@ namespace CarRepairGarage.Web.ViewModels.Appointment
         [Display(Name = "Appointment Time")]
         public DateTime SelectedTime { get; set; }
 
-        /*[Required]
-        [Display(Name = "User")]
-        public Guid UserId { get; set; }*/
-
         [Required]
         [Display(Name = "Garage")]
         public int GarageId { get; set; }
@@ -29,7 +25,5 @@ namespace CarRepairGarage.Web.ViewModels.Appointment
         [Required]
         [Display(Name = "Service")]
         public int ServiceId { get; set; }
-
-        //public List<DateTime> AvailableDates { get; set; }
     }
 }

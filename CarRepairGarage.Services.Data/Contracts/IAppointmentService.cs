@@ -10,7 +10,8 @@ namespace CarRepairGarage.Services.Contracts
 {
     public interface IAppointmentService
     {
-        Task<List<string>> GetAllAvailableHours(DateTime dateTime, int garageId);
-        Task CreateAppointmentAsync(CreateAppointmentViewModel model, ApplicationUser user);
+        Task<List<string>> GetAllAvailableHours(DateTime dateTime, int garageId, int serviceId);
+        Task CreateAppointmentAsync(CreateAppointmentModel model, ApplicationUser user);
+        Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByUserIdAsync(Guid id);
     }
 }

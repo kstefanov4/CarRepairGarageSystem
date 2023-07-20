@@ -6,7 +6,34 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
+        <li class="nav-item dropdown">
+            <a class="nav-link text-dark dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello @User.Identity?.Name!</a>
+            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">User Settings</a>
+                @if (User.IsInRole(GeneralApplicationConstants.Roles.UserRole))
+                {
+                    <a class="dropdown-item" asp-area="" asp-controller="Car" asp-action="Index">My Cars</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Car" asp-action="Add">Add Car</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Appointment" asp-action="GetAll">My Appointments</a>
+                }
+                else if (User.IsInRole(GeneralApplicationConstants.Roles.ManagerRole))
+                {
+            
+                    <a class="nav-link text-dark" asp-area="Manager" asp-controller="Garage" asp-action="Index">My Garages</a>
+            
+                }
+                else if (User.IsInRole(GeneralApplicationConstants.Roles.AdminRole))
+                {
+            
+                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Dashboard</a>
+            
+                }
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
+            </div>
+        </li>
+        @*<li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
         </li>
         @if (User.IsInRole(GeneralApplicationConstants.Roles.UserRole))
@@ -29,12 +56,12 @@
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Dashboard</a>
             </li>
-        }
-        <li class="nav-item">
+    }*@
+        @*<li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
             </form>
-        </li>
+        </li>*@
     }
     else
     {

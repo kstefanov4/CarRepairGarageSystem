@@ -1,5 +1,5 @@
 ﻿@using CarRepairGarage.Web.ViewModels.Appointment;
-@model CreateAppointmentViewModel
+@model CreateAppointmentModel
 @inject CarRepairGarage.Services.Contracts.IGarageService garageService;
 
 @{
@@ -39,7 +39,7 @@
     </div>
 
     <div class="form-group">
-        <label>Select Appointment Time</label>
+        <label>Appointment Time</label>
         <select asp-for="SelectedTime" class="form-control" id="availableTimes" required>
             <option value="">Select Time</option>
         </select>
@@ -85,7 +85,7 @@
             }
         });
     </script>
-    <script>
+    @*<script>
         document.addEventListener('DOMContentLoaded', function () {
             var selectDate = document.querySelector('#SelectedDate');
             var selectTime = document.querySelector('#availableTimes');
@@ -120,5 +120,49 @@
                 });
             }
         });
+    </script>*@
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var selectDate = document.querySelector('#SelectedDate');
+            var selectTime = document.querySelector('#availableTimes');
+            var selectGarage = document.querySelector('#GarageId');
+            var selectService = document.querySelector('#ServiceId'); // Use the correct ID for the Service dropdown
+
+            selectDate.addEventListener('change', function () {
+                var selectedDate = this.value;
+                var selectedGarageId = selectGarage.value;
+                var selectedServiceId = selectService.value; // Use the correct ID for the Service dropdown
+
+                loadAvailableTimes(selectedDate, selectedGarageId, selectedServiceId);
+            });
+
+            function loadAvailableTimes(selectedDate, selectedGarageId, selectedServiceId) {
+                // Make an AJAX request to the controller action
+                $.ajax({
+                    url: '@Url.Action("GetAvailableTimes", "Appointment")',
+                    type: 'GET',
+                    data: {
+                        selectedDate: selectedDate,
+                        garageId: selectedGarageId,
+                        serviceId: selectedServiceId // Replace GarageServiceId with ServiceId
+                    },
+                    success: function (data) {
+                        // Clear existing options
+                        selectTime.innerHTML = '<option value="">Select Time</option>';
+
+                        // Populate available times
+                        for (var i = 0; i < data.length; i++) {
+                            var time = data[i];
+                            var option = document.createElement('option');
+                            option.value = time;
+                            option.text = time;
+                            selectTime.appendChild(option);
+                        }
+                    }
+                });
+            }
+        });
     </script>
+
+
 }
