@@ -11,15 +11,23 @@
 
     public class CategoryService : ICategoryService
     {
-        private readonly IRepository repository;
+        private readonly IRepository _repository;
 
         public CategoryService(IRepository repository)
         {
-            this.repository = repository;
+            this._repository = repository;
         }
+
+        public async Task<IEnumerable<string>> AllCategoriesNameAsync()
+        {
+            return await _repository.AllReadonly<Category>()
+                .Select(c => c.Name)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<CategoryViewModel>> GetAllCategoryAsync()
         {
-            var model = await this.repository.AllReadonly<Category>()
+            var model = await this._repository.AllReadonly<Category>()
                 .Where(x => x.IsDeleted == false)
                 .Include(x => x.Garages)
                 .Select(x => new CategoryViewModel

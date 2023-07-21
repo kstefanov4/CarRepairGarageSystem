@@ -5,5 +5,6 @@
     public interface ICategoryService
     {
         Task<IEnumerable<CategoryViewModel>> GetAllCategoryAsync();
+        Task<IEnumerable<string>> AllCategoriesNameAsync();
     }
 }

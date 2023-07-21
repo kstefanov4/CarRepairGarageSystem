@@ -2,12 +2,12 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     
     using Microsoft.EntityFrameworkCore;
 
     using CarRepairGarage.Common;
     using CarRepairGarage.Data.Common.Models;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     [Comment("Repair Garage")]
     public class Garage : BaseDeletableModel

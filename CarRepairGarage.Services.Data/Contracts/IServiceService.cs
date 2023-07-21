@@ -5,5 +5,6 @@
     public interface IServiceService
     {
         Task<List<ServiceViewModel>> GetAllServiceAsync();
+        Task<IEnumerable<string>> AllServicesNameAsync();
     }
 }

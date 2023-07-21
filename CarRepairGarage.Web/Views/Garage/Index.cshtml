@@ -1,52 +1,120 @@
 ﻿@using CarRepairGarage.Web.ViewModels.Garage;
-@model IEnumerable<GarageViewModel>
+
+@model AllGaragesQueryModel
 
 @{
-    ViewData["Title"] = "Garage Page";
+    ViewBag.Title = "All Garages";
 }
-
-<div class="container">
-    @for (int i = 0; i < Model.Count(); i += 2)
-    {
-        <div class="row">
-            <div class="col">
-                <!-- Render the first object -->
-                @if (i < Model.Count())
-                {
-                    <div class="col-4">
-                        <img class="card-img-top" style="width: 20rem;"
-                             src="@Model.ElementAt(i).ImageUrl" alt="House Image">
-                    </div>
-                    <p style="font-size:25px;"><a asp-controller="Garage" asp-action="Detail" asp-route-id="@Model.ElementAt(i).Id">@Model.ElementAt(i).Name</a></p>
-                    <p>Located in:  @Model.ElementAt(i).City</p>
-                    <p>Services:</p>
-                    <div class="form-inline">
-                        @foreach (var service in Model.ElementAt(i).Services)
-                        {
-                            <p>* @service</p>
-                        }
-                    </div>
-                }
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="Category"></label>
+                <select asp-for="Category" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category">@category</option>
+                    }
+                </select>
             </div>
-            @if (i + 1 < Model.Count())
-            {
-                <div class="col">
-                    <!-- Render the second object -->
-                    <div class="col-4">
-                        <img class="card-img-top" style="width: 20rem;"
-                             src="@Model.ElementAt(i + 1).ImageUrl" alt="House Image">
-                    </div>
-                    <p style="font-size:25px;"><a asp-controller="Garage" asp-action="Detail" asp-route-id="@Model.ElementAt(i + 1).Id">@Model.ElementAt(i + 1).Name</a></p>
-                    <p>Located in:  @Model.ElementAt(i + 1).City</p>
-                    <p>Services:</p>
-                    <div class="form-inline">
-                        @foreach (var service in Model.ElementAt(i + 1).Services)
-                        {
-                            <p>* @service</p>
-                        }
-                    </div>
+        </div>
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="Service"></label>
+                <select asp-for="Service" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var service in Model.Services)
+                    {
+                        <option value="@service">@service</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="SearchByString"></label>
+            <input asp-for="SearchByString" class="form-control" placeholder="...">
+        </div>
+        <div class="form-group col-md-3">
+            <div class="form-group">
+                <label asp-for="GarageSorting"></label>
+                <select asp-for="GarageSorting" class="form-control">
+                    <option value="0">Newest</option>
+                    <option value="1">Oldest</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+@{
+    var previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+    var maxPage = Math.Ceiling((double)Model.TotalGarages /
+    Model.GaragesPerPage);
+
+}
+<div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" :
+        string.Empty)"
+           asp-controller="Garage"
+           asp-action="Index"
+           asp-route-currentPage="@previousPage"
+           asp-route-category="@Model.Category"
+           asp-route-service="@Model.Service"
+           asp-route-searchTerm="@Model.SearchByString"
+           asp-route-sorting="@((int)Model.GarageSorting)"><<</a>
+    </div>
+    @{
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
+        !Model.Garages.Any();
+    }
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary
+         @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="Garage"
+           asp-action="Index"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-category="@Model.Category"
+           asp-route-service="@Model.Service"
+           asp-route-searchTerm="@Model.SearchByString"
+           asp-route-sorting="@((int)Model.GarageSorting)">>></a>
+    </div>
+</div>
+
+@if (!Model.Garages.Any())
+{
+    <h2 class="text-center">No houses found by the given criteria!</h2>
+}
+<div class="row">
+    @foreach (var garage in Model.Garages)
+    {
+        @*<partial name="_HousePartial" model="@house" />*@
+
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="@garage.ImageUrl" alt="House Image">
+                <div class="card-body text-center">
+                    <h4>@garage.Name</h4>
+                    
+                    <h6>Address: <b>@garage.City</b></h6>
+              
+                    <br />
+                    <a asp-controller="Garage" asp-action="Details" asp-route-id="@garage.Id"
+                       class="btn btn-success">Details</a>
                 </div>
-            }
+            </div>
         </div>
     }
 </div>
+

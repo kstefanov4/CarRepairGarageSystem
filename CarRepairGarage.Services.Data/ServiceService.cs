@@ -14,15 +14,23 @@ namespace CarRepairGarage.Services
 {
     public class ServiceService : IServiceService
     {
-        protected readonly IRepository repository;
+        protected readonly IRepository _repository;
 
         public ServiceService(IRepository repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
+
+        public async Task<IEnumerable<string>> AllServicesNameAsync()
+        {
+            return await _repository.AllReadonly<Service>()
+                .Select(x => x.Name)
+                .ToListAsync();
+        }
+
         public async Task<List<ServiceViewModel>> GetAllServiceAsync()
         {
-            var services = await repository.AllReadonly<Service>()
+            var services = await _repository.AllReadonly<Service>()
                                     .Where(x => x.IsDeleted == false)
                                     .Include(x => x.Garages)
                                     .Select(x => new ServiceViewModel

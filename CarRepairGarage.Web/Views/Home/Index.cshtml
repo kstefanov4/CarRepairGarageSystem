@@ -14,30 +14,22 @@
     </p>
 </div>
 
-@foreach (var garage in Model)
-{
-    <div class="container" style="display:inline">
-        <div class="row">
-            <div class="col-4">
-                <img class="card-img-top" style="width: 20rem;"
-                     src="@garage.ImageUrl" alt="House Image">
-            </div>
-            <div class="card col-8 border-0">
-                <p style="font-size:25px;"><u>@garage.Name</u></p>
+<div class="row">
+    @foreach (var garage in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img class="card-img-top" src="@garage.ImageUrl" alt="House Image">
+                <div class="card-body text-center">
+                    <h4>@garage.Name</h4>
 
-                <p>Located in: <b>@garage.City</b></p>
+                    <h6>Address: <b>@garage.City</b></h6>
 
-                <p>Category:<b>@garage.Category</b></p>
-                <p>Services:</p>
-                <div class="form-inline">
-                    @foreach (var service in garage.Services)
-                    {
-                        <p>--@service</p>
-                    }
+                    <br />
+                    <a asp-controller="Garage" asp-action="Details" asp-route-id="@garage.Id"
+                       class="btn btn-success">Details</a>
                 </div>
             </div>
-
         </div>
-    </div>
-}
-
+    }
+</div>
