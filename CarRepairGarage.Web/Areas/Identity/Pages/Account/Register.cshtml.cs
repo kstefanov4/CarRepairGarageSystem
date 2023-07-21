@@ -18,6 +18,7 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
     using static CarRepairGarage.Common.NotificationsMessagesConstants;
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Common;
+    using System.Security.Claims;
 
     [AllowAnonymous]
     public class RegisterModel : PageModel
@@ -67,6 +68,16 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Role")]
             public bool IsManager { get; set; }
+
+            [Required]
+            [Display(Name = "First Name")]
+            [StringLength(50,MinimumLength = 2)]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            [StringLength(50, MinimumLength = 2)]
+            public string LastName { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -85,7 +96,10 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
-                { 
+                {
+                    await _userManager.AddClaimAsync(user, new Claim("FirstName", Input.FirstName));
+                    await _userManager.AddClaimAsync(user, new Claim("LastName", Input.LastName));
+
                     if (Input.IsManager)
                     {
                         await _userManager.AddToRoleAsync(user, GeneralApplicationConstants.Roles.ManagerRole);
@@ -94,7 +108,7 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, GeneralApplicationConstants.Roles.UserRole);
                     }
-                    TempData[SuccessMessage] = $"Success registration! Welcome on board {user.UserName}!";
+                    TempData[SuccessMessage] = $"Success registration! Welcome on board {Input.FirstName} {Input.LastName}!";
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -33,7 +33,7 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            TempData[InformationMessage] = $"User {_signInManager.Context.User.Identity.Name} logged out.";
+            TempData[InformationMessage] = $"User {_signInManager.Context.User.Claims.First(c => c.Type == "FirstName").Value} {_signInManager.Context.User.Claims.First(c => c.Type == "LastName").Value} logged out.";
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

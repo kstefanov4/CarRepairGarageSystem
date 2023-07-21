@@ -9,6 +9,7 @@
 
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Seeding.Contracts;
+    using System.Security.Claims;
 
     public class AccountSeeder : ISeeder
     {
@@ -33,6 +34,14 @@
                 "user@mail.com",
                 "User");
 
+            await CreateUser(
+                dbContext,
+                userManager,
+                roleManager,
+                "user2@mail.com",
+                "User",
+                "User2",
+                "Userov");
         }
 
         private static async Task CreateUser(
@@ -40,7 +49,9 @@
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             string email,
-            string roleName = null)
+            string roleName = null,
+            string firstName = null,
+            string lastName = null)
         {
 
             var user = new ApplicationUser
@@ -65,6 +76,12 @@
                     if (result.Succeeded)
                     {
                         await userManager.AddToRoleAsync(user, roleName);
+
+                        if (firstName != null || lastName != null)
+                        {
+                            await userManager.AddClaimAsync(user, new Claim("FirstName", firstName!));
+                            await userManager.AddClaimAsync(user, new Claim("LastName", lastName));
+                        }
                     }
 
                 }

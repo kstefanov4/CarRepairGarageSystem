@@ -87,8 +87,25 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
                 
                 if (result.Succeeded)
                 {
+                    var user = _userManager.FindByNameAsync(Input.Email);
+                    string firstName = string.Empty; string lastName = string.Empty;
+
+                    if (user != null)
+                    {
+                        var claims = await _userManager.GetClaimsAsync(await user);
+
+                        var firstNameClaim = claims.FirstOrDefault(c => c.Type == "FirstName");
+                        var lastNameClaim = claims.FirstOrDefault(c => c.Type == "LastName");
+
+                        if (firstNameClaim != null && lastNameClaim != null)
+                        {
+                            firstName = firstNameClaim.Value;
+                            lastName = lastNameClaim.Value;
+
+                        }
+                    }
                     _logger.LogInformation("User logged in.");
-                    TempData[SuccessMessage] = $"User {Input.Email} logged in.";
+                    TempData[SuccessMessage] = $"User {firstName} {lastName} logged in.";
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

@@ -1,5 +1,6 @@
 ﻿@using CarRepairGarage.Data.Models;
 @using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -7,7 +8,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item dropdown">
-            <a class="nav-link text-dark dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello @User.Identity?.Name!</a>
+            <a class="nav-link text-dark dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello @User.FindFirstValue("FirstName") @User.FindFirstValue("LastName")!</a>
             <div class="dropdown-menu" aria-labelledby="userDropdown">
                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">User Settings</a>
                 @if (User.IsInRole(GeneralApplicationConstants.Roles.UserRole))
