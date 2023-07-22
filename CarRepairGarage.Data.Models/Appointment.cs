@@ -49,8 +49,6 @@
         [ForeignKey(nameof(ServiceId))]
         public virtual Service Service { get; set; } = null!;
 
-        //public virtual GarageService GarageService { get; set; } = null!;
-
         [Comment("Is appointment confirmed")]
         public bool? Confirmed { get; set; }
 

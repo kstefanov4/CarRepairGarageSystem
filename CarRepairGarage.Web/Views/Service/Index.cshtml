@@ -5,17 +5,13 @@
     ViewData["Title"] = "Service Page";
 }
 
-<h1>Services</h1>
-
 <div class="row">
     @foreach (var service in Model)
     {
         <div class="col-md-4">
             <h4>@service.Name</h4>
-            @foreach (var garage in @service.Garages)
-            {
-                <p>@garage.Name</p>
-            }
+            <a asp-controller="Garage" asp-action="ByCategory" asp-route-id="@service.Id"
+               class="btn btn-success">Find Garage</a>
         </div>
     }
 </div>

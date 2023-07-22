@@ -1,0 +1,71 @@
+﻿@using CarRepairGarage.Web.ViewModels.Garage;
+@model GarageViewModel
+
+@{
+    ViewData["Title"] = "Garage Details Page";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-4 d-inline-block">
+            <img class="card-img-top" style="width: 20rem;" src="@Model.ImageUrl" alt="House Image">
+        </div>
+        
+        <div class="col-8 d-inline-block">
+            <div class="card border-0">
+                <p style="font-size: 25px;"><u>@Model.Name</u></p>
+                <p>Category: <b>@Model.Category</b></p>
+                <p>City: <b>@Model.City</b></p>
+                <p>Address: <b>@Model.StreetName</b> <b>@Model.StreetNumber</b></p>
+                <p>Services:</p>
+                <div class="form-inline">
+                    @foreach (var service in @Model.Services)
+                    {
+                        <p>-- @service</p>
+                    }
+                </div>
+                <a style="width: 20rem;" asp-controller="Appointment" asp-action="Index" asp-route-id="@Model.Id"
+                   class="btn btn-success">Reserve</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="map" style="height: 400px; width: 100%; margin-top: 15px">
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: @Model.Latitude, lng: @Model.Longitude },
+                zoom: 12
+            });
+
+            var coordinates = { lat: 42.5187, lng: 27.4496 }; // Replace with your desired coordinates
+
+            var marker = new google.maps.Marker({
+                position: coordinates,
+                map: map
+            });
+        }
+    </script>
+</div>
+
+@*
+<div class="col-md-4">
+    <div class="card mb-3">
+        <img class="card-img-top" src="@Model.ImageUrl" alt="House Image">
+        <div class="card-body text-center">
+            <h4>@Model.Name</h4>
+            <h5>@Model.Category</h5>
+
+            <h6>City: <b>@Model.City</b></h6>
+            <h6>Address: <b>@Model.StreetName</b></h6>
+
+            @foreach (var service in @Model.Services)
+            {
+                <p>@service</p>
+            }
+            <br />
+            <a asp-controller="Appointment" asp-action="Index" asp-route-id="@Model.Id"
+               class="btn btn-success">Reserve</a>
+        </div>
+    </div>
+</div>*@

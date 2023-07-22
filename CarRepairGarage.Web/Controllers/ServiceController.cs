@@ -16,7 +16,7 @@ namespace CarRepairGarage.Web.Controllers
         {
             var services = await serviceService.GetAllServiceAsync();
 
-            int pageSize = 3;
+            int pageSize = 6;
             int totalServices = services.Count;
             int totalPages = (int)Math.Ceiling(totalServices / (double)pageSize);
 

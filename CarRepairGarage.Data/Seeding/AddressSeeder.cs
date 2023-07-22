@@ -38,7 +38,7 @@
                 new Address
                 {
                     CityId = 4,
-                    StreetName = "ul. Kraimorska",
+                    StreetName = "ul. Trakia",
                     StreetNumber = 4,
                     IsDeleted = false
                 }

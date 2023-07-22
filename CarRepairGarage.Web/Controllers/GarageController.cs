@@ -18,7 +18,7 @@
             _categoryService = categoryService;
             _serviceService = serviceService;
         }
-        public async Task<IActionResult> Index([FromQuery]AllGaragesQueryModel queryModel)
+        public async Task<IActionResult> Index([FromQuery] AllGaragesQueryModel queryModel)
         {
             AllGaragesFilteredAndPagedServiceModel serviceModel = await _garageService.AllAsync(queryModel);
 
@@ -27,8 +27,30 @@
             queryModel.Categories = await _categoryService.AllCategoriesNameAsync();
             queryModel.Services = await _serviceService.AllServicesNameAsync();
 
-            /*var model = await _garageService.GetAllGaragesAsync(int.MaxValue);*/
             return View(queryModel);
+        }
+        public async Task<IActionResult> ByCategory(int id)
+        {
+            string category = await _categoryService.GetCategoryByIdAsync(id);
+
+            var queryString = new Dictionary<string, string>
+            {
+                { "currentPage", "1" }, // Set the default value for currentPage
+                { "category", category },
+                { "sorting", "0" } // Set the default value for sorting
+            };
+
+            string url = Url.Action("Index", "Garage", queryString)!;
+            return Redirect(url);
+
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            GarageViewModel model = await _garageService.GetGarageByIdAsync(id);
+            return View(model);
         }
     }
 }

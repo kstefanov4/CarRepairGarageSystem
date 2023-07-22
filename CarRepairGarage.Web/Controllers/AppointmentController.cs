@@ -121,7 +121,7 @@ namespace CarRepairGarage.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(GetAll));
         }
 
         [HttpGet]

@@ -25,6 +25,10 @@
         [Comment("Service name")]
         public string Name { get; set; } = null!;
 
+        [MaxLength(250)]
+        [Comment("Service Description")]
+        public string? Description { get; set; }
+
         public virtual ICollection<GarageService> Garages { get; set; }
 
         public virtual ICollection<Appointment> Appointments { get; set; }

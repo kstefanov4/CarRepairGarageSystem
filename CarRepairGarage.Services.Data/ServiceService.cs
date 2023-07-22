@@ -37,6 +37,7 @@ namespace CarRepairGarage.Services
                                     {
                                         Id = x.Id,
                                         Name = x.Name,
+                                        Description = x.Description,
                                         Garages = x.Garages.Select(g => new GarageViewModel
                                         {
                                             Id = g.Garage.Id,

@@ -45,5 +45,13 @@
 
             return model;
         }
+
+        public async Task<string> GetCategoryByIdAsync(int id)
+        {
+            return await _repository.AllReadonly<Category>()
+                .Where(x => x.Id == id && x.IsDeleted == false)
+                .Select(x => x.Name)
+                .FirstAsync();
+        }
     }
 }

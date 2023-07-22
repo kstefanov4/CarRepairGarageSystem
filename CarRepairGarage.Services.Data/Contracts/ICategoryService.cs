@@ -6,5 +6,6 @@
     {
         Task<IEnumerable<CategoryViewModel>> GetAllCategoryAsync();
         Task<IEnumerable<string>> AllCategoriesNameAsync();
+        Task<string> GetCategoryByIdAsync(int id);
     }
 }

@@ -16,12 +16,9 @@
                 <p style="font-size:25px;"><u>@category.Name</u></p>
 
                 <p>Description:<b>@category.Description</b></p>
-                <p>Garages:</p>
                 <div class="form-inline">
-                    @foreach (var garage in category.Garages)
-                    {
-                        <p><a asp-controller="Garage" asp-action="Detail" asp-route-id="@garage.Id">@garage.Name</a></p>
-                    }
+                    <a asp-controller="Garage" asp-action="ByCategory" asp-route-id="@category.Id"
+                       class="btn btn-success">Find Garage</a>
                 </div>
             </div>
 

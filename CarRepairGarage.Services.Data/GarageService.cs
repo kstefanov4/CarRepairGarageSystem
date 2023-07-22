@@ -118,5 +118,28 @@
 
             return services;
         }
+
+        public async Task<GarageViewModel> GetGarageByIdAsync(int id)
+        {
+            GarageViewModel? garage = await _repository.AllReadonly<Garage>()
+                .Where(x => x.Id == id && x.IsDeleted == false)
+                .Select(g => new GarageViewModel()
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    ImageUrl = g.ImageUrl,
+                    City = g.Address.City.Name,
+                    StreetName = g.Address.StreetName,
+                    StreetNumber = g.Address.StreetNumber.ToString(),
+                    Services = g.Services.Select(s => s.Service.Name).ToList(),
+                    Category = g.Category.Name,
+                    Latitude = g.Address.Latitude,
+                    Longitude = g.Address.Longitude
+
+                })
+                .FirstOrDefaultAsync();
+
+            return garage!;
+        }
     }
 }

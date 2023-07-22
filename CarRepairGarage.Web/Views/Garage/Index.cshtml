@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "All Garages";
 }
-<h2 class="text-center">@ViewBag.Title</h2>
+
 <hr />
 <form method="get">
     <div class="row">
@@ -107,11 +107,13 @@
                 <div class="card-body text-center">
                     <h4>@garage.Name</h4>
                     
-                    <h6>Address: <b>@garage.City</b></h6>
+                    <h6>City: <b>@garage.City</b></h6>
               
                     <br />
                     <a asp-controller="Garage" asp-action="Details" asp-route-id="@garage.Id"
                        class="btn btn-success">Details</a>
+                    <a asp-controller="Appointment" asp-action="Index" asp-route-id="@garage.Id"
+                       class="btn btn-success">Reserve</a>
                 </div>
             </div>
         </div>
