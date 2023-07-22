@@ -48,12 +48,11 @@ namespace CarRepairGarage.Services
 
         public async Task Delete(Guid id)
         {
-            var appointment = await _repository.GetByIdAsync<Appointment>(id.ToString());
-            appointment.IsDeleted = true;
-            appointment.DeletedOn = DateTime.Now;
+            //TODO check if the user is the owner
 
             try
             {
+                await _repository.DeleteAsync<Appointment>(id.ToString());
                 await _repository.SaveChangesAsync();
             }
             catch (Exception ex)

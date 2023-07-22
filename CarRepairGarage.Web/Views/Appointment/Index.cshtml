@@ -56,11 +56,14 @@
             var selectGarage = document.querySelector('#GarageId');
             var selectService = document.querySelector('#ServiceId');
 
-            selectGarage.addEventListener('change', function () {
-                var selectedGarageId = this.value;
-
-                loadGarageServices(selectedGarageId);
-            });
+            if (selectGarage.value > 0) {
+                loadGarageServices(selectGarage.value);
+            } else {
+                selectGarage.addEventListener('change', function () {
+                    var selectedGarageId = this.value;
+                    loadGarageServices(selectedGarageId);
+                });
+            }
 
             function loadGarageServices(selectedGarageId) {
                 // Make an AJAX request to the controller action
@@ -85,6 +88,7 @@
             }
         });
     </script>
+
     @*<script>
         document.addEventListener('DOMContentLoaded', function () {
             var selectDate = document.querySelector('#SelectedDate');

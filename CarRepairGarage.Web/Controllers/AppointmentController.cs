@@ -28,9 +28,30 @@ namespace CarRepairGarage.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int id = 0)
         {
-            return View();
+            if (id == 0 )
+            {
+                return View();
+
+            }
+
+            CreateAppointmentModel model = new CreateAppointmentModel()
+            {
+                GarageId = id,
+                SelectedDate = DateTime.Now,
+            };
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Reserve(int Id)
+        {
+            CreateAppointmentModel model = new CreateAppointmentModel()
+            {
+                GarageId = Id
+            };
+            return View(model);
         }
 
         public async Task<IActionResult> GetAll()
