@@ -47,6 +47,7 @@ namespace CarRepairGarage.Web
             builder.Services.AddScoped<IServiceService, ServiceService>();
             builder.Services.AddScoped<ICarService, CarService>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+            builder.Services.AddScoped<ICityService, CityService>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

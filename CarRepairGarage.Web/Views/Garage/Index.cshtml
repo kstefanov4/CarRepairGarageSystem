@@ -33,11 +33,25 @@
                 </select>
             </div>
         </div>
-        <div class="form-group col-md-3">
-            <label asp-for="SearchByString"></label>
-            <input asp-for="SearchByString" class="form-control" placeholder="...">
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="City"></label>
+                <select asp-for="City" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var city in Model.Cities)
+                    {
+                        <option value="@city">@city</option>
+                    }
+                </select>
+            </div>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="SearchByString"></label>
+                <input asp-for="SearchByString" class="form-control" placeholder="...">
+            </div>
+        </div>
+        <div class="form-group col-md-3 d-flex justify-content-between">
             <div class="form-group">
                 <label asp-for="GarageSorting"></label>
                 <select asp-for="GarageSorting" class="form-control">
@@ -72,6 +86,7 @@
            asp-route-currentPage="@previousPage"
            asp-route-category="@Model.Category"
            asp-route-service="@Model.Service"
+           asp-route-city="@Model.City"
            asp-route-searchTerm="@Model.SearchByString"
            asp-route-sorting="@((int)Model.GarageSorting)"><<</a>
     </div>
@@ -87,6 +102,7 @@
            asp-route-currentPage="@(Model.CurrentPage + 1)"
            asp-route-category="@Model.Category"
            asp-route-service="@Model.Service"
+           asp-route-city="@Model.City"
            asp-route-searchTerm="@Model.SearchByString"
            asp-route-sorting="@((int)Model.GarageSorting)">>></a>
     </div>
@@ -106,9 +122,9 @@
                 <img class="card-img-top" src="@garage.ImageUrl" alt="House Image">
                 <div class="card-body text-center">
                     <h4>@garage.Name</h4>
-                    
+
                     <h6>City: <b>@garage.City</b></h6>
-              
+
                     <br />
                     <a asp-controller="Garage" asp-action="Details" asp-route-id="@garage.Id"
                        class="btn btn-success">Details</a>

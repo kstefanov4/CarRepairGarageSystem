@@ -9,14 +9,17 @@
         private readonly IGarageService _garageService;
         private readonly ICategoryService _categoryService;
         private readonly IServiceService _serviceService;
+        private readonly ICityService _cityService;
         public GarageController(
             IGarageService garageService,
             ICategoryService categoryService,
-            IServiceService serviceService)
+            IServiceService serviceService,
+            ICityService cityService)
         {
             _garageService = garageService;
             _categoryService = categoryService;
             _serviceService = serviceService;
+            _cityService = cityService;
         }
         public async Task<IActionResult> Index([FromQuery] AllGaragesQueryModel queryModel)
         {
@@ -26,6 +29,7 @@
             queryModel.TotalGarages = queryModel.TotalGarages;
             queryModel.Categories = await _categoryService.AllCategoriesNameAsync();
             queryModel.Services = await _serviceService.AllServicesNameAsync();
+            queryModel.Cities = await _cityService.AllCitiesNameAsync();
 
             return View(queryModel);
         }
@@ -45,6 +49,21 @@
 
         }
 
+        public async Task<IActionResult> ByService(int id)
+        {
+            string service = await _serviceService.GetServiceByIdAsync(id);
+
+            var queryString = new Dictionary<string, string>
+            {
+                { "currentPage", "1" }, // Set the default value for currentPage
+                { "service", service },
+                { "sorting", "0" } // Set the default value for sorting
+            };
+
+            string url = Url.Action("Index", "Garage", queryString)!;
+            return Redirect(url);
+
+        }
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)

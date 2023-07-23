@@ -46,5 +46,13 @@ namespace CarRepairGarage.Services
                                     }).ToListAsync();
             return services;
         }
+
+        public async Task<string> GetServiceByIdAsync(int id)
+        {
+            return await _repository.AllReadonly<Service>()
+                .Where(x => x.Id == id && x.IsDeleted == false)
+                .Select(x => x.Name)
+                .FirstAsync();
+        }
     }
 }

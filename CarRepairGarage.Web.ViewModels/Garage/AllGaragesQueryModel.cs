@@ -17,12 +17,14 @@ namespace CarRepairGarage.Web.ViewModels.Garage
 
             this.Categories = new HashSet<string>();
             this.Services = new HashSet<string>();
+            this.Cities = new HashSet<string>();
             this.Garages = new HashSet<GarageViewModel>();
         }
         public string? Category { get; set; }
         public string? Service { get; set; }
+        public string? City { get; set; }
 
-        [Display(Name = "Search by word")]
+        [Display(Name = "Search")]
         public string? SearchByString { get; set; }
 
         [Display(Name = "Sort By")]
@@ -32,6 +34,7 @@ namespace CarRepairGarage.Web.ViewModels.Garage
         public int TotalGarages { get; set; }
         public IEnumerable<string> Categories { get; set; } = null!;
         public IEnumerable<string> Services { get; set; } = null!;
+        public IEnumerable<string> Cities { get; set; } = null!;
         public IEnumerable<GarageViewModel> Garages { get; set; } = null!;
     }
 }

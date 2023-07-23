@@ -9,9 +9,14 @@
     @foreach (var service in Model)
     {
         <div class="col-md-4">
-            <h4>@service.Name</h4>
-            <a asp-controller="Garage" asp-action="ByCategory" asp-route-id="@service.Id"
-               class="btn btn-success">Find Garage</a>
+            <p style="font-size:25px;"><u>@service.Name</u></p>
+
+            <p>Description:<b>@service.Description</b></p>
+            <div class="form-inline">
+                <a asp-controller="Garage" asp-action="ByService" asp-route-id="@service.Id"
+                   class="btn btn-success">Find Garage</a>
+            </div>
+
         </div>
     }
 </div>

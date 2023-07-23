@@ -31,6 +31,11 @@
                 garagesQuery = garagesQuery.Where(x => x.Services.Any(g => g.Service.Name == queryModel.Service));
             }
 
+            if (!string.IsNullOrWhiteSpace(queryModel.City))
+            {
+                garagesQuery = garagesQuery.Where(x => x.Address.City.Name == queryModel.City);
+            }
+
             if (!string.IsNullOrEmpty(queryModel.SearchByString))
             {
                 string wildCard = $"%{queryModel.SearchByString.ToLower()}%";

@@ -6,5 +6,6 @@
     {
         Task<List<ServiceViewModel>> GetAllServiceAsync();
         Task<IEnumerable<string>> AllServicesNameAsync();
+        Task<string> GetServiceByIdAsync(int id);
     }
 }
