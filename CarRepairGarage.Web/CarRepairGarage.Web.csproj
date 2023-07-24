@@ -53,8 +53,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Areas\Manager\Views\Dashboard\All.cshtml" />
-    <None Include="Areas\Manager\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\Dashboard\All.cshtml" />
+    <Content Include="Areas\Manager\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\_ViewStart.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
