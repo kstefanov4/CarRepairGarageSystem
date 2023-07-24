@@ -1,0 +1,37 @@
+﻿@using CarRepairGarage.Web.ViewModels.Garage;
+@model IEnumerable<GarageViewModel>
+
+@{
+    ViewData["Title"] = "Garage Details Page";
+}
+@foreach (var garage in @Model)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-4 d-inline-block">
+                <img class="card-img-top" style="width: 20rem;" src="@garage.ImageUrl" alt="House Image">
+            </div>
+
+            <div class="col-8 d-inline-block">
+                <div class="card border-0">
+                    <p style="font-size: 25px;"><u>@garage.Name</u></p>
+                    <p>Category: <b>@garage.Category</b></p>
+                    <p>City: <b>@garage.City</b></p>
+                    <p>Street Name: <b>@garage.StreetName</b></p>
+                    <p>Street Number: <b>@garage.StreetNumber</b></p>
+                    <p>Latitude: <b>@garage.Latitude</b></p>
+                    <p>Longitude: <b>@garage.Longitude</b></p>
+                    <p>Services:</p>
+                    <div class="form-inline">
+                        @foreach (var service in @garage.Services)
+                        {
+                            <p>-- @service</p>
+                        }
+                    </div>
+                    <a style="width: 20rem;" asp-area="Manager" asp-controller="Garage" asp-action="Modify" asp-route-id="@garage.Id"
+                       class="btn btn-success">Modify</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

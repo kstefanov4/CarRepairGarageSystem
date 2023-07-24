@@ -1,7 +1,9 @@
 ﻿namespace CarRepairGarage.Web.Controllers
 {
+    using CarRepairGarage.Data.Models;
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Garage;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class GarageController : Controller
@@ -10,16 +12,19 @@
         private readonly ICategoryService _categoryService;
         private readonly IServiceService _serviceService;
         private readonly ICityService _cityService;
+        private readonly UserManager<ApplicationUser> _userManager;
         public GarageController(
             IGarageService garageService,
             ICategoryService categoryService,
             IServiceService serviceService,
-            ICityService cityService)
+            ICityService cityService,
+            UserManager<ApplicationUser> userManager)
         {
             _garageService = garageService;
             _categoryService = categoryService;
             _serviceService = serviceService;
             _cityService = cityService;
+            _userManager = userManager;
         }
         public async Task<IActionResult> Index([FromQuery] AllGaragesQueryModel queryModel)
         {
@@ -32,6 +37,13 @@
             queryModel.Cities = await _cityService.AllCitiesNameAsync();
 
             return View(queryModel);
+        }
+
+        public async Task<IActionResult> AllByOwner()
+        {
+            string userId = _userManager.GetUserId(User);
+            var model = await _garageService.GetAllGaragesByOwnerAsync(userId);
+            return View(model);
         }
         public async Task<IActionResult> ByCategory(int id)
         {

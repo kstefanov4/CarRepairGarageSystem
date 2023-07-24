@@ -13,15 +13,16 @@
                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">User Settings</a>
                 @if (User.IsInRole(GeneralApplicationConstants.Roles.UserRole))
                 {
-                    <a class="dropdown-item" asp-area="" asp-controller="Car" asp-action="Index">My Cars</a>
-                    <a class="dropdown-item" asp-area="" asp-controller="Car" asp-action="Add">Add Car</a>
-                    <a class="dropdown-item" asp-area="" asp-controller="Appointment" asp-action="GetAll">My Appointments</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="Index">My Cars</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Car" asp-action="Add">Add Car</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="GetAll">My Appointments</a>
                 }
                 else if (User.IsInRole(GeneralApplicationConstants.Roles.ManagerRole))
                 {
-            
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Garage" asp-action="Index">My Garages</a>
-            
+
+                    <a class="nav-link text-dark" asp-area="Test" asp-controller="Dashboard" asp-action="All">My Garages</a>
+                    <a class="nav-link text-dark" asp-area="Manager" asp-controller="Dashboard" asp-action="Index">Add Garage</a>
+                    <a class="nav-link text-dark" asp-area="Manager" asp-controller="Appointment" asp-action="All">Appointments</a>
                 }
                 else if (User.IsInRole(GeneralApplicationConstants.Roles.AdminRole))
                 {

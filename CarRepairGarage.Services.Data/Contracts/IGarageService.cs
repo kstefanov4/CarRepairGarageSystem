@@ -7,5 +7,6 @@
         Task<List<GarageServicesModel>> GetAllServicesByGarageIdAsync(int garageId);
         Task<AllGaragesFilteredAndPagedServiceModel> AllAsync(AllGaragesQueryModel queryModel);
         Task<GarageViewModel> GetGarageByIdAsync(int id);
+        Task<IEnumerable<GarageViewModel>> GetAllGaragesByOwnerAsync(string id);
     }
 }

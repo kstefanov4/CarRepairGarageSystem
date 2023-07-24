@@ -104,6 +104,7 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
 
                         }
                     }
+
                     _logger.LogInformation("User logged in.");
                     TempData[SuccessMessage] = $"User {firstName} {lastName} logged in.";
                     return LocalRedirect(returnUrl);

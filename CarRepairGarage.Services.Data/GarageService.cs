@@ -111,6 +111,27 @@
             return garages;
         }
 
+        public async Task<IEnumerable<GarageViewModel>> GetAllGaragesByOwnerAsync(string id)
+        {
+            var garages = await _repository.AllReadonly<Garage>()
+                .Where(x => x.UserId.ToString() == id && x.IsDeleted == false)
+                .Select(x => new GarageViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Category = x.Category.Name,
+                    City = x.Address.City.Name,
+                    Services = x.Services.Select(x => x.Service.Name).ToList(),
+                    ImageUrl = x.ImageUrl,
+                    StreetName = x.Address.StreetName,
+                    StreetNumber = x.Address.StreetNumber.ToString(),
+                    Latitude = x.Address.Latitude,
+                    Longitude = x.Address.Longitude
+                }).ToListAsync();
+
+            return garages;
+        }
+
         public async Task<List<GarageServicesModel>> GetAllServicesByGarageIdAsync(int garageId)
         {
             var services = await _repository.AllReadonly<Data.Models.GarageService>()

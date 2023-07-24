@@ -108,6 +108,7 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, GeneralApplicationConstants.Roles.UserRole);
                     }
+
                     TempData[SuccessMessage] = $"Success registration! Welcome on board {Input.FirstName} {Input.LastName}!";
                     _logger.LogInformation("User created a new account with password.");
 
