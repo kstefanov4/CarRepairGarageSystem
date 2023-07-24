@@ -10,17 +10,16 @@
   <ItemGroup>
     <Compile Remove="Areas\Admin\**" />
     <Compile Remove="Areas\Manager\**" />
+    <Compile Remove="Areas\Test\**" />
     <Content Remove="Areas\Admin\**" />
     <Content Remove="Areas\Manager\**" />
+    <Content Remove="Areas\Test\**" />
     <EmbeddedResource Remove="Areas\Admin\**" />
     <EmbeddedResource Remove="Areas\Manager\**" />
+    <EmbeddedResource Remove="Areas\Test\**" />
     <None Remove="Areas\Admin\**" />
     <None Remove="Areas\Manager\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Areas\Test\Views\Dashboard\All.cshtml" />
-    <Content Remove="Areas\Test\Views\Dashboard\Index.cshtml" />
+    <None Remove="Areas\Test\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,16 +49,12 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
-    <Folder Include="Areas\Test\Data\" />
-    <Folder Include="Areas\Test\Models\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Areas\Manager\Views\Dashboard\All.cshtml" />
     <None Include="Areas\Manager\Views\Dashboard\Index.cshtml" />
-    <None Include="Areas\Test\Views\Dashboard\All.cshtml" />
-    <None Include="Areas\Test\Views\Dashboard\Index.cshtml" />
   </ItemGroup>
 
 </Project>
