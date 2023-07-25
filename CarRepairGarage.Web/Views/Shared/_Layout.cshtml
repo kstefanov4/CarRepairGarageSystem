@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body onload="initMap()">
+<body onload ="initMap()">
     <partial name="_NotificationsPartial" />
     <header>
         
@@ -77,6 +77,34 @@
                 }
             </script>
         </div>*@
+
+        <div id="map" style="height: 400px; width: 100%;">
+            <script>
+                function initMap() {
+                    var map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 12
+                    });
+
+                    var geocoder = new google.maps.Geocoder();
+                    var address = "Belite Borove 8";
+
+                    geocoder.geocode({ 'address': address }, function (results, status) {
+                        if (status === 'OK') {
+                            var coordinates = results[0].geometry.location;
+                            map.setCenter(coordinates);
+
+                            var marker = new google.maps.Marker({
+                                position: coordinates,
+                                map: map
+                            });
+                        } else {
+                            alert('Geocode was not successful for the following reason: ' + status);
+                        }
+                    });
+                }
+            </script>
+        </div>
+
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

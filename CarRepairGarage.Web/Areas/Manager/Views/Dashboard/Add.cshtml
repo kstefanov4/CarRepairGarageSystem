@@ -1,0 +1,85 @@
+﻿@using CarRepairGarage.Web.ViewModels.Garage;
+@model AddGarageViewModel
+@inject CarRepairGarage.Services.Contracts.ICategoryService categoryService;
+
+@{
+    ViewData["Title"] = "Create Garage";
+    var categories = await categoryService.GetAllCategoryAsync();
+}
+
+<form asp-action="Add">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" name="Name" class="form-control"
+               placeholder="Name">
+        <span asp-validation-for="Name" class="small text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl"></label>
+        <input asp-for="ImageUrl" name="ImageUrl" class="form-control"
+               placeholder="ImageUrl">
+        <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" class="form-control" required>
+            <option value="">-- Select Garage --</option>
+            @foreach (var category in categories)
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="City"></label>
+        <input asp-for="City" id="City" name="City" class="form-control"
+               placeholder="City">
+        <span asp-validation-for="City" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StreetName"></label>
+        <input asp-for="StreetName" id="StreetName" name="StreetName" class="form-control"
+               placeholder="Street Name">
+        <span asp-validation-for="StreetName" class="small text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="StreetNumber"></label>
+        <input asp-for="StreetNumber" id="StreetNumber" name="StreetNumber" class="form-control">
+        <span asp-validation-for="StreetNumber" class="small textdanger"></span>
+    </div>
+    <input asp-for="Latitude" name="Latitude" class="form-control" type="hidden" id="Latitude" />
+    <input asp-for="Longitude" name="Longitude" class="form-control" type="hidden" id="Longitude" />
+
+    <input type="submit" value="Add" class="btn btn-primary" @*onclick="event.preventDefault(); getLatLng()"*@ />
+
+</form>
+@section Scripts{
+    
+    <script>
+        function getLatLng() {
+            var geocoder = new google.maps.Geocoder();
+
+            // Get input values
+            var city = document.getElementById('City').value;
+            var streetName = document.getElementById('StreetName').value;
+            var streetNumber = document.getElementById('StreetNumber').value;
+
+            // Concatenate into a single address string
+            var address = streetName + ' ' + streetNumber;
+
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status === 'OK') {
+                    document.getElementById('Latitude').value = results[0].geometry.location.lat();
+                    document.getElementById('Longitude').value = results[0].geometry.location.lng();
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    </script>
+}

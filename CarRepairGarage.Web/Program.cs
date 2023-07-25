@@ -86,10 +86,6 @@ namespace CarRepairGarage.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "dashboard",
-                    pattern: "{area:exists}/{controller=Dashboard}/{action=All}/{id?}");
-
-                endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 

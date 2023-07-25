@@ -53,12 +53,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Areas\Manager\Views\Dashboard\All.cshtml" />
-    <Content Include="Areas\Manager\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="Areas\Manager\Views\_ViewStart.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Manager\Views\Dashboard\All.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Manager\Views\Dashboard\Add.cshtml" />
   </ItemGroup>
 
 </Project>

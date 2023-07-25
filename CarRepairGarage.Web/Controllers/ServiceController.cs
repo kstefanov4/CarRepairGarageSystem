@@ -6,15 +6,15 @@ namespace CarRepairGarage.Web.Controllers
 {
     public class ServiceController : Controller
     {
-        private readonly IServiceService serviceService;
+        private readonly IServiceService _serviceService;
 
         public ServiceController(IServiceService serviceService)
         {
-            this.serviceService = serviceService;
+            this._serviceService = serviceService;
         }
         public async Task<IActionResult> Index(int pageIndex = 1)
         {
-            var services = await serviceService.GetAllServiceAsync();
+            var services = await _serviceService.GetAllServiceAsync();
 
             int pageSize = 6;
             int totalServices = services.Count;
