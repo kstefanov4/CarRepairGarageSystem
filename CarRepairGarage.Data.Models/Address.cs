@@ -37,14 +37,6 @@
         [Required]
         public int StreetNumber { get; set; }
 
-        [Comment("Address Latitude coordinate")]
-        [TruncateDecimal]
-        public double? Latitude { get; set; }
- 
-        [Comment("Address Longitude coordinate")]
-        [TruncateDecimal]
-        public double? Longitude { get; set; }
-
         public virtual ICollection<Garage> Garages { get; set; }
     }
 }

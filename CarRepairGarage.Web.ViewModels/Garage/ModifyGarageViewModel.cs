@@ -1,14 +1,13 @@
-﻿using System;
+﻿using CarRepairGarage.Web.ViewModels.Service;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CarRepairGarage.Web.ViewModels.Garage
 {
-    public class AddGarageViewModel
+    public class ModifyGarageViewModel
     {
         public string Name { get; set; } = null!;
 
@@ -20,6 +19,6 @@ namespace CarRepairGarage.Web.ViewModels.Garage
         public string StreetName { get; set; } = null!;
         public int StreetNumber { get; set; }
 
-        public List<int> ServiceIds { get; set; } = new List<int>();
+        public List<int> Services { get; set; } = new List<int>();
     }
 }

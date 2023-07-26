@@ -8,13 +8,77 @@
     using CarRepairGarage.Data.Models;
     using System.Linq;
     using CarRepairGarage.Web.ViewModels.Garage.Enums;
+    using Microsoft.Extensions.Logging;
+    using CarRepairGarage.Web.ViewModels.Service;
 
     public class GarageService : IGarageService
     {
         private readonly IRepository _repository;
-        public GarageService(IRepository repository)
+        private readonly ILogger<GarageService> _logger;
+        public GarageService(
+            IRepository repository,
+            ILogger<GarageService> logger)
         {
             _repository = repository;
+            _logger = logger;
+        }
+
+        public async Task AddGarageAsync(AddGarageViewModel model, ApplicationUser user)
+        {
+            City city = new City()
+            {
+                Name = model.City
+            };
+
+            Address address = new Address()
+            {
+                City = city,
+                StreetName = model.StreetName,
+                StreetNumber = model.StreetNumber
+            };
+
+            Garage garage = new Garage()
+            {
+                Name = model.Name,
+                CategoryId = model.CategoryId,
+                ImageUrl = model.ImageUrl,
+                Address = address,
+                Owner = user,
+                
+            };
+
+            List<Data.Models.GarageService> services = new List<Data.Models.GarageService>();
+            
+            foreach (var serviceId in model.ServiceIds)
+            {
+                Data.Models.GarageService garageService = new Data.Models.GarageService()
+                {
+                    Garage = garage,
+                    ServiceId = serviceId,
+                    Available = true
+                };
+                services.Add(garageService);
+            }
+
+
+            try
+            {
+                await _repository.AddAsync(city);
+                await _repository.AddAsync(address);
+                await _repository.AddAsync(garage);
+
+                foreach (var service in services)
+                {
+                    await _repository.AddAsync(service);
+                }
+
+                await _repository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(nameof(AddGarageAsync), ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }
         }
 
         public async Task<AllGaragesFilteredAndPagedServiceModel> AllAsync(AllGaragesQueryModel queryModel)
@@ -90,6 +154,11 @@
             };
         }
 
+        public async Task<bool> Exists(int id)
+        {
+            return await _repository.AllReadonly<Garage>()
+                .AnyAsync(x => x.Id == id && x.IsDeleted == false);
+        }
 
         public async Task<IEnumerable<GarageViewModel>> GetAllGaragesAsync(int count)
         {
@@ -124,9 +193,7 @@
                     Services = x.Services.Select(x => x.Service.Name).ToList(),
                     ImageUrl = x.ImageUrl,
                     StreetName = x.Address.StreetName,
-                    StreetNumber = x.Address.StreetNumber.ToString(),
-                    Latitude = x.Address.Latitude,
-                    Longitude = x.Address.Longitude
+                    StreetNumber = x.Address.StreetNumber.ToString()
                 }).ToListAsync();
 
             return garages;
@@ -153,19 +220,36 @@
                 {
                     Id = g.Id,
                     Name = g.Name,
+                    OwnerId = g.Owner.Id,
                     ImageUrl = g.ImageUrl,
                     City = g.Address.City.Name,
                     StreetName = g.Address.StreetName,
                     StreetNumber = g.Address.StreetNumber.ToString(),
                     Services = g.Services.Select(s => s.Service.Name).ToList(),
-                    Category = g.Category.Name,
-                    Latitude = g.Address.Latitude,
-                    Longitude = g.Address.Longitude
+                    Category = g.Category.Name
 
                 })
                 .FirstOrDefaultAsync();
 
             return garage!;
+        }
+
+        public async Task<ModifyGarageViewModel> ModifyGarageByIdAsync(int id)
+        {
+            ModifyGarageViewModel? garage = await _repository.AllReadonly<Garage>()
+                .Where(x => x.Id == id && x.IsDeleted == false)
+                .Select(x => new ModifyGarageViewModel()
+                {
+                    Name = x.Name,
+                    CategoryId = x.CategoryId,
+                    City = x.Address.City.Name,
+                    ImageUrl = x.ImageUrl,
+                    StreetName = x.Address.StreetName,
+                    StreetNumber = x.Address.StreetNumber,
+                    Services = x.Services.Select(s => s.Service.Id).ToList()
+                }).FirstOrDefaultAsync();
+
+            return garage;
         }
     }
 }

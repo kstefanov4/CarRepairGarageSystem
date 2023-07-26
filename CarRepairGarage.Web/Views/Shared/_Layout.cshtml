@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body onload ="initMap()">
+<body onload="initMap()">
     <partial name="_NotificationsPartial" />
     <header>
         
@@ -78,7 +78,7 @@
             </script>
         </div>*@
 
-        <div id="map" style="height: 400px; width: 100%;">
+        @*<div id="map" style="height: 400px; width: 100%;">
             <script>
                 function initMap() {
                     var map = new google.maps.Map(document.getElementById("map"), {
@@ -103,7 +103,7 @@
                     });
                 }
             </script>
-        </div>
+        </div>*@
 
         <main role="main" class="pb-3">
             @RenderBody()

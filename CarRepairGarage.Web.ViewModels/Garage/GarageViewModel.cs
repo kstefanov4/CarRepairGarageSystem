@@ -12,14 +12,11 @@ namespace CarRepairGarage.Web.ViewModels.Garage
         public string ImageUrl { get; set; } = null!;
 
         public string Category { get; set; } = null!;
+        public Guid OwnerId { get; set; }
 
         public string City { get; set; } = null!;
         public string StreetName { get; set; } = null!;
         public string StreetNumber { get; set; } = null!;
-
-        public double? Latitude { get; set; }
-
-        public double? Longitude { get; set; }
 
         public ICollection<string> Services { get; set; } = new List<string>();
     }

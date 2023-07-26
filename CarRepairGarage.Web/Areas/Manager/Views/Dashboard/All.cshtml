@@ -20,8 +20,6 @@
                         <p class="card-text">City: <b>@garage.City</b></p>
                         <p class="card-text">Street Name: <b>@garage.StreetName</b></p>
                         <p class="card-text">Street Number: <b>@garage.StreetNumber</b></p>
-                        <p class="card-text">Latitude: <b>@garage.Latitude</b></p>
-                        <p class="card-text">Longitude: <b>@garage.Longitude</b></p>
                         <p class="card-text">Services:</p>
                         <ul>
                             @foreach (var service in garage.Services)
@@ -29,7 +27,7 @@
                                 <li>@service</li>
                             }
                         </ul>
-                        <a asp-area="Manager" asp-controller="Garage" asp-action="Modify" asp-route-id="@garage.Id" class="btn btn-success">Modify</a>
+                        <a asp-area="Manager" asp-controller="Dashboard" asp-action="Modify" asp-route-id="@garage.Id" class="btn btn-success">Modify</a>
                     </div>
                 </div>
             </div>

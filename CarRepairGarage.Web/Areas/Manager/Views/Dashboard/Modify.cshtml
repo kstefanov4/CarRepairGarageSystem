@@ -1,5 +1,5 @@
 ﻿@using CarRepairGarage.Web.ViewModels.Garage;
-@model AddGarageViewModel
+@model ModifyGarageViewModel
 @inject CarRepairGarage.Services.Contracts.ICategoryService categoryService;
 @inject CarRepairGarage.Services.Contracts.IServiceService serviceService;
 
@@ -9,7 +9,7 @@
     var services = await serviceService.GetAllServiceAsync();
 }
 
-<form asp-action="Add">
+<form asp-action="Modify">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" name="Name" class="form-control"
@@ -40,7 +40,11 @@
         @foreach (var service in services)
         {
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="ServiceIds" value="@service.Id">
+                <input class="form-check-input"
+                       type="checkbox"
+                       name="Services"
+                       value="@service.Id"
+                @(Model.Services.Contains(service.Id) ? "checked" : "")>
                 <label class="form-check-label">@service.Name</label>
             </div>
         }
@@ -59,13 +63,13 @@
                placeholder="Street Name">
         <span asp-validation-for="StreetName" class="small text-danger"></span>
     </div>
-    
+
     <div class="form-group">
         <label asp-for="StreetNumber"></label>
         <input asp-for="StreetNumber" id="StreetNumber" name="StreetNumber" class="form-control">
         <span asp-validation-for="StreetNumber" class="small textdanger"></span>
     </div>
 
-    <input type="submit" value="Add" class="btn btn-primary" @*onclick="event.preventDefault(); getLatLng()"*@ />
+    <input type="submit" value="Modify" class="btn btn-primary" />
 
 </form>
