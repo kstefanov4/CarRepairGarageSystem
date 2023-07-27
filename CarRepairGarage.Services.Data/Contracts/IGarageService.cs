@@ -12,5 +12,6 @@
         Task<IEnumerable<GarageViewModel>> GetAllGaragesByOwnerAsync(string id);
         Task AddGarageAsync(AddGarageViewModel model, ApplicationUser user);
         Task<bool> Exists(int id);
+        Task Edit(ModifyGarageViewModel model);
     }
 }

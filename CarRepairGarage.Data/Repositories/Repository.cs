@@ -92,6 +92,7 @@
             Delete(entity);
         }
 
+
         /// <summary>
         /// Deletes a record from database
         /// </summary>

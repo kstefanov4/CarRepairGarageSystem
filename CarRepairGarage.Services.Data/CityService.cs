@@ -25,5 +25,17 @@ namespace CarRepairGarage.Services
                 .Select(x => x.Name)
                 .ToListAsync();
         }
+
+        public async Task<bool> Exist(string name)
+        {
+            return await _repository.AllReadonly<City>()
+                .AnyAsync(x => x.Name == name);
+        }
+
+        public async Task<City> GetCityByNameAsync(string name)
+        {
+            return await _repository.AllReadonly<City>()
+                .Where (x => x.Name == name).FirstAsync();
+        }
     }
 }

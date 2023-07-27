@@ -10,6 +10,7 @@
 }
 
 <form asp-action="Modify">
+    <input type="hidden" asp-for="@Model.Id" />
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" name="Name" class="form-control"

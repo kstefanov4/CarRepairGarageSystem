@@ -53,7 +53,7 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
         {
             if ((await _garageService.Exists(id)) == false)
             {
-                TempData[ErrorMessage] = $"You aretrying to modify non existing garage!";
+                TempData[ErrorMessage] = $"You are trying to modify non existing garage!";
                 return RedirectToAction(nameof(All));
             }
 
@@ -73,8 +73,38 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
         [HttpPost]
         public async Task<IActionResult> Modify(ModifyGarageViewModel model)
         {
+            if (ModelState.IsValid == false)
+            {
+                return View(model);
+            }
 
-            return View(model);
+            if ((await _garageService.Exists(model.Id)) == false)
+            {
+                TempData[ErrorMessage] = $"You are trying to modify non existing garage!";
+                return RedirectToAction(nameof(All));
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            var garage = await _garageService.GetGarageByIdAsync(model.Id);
+
+            if (garage.OwnerId != user.Id)
+            {
+                TempData[ErrorMessage] = "You are not the owner of this garage. Please contact our support team!";
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }
+
+            try
+            {
+                await _garageService.Edit(model);
+                TempData[SuccessMessage] = $"Your garage {model.Name} was successfully edited.";
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(All));
         }
 
         [HttpGet]

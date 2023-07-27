@@ -10,67 +10,41 @@
     using CarRepairGarage.Web.ViewModels.Garage.Enums;
     using Microsoft.Extensions.Logging;
     using CarRepairGarage.Web.ViewModels.Service;
+    using System.Net;
+    using System.Runtime.Loader;
 
     public class GarageService : IGarageService
     {
         private readonly IRepository _repository;
         private readonly ILogger<GarageService> _logger;
+        private readonly ICityService _cityService;
         public GarageService(
             IRepository repository,
-            ILogger<GarageService> logger)
+            ILogger<GarageService> logger,
+            ICityService cityService)
         {
             _repository = repository;
             _logger = logger;
+            _cityService = cityService;
+
         }
 
         public async Task AddGarageAsync(AddGarageViewModel model, ApplicationUser user)
         {
-            City city = new City()
-            {
-                Name = model.City
-            };
+            var city = CreateCity(model.City);
+            var address = CreateAddress(city, model.StreetName, model.StreetNumber);
+            var garage = CreateGarage(model, user, address);
 
-            Address address = new Address()
-            {
-                City = city,
-                StreetName = model.StreetName,
-                StreetNumber = model.StreetNumber
-            };
-
-            Garage garage = new Garage()
-            {
-                Name = model.Name,
-                CategoryId = model.CategoryId,
-                ImageUrl = model.ImageUrl,
-                Address = address,
-                Owner = user,
-                
-            };
-
-            List<Data.Models.GarageService> services = new List<Data.Models.GarageService>();
-            
-            foreach (var serviceId in model.ServiceIds)
-            {
-                Data.Models.GarageService garageService = new Data.Models.GarageService()
-                {
-                    Garage = garage,
-                    ServiceId = serviceId,
-                    Available = true
-                };
-                services.Add(garageService);
-            }
-
+            var services = model.ServiceIds
+                .Select(serviceId => CreateGarageService(garage, serviceId))
+                .ToList();
 
             try
             {
                 await _repository.AddAsync(city);
                 await _repository.AddAsync(address);
                 await _repository.AddAsync(garage);
-
-                foreach (var service in services)
-                {
-                    await _repository.AddAsync(service);
-                }
+                await _repository.AddRangeAsync(services); // batch add
 
                 await _repository.SaveChangesAsync();
             }
@@ -80,6 +54,44 @@
                 throw new ApplicationException("Database failed to save info", ex);
             }
         }
+
+        private City CreateCity(string cityName)
+        {
+            return new City { Name = cityName };
+        }
+
+        private Address CreateAddress(City city, string streetName, int streetNumber)
+        {
+            return new Address
+            {
+                City = city,
+                StreetName = streetName,
+                StreetNumber = streetNumber
+            };
+        }
+
+        private Garage CreateGarage(AddGarageViewModel model, ApplicationUser user, Address address)
+        {
+            return new Garage
+            {
+                Name = model.Name,
+                CategoryId = model.CategoryId,
+                ImageUrl = model.ImageUrl,
+                Address = address,
+                Owner = user
+            };
+        }
+
+        private Data.Models.GarageService CreateGarageService(Garage garage, int serviceId)
+        {
+            return new Data.Models.GarageService
+            {
+                Garage = garage,
+                ServiceId = serviceId,
+                Available = true
+            };
+        }
+
 
         public async Task<AllGaragesFilteredAndPagedServiceModel> AllAsync(AllGaragesQueryModel queryModel)
         {
@@ -154,6 +166,91 @@
             };
         }
 
+        public async Task Edit(ModifyGarageViewModel model)
+        {
+            var garage = await _repository.GetByIdAsync<Garage>(model.Id);
+            var services = await GetGarageServices(garage.Id);
+
+            await HandleServices(model, garage, services);
+
+            await HandleCityAndAddress(model, garage);
+
+            garage.Name = model.Name;
+            garage.ImageUrl = model.ImageUrl;
+            garage.CategoryId = model.CategoryId;
+
+            try
+            {
+                await _repository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(nameof(Edit), ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }
+        }
+
+        private async Task<List<Data.Models.GarageService>> GetGarageServices(int garageId)
+        {
+            return await _repository.AllReadonly<Data.Models.GarageService>()
+                .Where(x => x.GarageId == garageId)
+                .ToListAsync();
+        }
+
+        private async Task HandleServices(ModifyGarageViewModel model, Garage garage, List<Data.Models.GarageService> services)
+        {
+            var serviceIdsToDelete = services.Where(service => !model.Services.Contains(service.ServiceId))
+                .Select(service => service.ServiceId)
+                .ToList();
+
+            var addedServices = model.Services.Where(serviceId => !services.Any(x => x.ServiceId == serviceId))
+                .Select(serviceId => CreateGarageService(garage, serviceId))
+                .ToList();
+
+            foreach (var id in serviceIdsToDelete)
+            {
+                var serviceToDelete = services.FirstOrDefault(s => s.ServiceId == id);
+                _repository.Delete(serviceToDelete);
+            }
+
+            foreach (var service in addedServices)
+            {
+                await _repository.AddAsync(service);
+            }
+        }
+
+        private async Task HandleCityAndAddress(ModifyGarageViewModel model, Garage garage)
+        {
+            var address = await _repository.GetByIdAsync<Address>(garage.AddressId);
+            var city = await _repository.GetByIdAsync<City>(address.CityId);
+
+            if (city.Name != model.City)
+            {
+                if (await _repository.AllReadonly<City>().AnyAsync(x => x.Name == model.City))
+                {
+                    city = await _repository.All<City>().FirstOrDefaultAsync(x => x.Name == model.City);
+                }
+                else
+                {
+                    City newCity = CreateCity(model.City);
+                    await _repository.AddAsync(newCity);
+                    city = newCity;
+                }
+            }
+
+            if (address.StreetName != model.StreetName)
+            {
+                address.IsDeleted = true;
+                address.DeletedOn = DateTime.UtcNow;
+                Address newAddress = CreateAddress(city!, model.StreetName, model.StreetNumber);
+                await _repository.AddAsync(newAddress);
+                address = newAddress;
+            }
+
+            garage.Address = address;
+        }
+
+
         public async Task<bool> Exists(int id)
         {
             return await _repository.AllReadonly<Garage>()
@@ -190,7 +287,7 @@
                     Name = x.Name,
                     Category = x.Category.Name,
                     City = x.Address.City.Name,
-                    Services = x.Services.Select(x => x.Service.Name).ToList(),
+                    Services = x.Services.Where(x => x.IsDeleted == false).Select(x => x.Service.Name).ToList(),
                     ImageUrl = x.ImageUrl,
                     StreetName = x.Address.StreetName,
                     StreetNumber = x.Address.StreetNumber.ToString()
@@ -240,6 +337,7 @@
                 .Where(x => x.Id == id && x.IsDeleted == false)
                 .Select(x => new ModifyGarageViewModel()
                 {
+                    Id = x.Id,
                     Name = x.Name,
                     CategoryId = x.CategoryId,
                     City = x.Address.City.Name,
