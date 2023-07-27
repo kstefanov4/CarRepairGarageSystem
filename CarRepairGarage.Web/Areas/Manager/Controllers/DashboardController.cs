@@ -14,15 +14,13 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
     {
         private readonly IGarageService _garageService;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IServiceService _serviceService;
+
         public DashboardController(
             IGarageService garageService,
-            UserManager<ApplicationUser> userManager,
-            IServiceService serviceService)
+            UserManager<ApplicationUser> userManager)
         {
             _garageService = garageService;
             _userManager = userManager;
-            _serviceService = serviceService;
 
         }
         [HttpGet]
@@ -133,6 +131,37 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
             {
                 TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
                 return View(model);
+            }
+
+            return RedirectToAction(nameof(All));
+        }
+        public async Task<IActionResult> Remove(int id)
+        {
+            if ((await _garageService.Exists(id)) == false)
+            {
+                TempData[ErrorMessage] = "This garage does not exist!";
+                return RedirectToAction(nameof(All));
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            var garage = await _garageService.GetGarageByIdAsync(id);
+
+
+            if (garage.OwnerId != user.Id)
+            {
+                TempData[ErrorMessage] = "You are not the owner of this car. Please contact our support team!";
+                return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
+            }
+
+            try
+            {
+                await _garageService.Delete(id);
+                TempData[SuccessMessage] = $"Your garage {garage.Name} was successfully deleted.";
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
+                return RedirectToAction(nameof(Index));
             }
 
             return RedirectToAction(nameof(All));

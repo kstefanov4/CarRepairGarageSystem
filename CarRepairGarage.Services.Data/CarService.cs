@@ -35,16 +35,11 @@
                 User = user
             };
 
-            try
+            await ExecuteDatabaseAction(async () =>
             {
                 await _repository.AddAsync(car);
                 await _repository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(nameof(AddCarAsync), ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }
+            });
         }
 
         public async Task Delete(int id)
@@ -52,16 +47,11 @@
             var car = await _repository.GetByIdAsync<Car>(id);
             car.IsDeleted = true;
             car.DeletedOn = DateTime.Now;
-            
-            try
+
+            await ExecuteDatabaseAction(async () =>
             {
                 await _repository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(nameof(Delete), ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }
+            });
         }
 
         public async Task Edit(int id, AddCarViewModel model)
@@ -73,7 +63,10 @@
             car.Model = model.CarModel;
             car.Year = model.Year;
 
-            await _repository.SaveChangesAsync();
+            await ExecuteDatabaseAction(async () =>
+            {
+                await _repository.SaveChangesAsync();
+            });
         }
 
         public async Task<bool> Exist(int id)
@@ -111,6 +104,19 @@
                 Year = car.Year,
                 UserId = car.UserId.ToString()
             };
+        }
+
+        private async Task ExecuteDatabaseAction(Func<Task> databaseAction)
+        {
+            try
+            {
+                await databaseAction.Invoke();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(databaseAction.Method.Name, ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }
         }
     }
 }

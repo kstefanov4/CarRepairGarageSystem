@@ -349,5 +349,23 @@
 
             return garage;
         }
+
+        public async Task Delete(int id)
+        {
+            var car = await _repository.GetByIdAsync<Garage>(id);
+            car.IsDeleted = true;
+            car.DeletedOn = DateTime.Now;
+
+            try
+            {
+                await _repository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(nameof(Delete), ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }
+        }
+
     }
 }

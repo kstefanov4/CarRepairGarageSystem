@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Areas\Manager\Controllers\AppointmentController.cs" />
     <Compile Include="Areas\Manager\Controllers\BaseController.cs" />
     <Compile Include="Areas\Manager\Controllers\DashboardController.cs" />
   </ItemGroup>
@@ -73,6 +74,10 @@
 
   <ItemGroup>
     <Content Include="Areas\Manager\Views\Dashboard\Modify.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Manager\Views\Appointment\All.cshtml" />
   </ItemGroup>
 
 </Project>

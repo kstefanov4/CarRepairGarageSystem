@@ -10,14 +10,27 @@ namespace CarRepairGarage.Web.ViewModels.Garage
 {
     public class AddGarageViewModel
     {
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
         public string Name { get; set; } = null!;
 
+        [Required]
+        [StringLength(250)]
         public string ImageUrl { get; set; } = null!;
 
+        [Required]
+        [Range(1,3)]
         public int CategoryId { get; set; }
-
+        
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
         public string City { get; set; } = null!;
+        
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
         public string StreetName { get; set; } = null!;
+
+        [Required]
         public int StreetNumber { get; set; }
 
         public List<int> ServiceIds { get; set; } = new List<int>();

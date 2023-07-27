@@ -76,7 +76,7 @@ namespace CarRepairGarage.Web.Controllers
             }
 
             var user = await _userManager.GetUserAsync(User);
-            var appointment = await _appointmentService.GetAppointmentByIdAsync(id);
+            var appointment = await _appointmentService.GetAppointmentByIdAsync(id.ToString());
 
 
             if (appointment.UserId != user.Id)

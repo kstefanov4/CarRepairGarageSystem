@@ -13,5 +13,6 @@
         Task AddGarageAsync(AddGarageViewModel model, ApplicationUser user);
         Task<bool> Exists(int id);
         Task Edit(ModifyGarageViewModel model);
+        Task Delete(int id);
     }
 }

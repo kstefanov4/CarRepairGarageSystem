@@ -34,32 +34,22 @@ namespace CarRepairGarage.Services
             appointment.Date = model.SelectedDate;
             appointment.Time = model.SelectedTime.TimeOfDay;
 
-            try
+            await ExecuteDatabaseAction(async () =>
             {
                 await _repository.AddAsync(appointment);
                 await _repository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(nameof(CreateAppointmentAsync), ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }
+            });
         }
 
         public async Task Delete(Guid id)
         {
             //TODO check if the user is the owner
 
-            try
+            await ExecuteDatabaseAction(async () =>
             {
                 await _repository.DeleteAsync<Appointment>(id.ToString());
                 await _repository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(nameof(Delete), ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }
+            });
         }
 
         public async Task<bool> Exist(Guid id)
@@ -71,8 +61,30 @@ namespace CarRepairGarage.Services
         public async Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByUserIdAsync(Guid id)
         {
             var appointments = await _repository.AllReadonly<Appointment>()
-                .Where(x => x.UserId == id && x.IsDeleted == false)
+                .Include(x => x.Garage)
+                .Where(x => x.UserId == id && x.Garage.IsDeleted == false && x.IsDeleted == false)
                 .Select( x => new AppointmentDetailsViewModel()
+                {
+                    Id = x.Id.ToString(),
+                    GarageName = x.Garage.Name,
+                    GarageId = x.GarageId,
+                    ServiceId = x.ServiceId,
+                    ServiceName = x.Service.Name,
+                    SelectedDate = x.Date.ToString(@"yyyy-MM-dd"),
+                    SelectedTime = x.Time.ToString(@"hh\:mm"),
+                    IsApproved = x.Confirmed
+                })
+                .ToListAsync();
+
+            return appointments;
+        }
+
+        public async Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByGarageIdAsync(Guid id)
+        {
+            var appointments = await _repository.AllReadonly<Appointment>()
+                .Include(x => x.Garage)
+                .Where(x => x.Garage.UserId == id && x.Garage.IsDeleted == false && x.IsDeleted == false)
+                .Select(x => new AppointmentDetailsViewModel()
                 {
                     Id = x.Id.ToString(),
                     GarageName = x.Garage.Name,
@@ -98,19 +110,66 @@ namespace CarRepairGarage.Services
             return hours;
         }
 
-        public async Task<AppointmentModel> GetAppointmentByIdAsync(Guid id)
+        public async Task<AppointmentModel> GetAppointmentByIdAsync(string id)
         {
-            var appointment = await _repository.GetByIdAsync<Appointment>(id.ToString());
+            var appointment = await _repository.GetByIdAsync<Appointment>(id);
+            var garageOwner = await _repository.AllReadonly<Garage>()
+                .Where(x => x.Id == appointment.GarageId)
+                .Select(x => x.UserId)
+                .FirstAsync();
 
             return new AppointmentModel()
             {
                 GarageId = appointment.GarageId,
+                GarageOwner = garageOwner.ToString(),
                 SelectedDate = appointment.Date.ToString(@"yyyy-MM-dd"),
                 SelectedTime = appointment.Time.ToString(@"hh\:mm"),
                 ServiceId = appointment.ServiceId,
-                UserId = appointment.UserId
+                UserId = appointment.UserId,
+                Approved = appointment.Confirmed
 
             };
+        }
+
+        public async Task Approve(string id)
+        {
+            var appointent = await _repository.All<Appointment>()
+                .Where(x => x.Id == id)
+                .FirstAsync();
+
+            appointent.Confirmed = true;
+
+            await ExecuteDatabaseAction(async () =>
+            {
+                await _repository.SaveChangesAsync();
+            });
+        }
+
+        public async Task Reject(string id)
+        {
+            var appointent = await _repository.All<Appointment>()
+                .Where(x => x.Id == id)
+                .FirstAsync();
+
+            appointent.Confirmed = false;
+
+            await ExecuteDatabaseAction(async () =>
+            {
+                await _repository.SaveChangesAsync();
+            });
+        }
+
+        private async Task ExecuteDatabaseAction(Func<Task> databaseAction)
+        {
+            try
+            {
+                await databaseAction.Invoke();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(databaseAction.Method.Name, ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }
         }
     }
 }
