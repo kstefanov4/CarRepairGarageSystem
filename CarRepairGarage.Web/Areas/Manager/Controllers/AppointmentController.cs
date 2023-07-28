@@ -1,5 +1,8 @@
 ﻿using CarRepairGarage.Data.Models;
+using CarRepairGarage.Services;
 using CarRepairGarage.Services.Contracts;
+using CarRepairGarage.Web.ViewModels.Appointment;
+using CarRepairGarage.Web.ViewModels.Garage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static CarRepairGarage.Common.NotificationsMessagesConstants;
@@ -21,7 +24,7 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
             _garageService = garageService;
             _userManager = userManager;
         }
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] AllAppointmentsQueryModel queryModel)
         {
             var user = await _userManager.GetUserAsync(User);
 
@@ -29,9 +32,21 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
             {
                 return RedirectToPage("/Account/Login");
             }
+            
+            AllAppointmentsFilteredAndPagedServiceModel serviceModel = await _appointmentService.GetAllAppointmentsByGarageIdAsync(queryModel, user.Id);
+
+            queryModel.Appointments = serviceModel.Appointments;
+
+            return View(queryModel);
+            /*var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return RedirectToPage("/Account/Login");
+            }
 
             var model = await _appointmentService.GetAllAppointmentsByGarageIdAsync(user.Id);
-            return View(model);
+            return View(model);*/
         }
 
         public async Task<IActionResult> Approve(Guid id)

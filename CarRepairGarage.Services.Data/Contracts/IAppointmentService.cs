@@ -1,5 +1,6 @@
 ﻿using CarRepairGarage.Data.Models;
 using CarRepairGarage.Web.ViewModels.Appointment;
+using CarRepairGarage.Web.ViewModels.Garage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace CarRepairGarage.Services.Contracts
         Task<List<string>> GetAllAvailableHours(DateTime dateTime, int garageId, int serviceId);
         Task CreateAppointmentAsync(CreateAppointmentModel model, ApplicationUser user);
         Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByUserIdAsync(Guid id);
-        Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByGarageIdAsync(Guid id);
+        Task<AllAppointmentsFilteredAndPagedServiceModel> GetAllAppointmentsByGarageIdAsync(AllAppointmentsQueryModel queryModel, Guid id);
         Task<bool> Exist(Guid id);
         Task<AppointmentModel> GetAppointmentByIdAsync(string id);
         Task Delete(Guid id);
