@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRepairGarage.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230722201943_AddCoordinationParamethers")]
-    partial class AddCoordinationParamethers
+    [Migration("20230729202714_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,14 +42,6 @@ namespace CarRepairGarage.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<double?>("Latitude")
-                        .HasColumnType("float")
-                        .HasComment("Address Latitude coordinate");
-
-                    b.Property<double?>("Longitude")
-                        .HasColumnType("float")
-                        .HasComment("Address Longitude coordinate");
 
                     b.Property<string>("StreetName")
                         .IsRequired()
@@ -190,6 +182,10 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasComment("Primary key");
 
+                    b.Property<int>("CarId")
+                        .HasColumnType("int")
+                        .HasComment("Appointed car");
+
                     b.Property<bool?>("Confirmed")
                         .HasColumnType("bit")
                         .HasComment("Is appointment confirmed");
@@ -198,15 +194,9 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("Date")
                         .HasComment("Date of the appointment");
 
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("GarageId")
                         .HasColumnType("int")
                         .HasComment("Appointed garage");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("int")
@@ -221,6 +211,8 @@ namespace CarRepairGarage.Data.Migrations
                         .HasComment("User appointed");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CarId");
 
                     b.HasIndex("GarageId");
 
@@ -383,7 +375,11 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasComment("Garage name");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<int>("NoteId")
+                        .HasColumnType("int")
+                        .HasComment("Garage Note");
+
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Garage Owner");
 
@@ -392,6 +388,8 @@ namespace CarRepairGarage.Data.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("NoteId");
 
                     b.HasIndex("UserId");
 
@@ -413,12 +411,6 @@ namespace CarRepairGarage.Data.Migrations
                     b.Property<bool>("Available")
                         .HasColumnType("bit")
                         .HasComment("Is garage service available");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("ServiceId", "GarageId");
 
@@ -479,6 +471,11 @@ namespace CarRepairGarage.Data.Migrations
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
+                        .HasComment("Service Description");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -621,6 +618,12 @@ namespace CarRepairGarage.Data.Migrations
 
             modelBuilder.Entity("CarRepairGarage.Data.Models.Appointment", b =>
                 {
+                    b.HasOne("CarRepairGarage.Data.Models.Car", "Car")
+                        .WithMany("Appointments")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("CarRepairGarage.Data.Models.Garage", "Garage")
                         .WithMany("Appointments")
                         .HasForeignKey("GarageId")
@@ -638,6 +641,8 @@ namespace CarRepairGarage.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Car");
 
                     b.Navigation("Garage");
 
@@ -671,13 +676,23 @@ namespace CarRepairGarage.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("CarRepairGarage.Data.Models.Note", "Note")
+                        .WithMany("Garages")
+                        .HasForeignKey("NoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CarRepairGarage.Data.Models.ApplicationUser", "Owner")
                         .WithMany("Garages")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Address");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Note");
 
                     b.Navigation("Owner");
                 });
@@ -772,6 +787,11 @@ namespace CarRepairGarage.Data.Migrations
                     b.Navigation("Roles");
                 });
 
+            modelBuilder.Entity("CarRepairGarage.Data.Models.Car", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
             modelBuilder.Entity("CarRepairGarage.Data.Models.Category", b =>
                 {
                     b.Navigation("Garages");
@@ -787,6 +807,11 @@ namespace CarRepairGarage.Data.Migrations
                     b.Navigation("Appointments");
 
                     b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("CarRepairGarage.Data.Models.Note", b =>
+                {
+                    b.Navigation("Garages");
                 });
 
             modelBuilder.Entity("CarRepairGarage.Data.Models.Service", b =>

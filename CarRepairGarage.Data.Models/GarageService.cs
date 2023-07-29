@@ -9,7 +9,7 @@
     using CarRepairGarage.Data.Common.Models;
 
     [Comment("Garage Service")]
-    public class GarageService : BaseDeletableModel
+    public class GarageService
     {
         public GarageService()
         {

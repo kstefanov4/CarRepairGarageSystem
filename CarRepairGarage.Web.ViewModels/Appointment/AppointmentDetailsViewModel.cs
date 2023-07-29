@@ -17,6 +17,8 @@ namespace CarRepairGarage.Web.ViewModels.Appointment
         public string GarageName { get; set; } = null!;
         public int ServiceId { get; set; }
         public string ServiceName { get; set; } = null!;
+        public int CarId { get; set; }
+        public string CarVIN { get; set; } = null!;
         public bool? IsApproved { get; set; }
 
     }

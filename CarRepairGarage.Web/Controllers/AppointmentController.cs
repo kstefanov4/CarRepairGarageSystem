@@ -54,8 +54,9 @@ namespace CarRepairGarage.Web.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> All([FromQuery] AllAppointmentsQueryModel queryModel)
         {
+
             var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
@@ -63,8 +64,21 @@ namespace CarRepairGarage.Web.Controllers
                 return RedirectToPage("/Account/Login");
             }
 
+            AllAppointmentsFilteredAndPagedServiceModel serviceModel = await _appointmentService.GetAllAppointmentsByUserIdAsync(queryModel, user.Id);
+
+            queryModel.Appointments = serviceModel.Appointments;
+
+            return View(queryModel);
+
+            /*var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return RedirectToPage("/Account/Login");
+            }
+
             var model = await _appointmentService.GetAllAppointmentsByUserIdAsync(user.Id);
-            return View(model);
+            return View(model);*/
         }
 
         public async Task<IActionResult> Remove(Guid id)
@@ -72,7 +86,7 @@ namespace CarRepairGarage.Web.Controllers
             if ((await _appointmentService.Exist(id)) == false)
             {
                 TempData[ErrorMessage] = "This appointment does not exist!";
-                return RedirectToAction(nameof(GetAll));
+                return RedirectToAction(nameof(All));
             }
 
             var user = await _userManager.GetUserAsync(User);
@@ -93,11 +107,11 @@ namespace CarRepairGarage.Web.Controllers
             catch (Exception)
             {
                 TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
-                return RedirectToAction(nameof(GetAll));
+                return RedirectToAction(nameof(All));
             }
             
 
-            return RedirectToAction(nameof(GetAll));
+            return RedirectToAction(nameof(All));
         }
 
         [HttpPost]
@@ -121,7 +135,7 @@ namespace CarRepairGarage.Web.Controllers
                 return View(model);
             }
 
-            return RedirectToAction(nameof(GetAll));
+            return RedirectToAction(nameof(All));
         }
 
         [HttpGet]

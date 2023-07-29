@@ -81,7 +81,7 @@
 
 @if (!Model.Appointments.Any())
 {
-    <h2 class="text-center">No houses found by the given criteria!</h2>
+    <h2 class="text-center">No appointments found by the given criteria!</h2>
 }
 <div class="container">
     <div class="row">
@@ -92,6 +92,7 @@
                     <div class="card-body">
                         <p>Garage: <b>@appointment.GarageName</b></p>
                         <p>Service: <b>@appointment.ServiceName</b></p>
+                        <p>Car VIN: <b class="vin" style="cursor: pointer;">@appointment.CarVIN</b></p>
                         <p>Date: <b>@appointment.SelectedDate</b></p>
                         <p>Time: <b>@appointment.SelectedTime</b></p>
                         @if (DateTime.Parse(appointment.SelectedDate) < DateTime.UtcNow)
@@ -121,3 +122,53 @@
         }
     </div>
 </div>
+
+<style>
+    .vin {
+        color: blue;
+        cursor: pointer;
+    }
+
+    .vin-details {
+        margin-top: 10px;
+        color: green;
+        display: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('.vin').click(function () {
+            var vin = $(this).text();
+            var vinDetailsDiv = $(this).parent().next('.vin-details');
+            var that = $(this);
+            if (vinDetailsDiv.length > 0) {
+                vinDetailsDiv.slideToggle();
+            } else {
+                $.getJSON('https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvalues/' + vin + '?format=json')
+                    .done(function (data) {
+                        if (data.Results[0].ErrorCode == "0") {
+                            $('<p class="vin-details">Make: ' + data.Results[0].Make 
+                            + ', Model: ' + data.Results[0].Model 
+                            + ', Year: ' + data.Results[0].ModelYear
+                            + ', Fuel: ' + data.Results[0].FuelTypePrimary
+                            + ', CC: ' + data.Results[0].DisplacementCC
+                            + ', Cylinders: ' + data.Results[0].EngineCylinders
+                            + ', HP: ' + data.Results[0].EngineHP
+                            + '</p>')
+                            .hide().insertAfter(that.parent()).slideDown();
+                        } else {
+                            $('<p class="vin-details">Error getting vehicle details: ' + data.Results[0].ErrorText + '</p>').hide().insertAfter(that.parent()).slideDown();
+                        }
+                    })
+                    .fail(function () {
+                        $('<p class="vin-details">Error getting vehicle details</p>').hide().insertAfter(that.parent()).slideDown();
+                    });
+            }
+        });
+    });
+</script>
+
+
+
+

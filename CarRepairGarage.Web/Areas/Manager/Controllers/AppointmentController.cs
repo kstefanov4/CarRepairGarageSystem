@@ -24,6 +24,7 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
             _garageService = garageService;
             _userManager = userManager;
         }
+
         public async Task<IActionResult> All([FromQuery] AllAppointmentsQueryModel queryModel)
         {
             var user = await _userManager.GetUserAsync(User);

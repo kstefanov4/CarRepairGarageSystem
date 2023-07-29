@@ -287,7 +287,7 @@
                     Name = x.Name,
                     Category = x.Category.Name,
                     City = x.Address.City.Name,
-                    Services = x.Services.Where(x => x.IsDeleted == false).Select(x => x.Service.Name).ToList(),
+                    Services = x.Services.Select(x => x.Service.Name).ToList(),
                     ImageUrl = x.ImageUrl,
                     StreetName = x.Address.StreetName,
                     StreetNumber = x.Address.StreetNumber.ToString()
@@ -299,7 +299,7 @@
         public async Task<List<GarageServicesModel>> GetAllServicesByGarageIdAsync(int garageId)
         {
             var services = await _repository.AllReadonly<Data.Models.GarageService>()
-                .Where(x => x.GarageId == garageId && x.IsDeleted == false)
+                .Where(x => x.GarageId == garageId)
                 .Select(x => new GarageServicesModel()
                 {
                     Id = x.Service.Id,

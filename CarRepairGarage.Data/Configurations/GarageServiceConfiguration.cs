@@ -5,7 +5,7 @@
 
     using CarRepairGarage.Data.Models;
 
-    public class GarageServiceConfiguration : IEntityTypeConfiguration<GarageService>
+    internal class GarageServiceConfiguration : IEntityTypeConfiguration<GarageService>
     {
         public void Configure(EntityTypeBuilder<GarageService> builder)
         {

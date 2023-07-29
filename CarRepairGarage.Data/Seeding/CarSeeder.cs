@@ -23,54 +23,54 @@
             {
                 new Car
                 {
-                    VIN = GenerateRandomVin.Generate(),
-                    Make = "Opel",
-                    Model = "Zafira",
-                    Year = 2013,
-                    IsDeleted = false,
-                    UserId = userGuid
-                },
-                new Car
-                {
-                    VIN = GenerateRandomVin.Generate(),
-                    Make = "Audi",
-                    Model = "A4",
-                    Year = 2010,
-                    IsDeleted = false,
-                    UserId = userGuid
-                },
-                new Car
-                {
-                    VIN = GenerateRandomVin.Generate(),
-                    Make = "Mercedes",
-                    Model = "ML",
-                    Year = 2016,
-                    IsDeleted = false,
-                    UserId = userGuid
-                },
-                new Car
-                {
-                    VIN = GenerateRandomVin.Generate(),
+                    VIN = "WBAFR7C51BC400485",
                     Make = "BMW",
-                    Model = "M3",
+                    Model = "535i",
                     Year = 2011,
                     IsDeleted = false,
                     UserId = userGuid
                 },
                 new Car
                 {
-                    VIN = GenerateRandomVin.Generate(),
-                    Make = "Toyota",
-                    Model = "Yaris",
-                    Year = 2017,
+                    VIN = "WA1WMBFE1AD001465",
+                    Make = "Audi",
+                    Model = "Q7",
+                    Year = 2010,
+                    IsDeleted = false,
+                    UserId = userGuid
+                },
+                new Car
+                {
+                    VIN = "KNDUP131266609054",
+                    Make = "Kia",
+                    Model = "Sedona",
+                    Year = 2006,
+                    IsDeleted = false,
+                    UserId = userGuid
+                },
+                new Car
+                {
+                    VIN = "ZFF76ZFA0E0015561",
+                    Make = "Ferrari",
+                    Model = "Laferrari",
+                    Year = 2014,
+                    IsDeleted = false,
+                    UserId = userGuid
+                },
+                new Car
+                {
+                    VIN = "1FTCR10U4PPB51355",
+                    Make = "FORD",
+                    Model = "Ranger",
+                    Year = 1993,
                     IsDeleted = false,
                     UserId = userGuid
                 },
                 new Car
                 {
                     VIN = GenerateRandomVin.Generate(),
-                    Make = "Volvo",
-                    Model = "XC90",
+                    Make = "NoReal",
+                    Model = "Car",
                     Year = 2006,
                     IsDeleted = false,
                     UserId = userGuid

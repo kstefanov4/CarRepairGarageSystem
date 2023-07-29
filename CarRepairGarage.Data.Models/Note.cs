@@ -10,6 +10,10 @@
     [Comment("Garage Notes")]
     public class Note : BaseDeletableModel
     {
+        public Note()
+        {
+            Garages = new HashSet<Garage>();
+        }
         [Key]
         [Comment("Primary key")]
         public int Id { get; set; }
@@ -27,6 +31,8 @@
         [Required]
         [Comment("Note Image")]
         public string ImageUrl { get; set; } = null!;
+
+        public virtual ICollection<Garage> Garages { get; set; }
 
     }
 }

@@ -19,7 +19,6 @@
 
             await SeedRoleAsync(dbContext, roleManager, GeneralApplicationConstants.Roles.AdminRole);
             await SeedRoleAsync(dbContext, roleManager, GeneralApplicationConstants.Roles.ManagerRole);
-            await SeedRoleAsync(dbContext, roleManager, GeneralApplicationConstants.Roles.SupervisorRole);
             await SeedRoleAsync(dbContext, roleManager, GeneralApplicationConstants.Roles.UserRole);
         }
 

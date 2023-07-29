@@ -9,7 +9,7 @@
     using CarRepairGarage.Data.Common.Models;
 
     [Comment("User Appointments")]
-    public class Appointment : BaseDeletableModel
+    public class Appointment
     {
         public Appointment()
         {
@@ -48,6 +48,13 @@
 
         [ForeignKey(nameof(ServiceId))]
         public virtual Service Service { get; set; } = null!;
+
+        [Required]
+        [Comment("Appointed car")]
+        public int CarId { get; set; }
+
+        [ForeignKey(nameof(CarId))]
+        public virtual Car Car { get; set; } = null!;
 
         [Comment("Is appointment confirmed")]
         public bool? Confirmed { get; set; }

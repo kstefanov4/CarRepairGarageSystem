@@ -18,6 +18,7 @@
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new CityConfiguration());
             builder.ApplyConfiguration(new GarageConfiguration());
+            builder.ApplyConfiguration(new CarConfiguration());
             builder.ApplyConfiguration(new GarageServiceConfiguration());
             builder.ApplyConfiguration(new ServiceConfiguration());
             builder.ApplyConfiguration(new AppointmentConfiguration());

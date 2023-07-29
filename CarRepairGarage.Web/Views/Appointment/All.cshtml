@@ -1,0 +1,120 @@
+﻿@using CarRepairGarage.Web.ViewModels.Appointment;
+@model AllAppointmentsQueryModel
+
+@{
+    ViewData["Title"] = "Appointments Page";
+}
+
+@if (Model.Appointments.Count() < 1)
+{
+    <p>Your do not have any appointments!</p>
+}
+
+<hr />
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="Status"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var status in Model.Statuses)
+                    {
+                        <option value="@status">@status</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3 d-flex justify-content-between">
+            <div class="form-group">
+                <label asp-for="AppointmentSorting"></label>
+                <select asp-for="AppointmentSorting" class="form-control">
+                    <option value="0">Newest</option>
+                    <option value="1">Oldest</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mt-4 p-2">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+@{
+    var previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+    var maxPage = Math.Ceiling((double)Model.TotalGarages /
+    Model.AppointmentsPerPage);
+
+}
+<div class="row mb-5">
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" :
+        string.Empty)"
+           asp-controller="Appointment"
+           asp-action="All"
+           asp-route-currentPage="@previousPage"
+           asp-route-status="@Model.Status"
+           asp-route-sorting="@((int)Model.AppointmentSorting)"><<</a>
+    </div>
+    @{
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
+        !Model.Appointments.Any();
+    }
+    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary
+         @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+           asp-controller="Appointment"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)"
+           asp-route-status="@Model.Status"
+           asp-route-sorting="@((int)Model.AppointmentSorting)">>></a>
+    </div>
+</div>
+
+@if (Model.Appointments.Count() < 1)
+{
+    <p>Your do not have any appointments!</p>
+}
+<div class="container">
+    <div class="row">
+        @foreach (var appointment in Model.Appointments)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p>Garage: <b>@appointment.GarageName</b></p>
+                        <p>Service: <b>@appointment.ServiceName</b></p>
+                        <p>Car VIN: <b>@appointment.CarVIN</b></p>
+                        <p>Date: <b>@appointment.SelectedDate</b></p>
+                        <p>Time: <b>@appointment.SelectedTime</b></p>
+                        @if (appointment.IsApproved == null)
+                        {
+                            <p>Status: <b style="color: yellow;">Pending</b></p>
+                        }
+                        else if (appointment.IsApproved == true)
+                        {
+                            <p>Status: <b style="color: green;">Approved</b></p>
+                        }
+                        else
+                        {
+                            <p>Status: <b style="color: red;">Rejected</b></p>
+                        }
+                        <a asp-controller="Appointment" asp-action="Remove" asp-route-id="@appointment.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this element?");
+    }
+</script>

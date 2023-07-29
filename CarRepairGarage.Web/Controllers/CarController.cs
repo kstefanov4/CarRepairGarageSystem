@@ -139,7 +139,7 @@ namespace CarRepairGarage.Web.Controllers
             try
             {
                 await _carService.Delete(id);
-                TempData[SuccessMessage] = $"Your appointment was successfully deleted.";
+                TempData[SuccessMessage] = $"Your Car was successfully deleted.";
             }
             catch (Exception)
             {

@@ -1,11 +1,20 @@
-﻿@using CarRepairGarage.Web.ViewModels.Appointment;
+﻿@using CarRepairGarage.Data.Models;
+@using CarRepairGarage.Web.ViewModels.Appointment;
+@using Microsoft.AspNetCore.Identity;
+
 @model CreateAppointmentModel
-@inject CarRepairGarage.Services.Contracts.IGarageService garageService;
+
+@inject CarRepairGarage.Services.Contracts.IGarageService _garageService;
+@inject CarRepairGarage.Services.Contracts.ICarService _carService;
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Appointment Page";
 
-    var garages = await garageService.GetAllGaragesAsync(int.MaxValue);
+    var garages = await _garageService.GetAllGaragesAsync(int.MaxValue);
+
+    var user = await UserManager.GetUserAsync(User);
+    var cars = await _carService.GetAllCarsByUserIdAsync(user.Id);
 }
 
 <h1>Create Appointment</h1>
@@ -47,6 +56,18 @@
                         <option value="">Select Time</option>
                     </select>
                     <span asp-validation-for="SelectedTime" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CarId">Car</label>
+                    <select asp-for="CarId" class="form-control" required>
+                        <option value="">-- Select Car --</option>
+                        @foreach (var car in cars)
+                        {
+                            <option value="@car.Id">@car.VIN</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CarId" class="text-danger"></span>
                 </div>
 
                 <button style="margin-top: 15px" type="submit" class="btn btn-primary">Create</button>

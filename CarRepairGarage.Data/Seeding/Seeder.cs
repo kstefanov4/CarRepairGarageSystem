@@ -22,6 +22,7 @@
 
             await new RoleSeeder().SeedAsync(dbContext, serviceProvider);
             await new AccountSeeder().SeedAsync(dbContext, serviceProvider);
+            await new NoteSeeder().SeedAsync(dbContext, serviceProvider);
             await new CarSeeder().SeedAsync(dbContext, serviceProvider);
             await new CitySeeder().SeedAsync(dbContext, serviceProvider);
             await new AddressSeeder().SeedAsync(dbContext, serviceProvider);
@@ -30,7 +31,6 @@
             await new GarageSeeder().SeedAsync(dbContext, serviceProvider);
             await new GarageServiceSeeder().SeedAsync(dbContext, serviceProvider);
             await new AppointmentSeeder().SeedAsync(dbContext, serviceProvider);
-            await new NoteSeeder().SeedAsync(dbContext, serviceProvider);
             
         }
     }

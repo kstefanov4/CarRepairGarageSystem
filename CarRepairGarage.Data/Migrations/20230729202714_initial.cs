@@ -113,6 +113,7 @@ namespace CarRepairGarage.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Primary key")
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Service name"),
+                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true, comment: "Service Description"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -291,9 +292,10 @@ namespace CarRepairGarage.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Garage name"),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Garage Image"),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true, comment: "Garage Owner"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Garage Owner"),
                     CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Garage Category"),
                     AddressId = table.Column<int>(type: "int", nullable: false, comment: "Garage address"),
+                    NoteId = table.Column<int>(type: "int", nullable: false, comment: "Garage Note"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -309,12 +311,19 @@ namespace CarRepairGarage.Data.Migrations
                         name: "FK_Garages_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Garages_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Garages_Notes_NoteId",
+                        column: x => x.NoteId,
+                        principalTable: "Notes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 },
                 comment: "Repair Garage");
 
@@ -328,9 +337,8 @@ namespace CarRepairGarage.Data.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "User appointed"),
                     GarageId = table.Column<int>(type: "int", nullable: false, comment: "Appointed garage"),
                     ServiceId = table.Column<int>(type: "int", nullable: false, comment: "Appointed service"),
-                    Confirmed = table.Column<bool>(type: "bit", nullable: true, comment: "Is appointment confirmed"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CarId = table.Column<int>(type: "int", nullable: false, comment: "Appointed car"),
+                    Confirmed = table.Column<bool>(type: "bit", nullable: true, comment: "Is appointment confirmed")
                 },
                 constraints: table =>
                 {
@@ -341,6 +349,11 @@ namespace CarRepairGarage.Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Appointments_Garages_GarageId",
                         column: x => x.GarageId,
@@ -360,9 +373,7 @@ namespace CarRepairGarage.Data.Migrations
                 {
                     GarageId = table.Column<int>(type: "int", nullable: false, comment: "Garage"),
                     ServiceId = table.Column<int>(type: "int", nullable: false, comment: "Service"),
-                    Available = table.Column<bool>(type: "bit", nullable: false, comment: "Is garage service available"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Available = table.Column<bool>(type: "bit", nullable: false, comment: "Is garage service available")
                 },
                 constraints: table =>
                 {
@@ -384,6 +395,11 @@ namespace CarRepairGarage.Data.Migrations
                 name: "IX_Addresses_CityId",
                 table: "Addresses",
                 column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_CarId",
+                table: "Appointments",
+                column: "CarId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_GarageId",
@@ -460,6 +476,11 @@ namespace CarRepairGarage.Data.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Garages_NoteId",
+                table: "Garages",
+                column: "NoteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Garages_UserId",
                 table: "Garages",
                 column: "UserId");
@@ -491,13 +512,10 @@ namespace CarRepairGarage.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Cars");
-
-            migrationBuilder.DropTable(
                 name: "GaragesServices");
 
             migrationBuilder.DropTable(
-                name: "Notes");
+                name: "Cars");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -516,6 +534,9 @@ namespace CarRepairGarage.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Notes");
 
             migrationBuilder.DropTable(
                 name: "Cities");

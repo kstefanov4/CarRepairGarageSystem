@@ -11,6 +11,11 @@
     [Comment("User Car")]
     public class Car : BaseDeletableModel
     {
+        public Car()
+        {
+            Appointments = new HashSet<Appointment>();
+        }
+
         [Key]
         [Comment("Primary key")]
         public int Id { get; set; }
@@ -39,6 +44,8 @@
 
         [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser User { get; set; } = null!;
+
+        public virtual ICollection<Appointment> Appointments { get; set; }
 
     }
 }

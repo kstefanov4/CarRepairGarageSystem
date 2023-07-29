@@ -4,9 +4,6 @@
     {
         public const int ReleaseYear = 2023;
         public const string ApplicationTitle = "Car Repair Garage";
-        public const string AdministratorRole = "Administrator";
-        public const string ManagerRole = "Manager";
-
         public static class DataValidations
         {
             public const int TitleMaxLength = 35;
@@ -26,7 +23,6 @@
         {
             public const string AdminRole = "Admin";
             public const string ManagerRole = "Manager";
-            public const string SupervisorRole = "Supervisor";
             public const string UserRole = "User";
         }
     }

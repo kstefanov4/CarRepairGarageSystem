@@ -25,5 +25,9 @@ namespace CarRepairGarage.Web.ViewModels.Appointment
         [Required]
         [Display(Name = "Service")]
         public int ServiceId { get; set; }
+
+        [Required]
+        [Display(Name = "Car")]
+        public int CarId { get; set; }
     }
 }

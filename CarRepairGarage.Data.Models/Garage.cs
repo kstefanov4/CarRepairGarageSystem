@@ -32,21 +32,30 @@
         public string ImageUrl { get; set; } = null!;
         
         [Comment("Garage Owner")]
-        public Guid? UserId { get; set; }
+        public Guid UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public virtual ApplicationUser? Owner { get; set; }
+        public virtual ApplicationUser Owner { get; set; }
 
         [Comment("Garage Category")]
         public int CategoryId { get; set; }
 
+        [ForeignKey(nameof(CategoryId))]
         public virtual Category Category { get; set; } = null!;
 
         [Required]
         [Comment("Garage address")]
         public int AddressId { get; set; }
-        
+
+        [ForeignKey(nameof(AddressId))]
         public virtual Address Address { get; set; } = null!;
+        
+        [Required]
+        [Comment("Garage Note")]
+        public int NoteId { get; set; }
+
+        [ForeignKey(nameof(NoteId))]
+        public virtual Note Note { get; set; } = null!;
 
         public virtual ICollection<GarageService> Services { get; set; }
 

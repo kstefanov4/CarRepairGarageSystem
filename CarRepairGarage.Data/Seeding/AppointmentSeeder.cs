@@ -21,6 +21,8 @@ namespace CarRepairGarage.Data.Seeding
                 return;
             }
 
+            Random rand = new Random();
+
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             Guid userGuid = userManager.FindByNameAsync("user@mail.com").Result.Id;
 
@@ -28,9 +30,17 @@ namespace CarRepairGarage.Data.Seeding
 
             var appointments = new List<Appointment>();
 
+            var carsIds = await dbContext.Cars
+                    .Where(x => x.UserId == userGuid).Select(x => x.Id)
+                    .ToListAsync();
+
             foreach (var garage in garages)
             {
-                var service = await dbContext.GaragesServices.Where(x => x.GarageId == garage.Id).FirstOrDefaultAsync();
+                var service = await dbContext.GaragesServices
+                    .Where(x => x.GarageId == garage.Id)
+                    .FirstOrDefaultAsync();
+
+                int carid = rand.Next(carsIds.Count);
 
                 appointments.Add(new Appointment
                 {
@@ -39,7 +49,7 @@ namespace CarRepairGarage.Data.Seeding
                     GarageId = garage.Id,
                     ServiceId = service!.ServiceId,
                     UserId = userGuid,
-                    IsDeleted = false
+                    CarId = carid
                 }); 
             }
 

@@ -24,7 +24,9 @@
                 userManager,
                 roleManager,
                 "admin@mail.com",
-                "Admin");
+                "Admin",
+                "Admincho",
+                "Adminov");
 
             // Create User
             await CreateUser(
@@ -32,7 +34,9 @@
                 userManager,
                 roleManager,
                 "user@mail.com",
-                "User");
+                "User",
+                "Usercho",
+                "Userov");
 
             await CreateUser(
                 dbContext,
@@ -42,6 +46,15 @@
                 "User",
                 "User2",
                 "Userov");
+
+            await CreateUser(
+                dbContext,
+                userManager,
+                roleManager,
+                "garageManager@mail.com",
+                "Manager",
+                "Garage",
+                "Mladost");
         }
 
         private static async Task CreateUser(
@@ -61,7 +74,7 @@
                 EmailConfirmed = true
             };
 
-            var password = "Admin123!";
+            var password = "123456";
 
             if (roleName != null)
             {

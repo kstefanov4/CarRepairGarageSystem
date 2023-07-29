@@ -28,6 +28,12 @@ namespace CarRepairGarage.Data.Configurations
                 .WithMany(s => s.Appointments)
                 .HasForeignKey(a => a.ServiceId);
 
+            builder
+                .HasOne(a => a.Car)
+                .WithMany(s => s.Appointments)
+                .HasForeignKey(a => a.CarId);
+
+
             /*builder
                 .HasOne(a => a.GarageService)
                 .WithMany(ss => ss.Appointments)
