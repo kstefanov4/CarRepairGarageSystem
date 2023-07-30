@@ -11,8 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CarRepairGarage.Common\CarRepairGarage.Common.csproj" />
     <ProjectReference Include="..\CarRepairGarage.Data\CarRepairGarage.Data.csproj" />
+    <ProjectReference Include="..\CarRepairGarage.Services.Data\CarRepairGarage.Services.csproj" />
     <ProjectReference Include="..\CarRepairGarage.Web.ViewModels\CarRepairGarage.Web.ViewModels.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
-﻿using CarRepairGarage.Services.Contracts;
+﻿using CarRepairGarage.Data.Models;
+using CarRepairGarage.Services;
+using CarRepairGarage.Services.Contracts;
 using CarRepairGarage.Web.ViewModels.Note;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +10,15 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
 {
     public class NoteController : BaseController
     {
-        private readonly IGarageService _garageService;
+        private readonly INoteService _noteService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public NoteController(IGarageService garageService)
+        public NoteController(
+            INoteService noteService,
+            UserManager<ApplicationUser> userManager)
         {
-            _garageService = garageService;
+            _noteService = noteService;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -31,7 +37,7 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
 
             try
             {
-                await _garageService.CreateNoteAsync(model);
+                await _noteService.CreateNoteAsync(model);
                 TempData[SuccessMessage] = $"Your Note {model.Title} was successfully created.";
             }
             catch (Exception)
@@ -41,6 +47,37 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
             }
 
             return RedirectToAction("All","Dashboard");
+        }
+
+        public async Task<IActionResult> Remove(int id)
+        {
+            try
+            {
+                await _noteService.Delete(id);
+                TempData[SuccessMessage] = $"Your Note was successfully deleted.";
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
+                return RedirectToAction("All", "Dashboard");
+            }
+
+            return RedirectToAction("All", "Dashboard");
+        }
+        public async Task<IActionResult> RemoveAll(int id)
+        {
+            try
+            {
+                await _noteService.DeleteAll(id);
+                TempData[SuccessMessage] = $"Your Note was successfully deleted.";
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
+                return RedirectToAction("All", "Dashboard");
+            }
+
+            return RedirectToAction("All", "Dashboard");
         }
     }
 }

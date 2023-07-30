@@ -241,6 +241,27 @@ namespace CarRepairGarage.Services
             return appointments;*/
         }
 
+        public async Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByGarageIdAsync(int id)
+        {
+            var appointments = await _repository.AllReadonly<Appointment>()
+                .Include(x => x.Garage)
+                .Where(x => x.Garage.Id == id && x.Garage.IsDeleted == false)
+                .Select(x => new AppointmentDetailsViewModel()
+                {
+                    Id = x.Id.ToString(),
+                    GarageName = x.Garage.Name,
+                    GarageId = x.GarageId,
+                    ServiceId = x.ServiceId,
+                    ServiceName = x.Service.Name,
+                    SelectedDate = x.Date.ToString(@"yyyy-MM-dd"),
+                    SelectedTime = x.Time.ToString(@"hh\:mm"),
+                    IsApproved = x.Confirmed
+                })
+                .ToListAsync();
+
+            return appointments;
+        }
+
         public async Task<List<string>> GetAllAvailableHours(DateTime dateTime, int garageId, int serviceId)
         {
             List<string> hours = await _repository.AllReadonly<Appointment>()

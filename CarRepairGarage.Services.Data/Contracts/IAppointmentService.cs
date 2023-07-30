@@ -15,6 +15,7 @@ namespace CarRepairGarage.Services.Contracts
         Task CreateAppointmentAsync(CreateAppointmentModel model, ApplicationUser user);
         Task<AllAppointmentsFilteredAndPagedServiceModel> GetAllAppointmentsByUserIdAsync(AllAppointmentsQueryModel queryModel, Guid id);
         Task<AllAppointmentsFilteredAndPagedServiceModel> GetAllAppointmentsByGarageIdAsync(AllAppointmentsQueryModel queryModel, Guid id);
+        Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByGarageIdAsync(int id);
         Task<bool> Exist(Guid id);
         Task<AppointmentModel> GetAppointmentByIdAsync(string id);
         Task Delete(Guid id);

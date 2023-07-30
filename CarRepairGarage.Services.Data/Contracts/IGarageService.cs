@@ -16,6 +16,6 @@
         Task<bool> Exists(int id);
         Task Edit(ModifyGarageViewModel model);
         Task Delete(int id);
-        Task CreateNoteAsync(AddNoteViewModel model);
+        
     }
 }

@@ -46,6 +46,7 @@
     <ProjectReference Include="..\CarRepairGarage.Common\CarRepairGarage.Common.csproj" />
     <ProjectReference Include="..\CarRepairGarage.Data\CarRepairGarage.Data.csproj" />
     <ProjectReference Include="..\CarRepairGarage.Services.Data\CarRepairGarage.Services.csproj" />
+    <ProjectReference Include="..\CarRepairGarage.Web.Components\CarRepairGarage.Web.Components.csproj" />
     <ProjectReference Include="..\CarRepairGarage.Web.ViewModels\CarRepairGarage.Web.ViewModels.csproj" />
   </ItemGroup>
 
@@ -83,6 +84,10 @@
 
   <ItemGroup>
     <Content Include="Areas\Manager\Views\Note\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Manager\Views\Shared\Components\AllAppointmentsByGarage\Default.cshtml" />
   </ItemGroup>
 
 </Project>

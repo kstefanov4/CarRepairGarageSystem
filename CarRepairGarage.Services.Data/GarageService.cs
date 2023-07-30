@@ -291,7 +291,12 @@
                     Services = x.Services.Select(x => x.Service.Name).ToList(),
                     ImageUrl = x.ImageUrl,
                     StreetName = x.Address.StreetName,
-                    StreetNumber = x.Address.StreetNumber.ToString()
+                    StreetNumber = x.Address.StreetNumber.ToString(),
+                    NoteId = x.Note.Id,
+                    NoteTitle = x.Note.Title,
+                    NoteDescription = x.Note.Description,
+                    NoteImageUrl = x.Note.ImageUrl,
+                    NoteIsVisible = x.Note.Vissible
                 }).ToListAsync();
 
             return garages;
@@ -373,35 +378,6 @@
             }
         }
 
-        public async Task CreateNoteAsync(AddNoteViewModel model)
-        {
-            
-            foreach (var garageId in model.GarageIds)
-            {
-                var garage = await _repository.All<Garage>()
-                    .Include(x => x.Note)
-                    .Where(x => x.Id == garageId)
-                    .FirstAsync();
-                    
-                garage.Note = new Note()
-                {
-                    Title = model.Title,
-                    Description = model.Description,
-                    ImageUrl = model.ImageUrl,
-                    Vissible = true
-                };
-
-            }
-
-            try
-            {
-                await _repository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(nameof(Delete), ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }
-        }
+        
     }
 }

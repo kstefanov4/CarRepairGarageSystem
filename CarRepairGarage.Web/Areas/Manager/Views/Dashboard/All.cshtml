@@ -8,30 +8,46 @@
 <div class="container">
     @foreach (var garage in Model)
     {
-        <div class="card my-3">
-            <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="@garage.ImageUrl" class="card-img" alt="Garage Image">
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <img class="card-img-top" style="width: 20rem;" src="@garage.ImageUrl" alt="Garage Image">
                 </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">@garage.Name</h5>
-                        <p class="card-text">Category: <b>@garage.Category</b></p>
-                        <p class="card-text">City: <b>@garage.City</b></p>
-                        <p class="card-text">Street Name: <b>@garage.StreetName</b></p>
-                        <p class="card-text">Street Number: <b>@garage.StreetNumber</b></p>
-                        <p class="card-text">Services:</p>
-                        <ul>
-                            @foreach (var service in garage.Services)
+
+                <div class="col-4">
+                    <div class="card border-0">
+                        <p style="font-size: 25px;"><u>@garage.Name</u></p>
+                        <p>Category: <b>@garage.Category</b></p>
+                        <p>City: <b>@garage.City</b></p>
+                        <p>Address: <b>@garage.StreetName</b> <b>@garage.StreetNumber</b></p>
+                        <p>Services:</p>
+                        <div class="form-inline">
+                            @foreach (var service in @garage.Services)
                             {
-                                <li>@service</li>
+                                <p>-- @service</p>
                             }
-                        </ul>
-                        <a asp-area="Manager" asp-controller="Dashboard" asp-action="Modify" asp-route-id="@garage.Id" class="btn btn-success">Modify</a>
-                        <a asp-area="Manager" asp-controller="Dashboard" asp-action="Remove" asp-route-id="@garage.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove</a>
+                            <a asp-area="Manager" asp-controller="Dashboard" asp-action="Modify" asp-route-id="@garage.Id" class="btn btn-success">Modify</a>
+                            <a asp-area="Manager" asp-controller="Dashboard" asp-action="Remove" asp-route-id="@garage.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove</a>
+                        </div>
+
                     </div>
                 </div>
+
+                <div class="col-4">
+                    @if (garage.NoteTitle != null)
+                    {
+                        <img class="card-img-top" style="width: 20rem;" src="@garage.NoteImageUrl" alt="Note Image">
+                        <p style="font-size: 25px;"><u>@garage.NoteTitle</u></p>
+                        <p>@garage.NoteDescription</p>
+                        <a asp-area="Manager" asp-controller="Note" asp-action="Remove" asp-route-id="@garage.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove for this Garage</a>
+                        <a asp-area="Manager" asp-controller="Note" asp-action="RemoveAll" asp-route-id="@garage.NoteId" class="btn btn-warning" onclick="return confirmDelete()">Remove for all Garages</a>
+                    }
+
+                </div>
             </div>
+        </div>
+        <div>
+            @await Component.InvokeAsync("AllAppointmentsByGarage", garage.Id)
         </div>
     }
 </div>
@@ -47,7 +63,7 @@
                         <a class="page-link" href="/Manager/Dashboard/All?pageIndex=@i">@i</a>
                     </li>
                 }
-                
+
             </ul>
         </nav>
     </div>
