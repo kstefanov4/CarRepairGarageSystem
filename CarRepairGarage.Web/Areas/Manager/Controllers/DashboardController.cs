@@ -26,6 +26,9 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
         [HttpGet]
         public async Task<IActionResult> All(int pageIndex = 1)
         {
+            var referer = Request.Headers["Referer"].ToString();
+            ViewBag.RefererUrl = referer;
+
             string userId = _userManager.GetUserId(User);
             IEnumerable<GarageViewModel> model = await _garageService.GetAllGaragesByOwnerAsync(userId);
 

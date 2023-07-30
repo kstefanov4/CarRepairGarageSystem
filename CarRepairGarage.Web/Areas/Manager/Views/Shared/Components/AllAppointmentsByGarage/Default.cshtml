@@ -38,7 +38,7 @@
                                     <p>Status: <b style="color: red;">Rejected</b></p>
                                 }
                             }
-                            <a asp-area="Manager" asp-controller="Appointment" asp-action="Approve" asp-route-id="@appointment.Id" class="btn btn-success">Approve</a>
+                            <a asp-area="Manager" asp-controller="Appointment" asp-action="Approve" asp-route-id="@appointment.Id" asp-route-returnUrl="@ViewBag.RefererUrl" class=" btn btn-success">Approve</a>
                             <a asp-area="Manager" asp-controller="Appointment" asp-action="Reject" asp-route-id="@appointment.Id" class="btn btn-warning" onclick="return confirmReject()">Reject</a>
                         </div>
                     </div>

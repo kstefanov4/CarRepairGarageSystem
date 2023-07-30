@@ -50,8 +50,9 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
             return View(model);*/
         }
 
-        public async Task<IActionResult> Approve(Guid id)
+        public async Task<IActionResult> Approve(Guid id, string returnUrl)
         {
+
             if ((await _appointmentService.Exist(id)) == false)
             {
                 TempData[ErrorMessage] = "This appointment does not exist!";
@@ -79,6 +80,10 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
             return RedirectToAction(nameof(All));
         }
 
