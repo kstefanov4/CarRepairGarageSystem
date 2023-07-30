@@ -375,24 +375,7 @@
 
         public async Task CreateNoteAsync(AddNoteViewModel model)
         {
-            /*Note note = new Note()
-            {
-                Title = model.Title,
-                Description = model.Description,
-                ImageUrl = model.ImageUrl,
-                Vissible = true
-            };
-
-            *//*try
-            {
-                await _repository.AddAsync(note);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(nameof(Delete), ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }*/
-
+            
             foreach (var garageId in model.GarageIds)
             {
                 var garage = await _repository.All<Garage>()
