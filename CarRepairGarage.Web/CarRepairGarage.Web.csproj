@@ -26,6 +26,7 @@
     <Compile Include="Areas\Manager\Controllers\AppointmentController.cs" />
     <Compile Include="Areas\Manager\Controllers\BaseController.cs" />
     <Compile Include="Areas\Manager\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Manager\Controllers\NoteController.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -77,11 +78,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Areas\Manager\Views\Appointment\All2.cshtml" />
+    <Content Include="Areas\Manager\Views\Appointment\All.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Areas\Manager\Views\Appointment\All.cshtml" />
+    <Content Include="Areas\Manager\Views\Note\Index.cshtml" />
   </ItemGroup>
 
 </Project>

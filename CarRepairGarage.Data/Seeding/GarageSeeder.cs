@@ -25,7 +25,6 @@
                     AddressId = 1,
                     CategoryId = 3,
                     UserId = userGuid,
-                    NoteId = 1,
                     ImageUrl = "https://media.istockphoto.com/id/513706427/photo/auto-repair-shop-with-car-serviced-by-mechanics.jpg?s=612x612&w=0&k=20&c=P8roDdc_ayEVEaGJlpwYf4QhxKJjEpJzeRtdxbGWiZc=",
                     IsDeleted = false
                 },

@@ -6,11 +6,11 @@
 }
 <div class="container">
     <div class="row">
-        <div class="col-4 d-inline-block">
+        <div class="col-4">
             <img class="card-img-top" style="width: 20rem;" src="@Model.ImageUrl" alt="House Image">
         </div>
-        
-        <div class="col-8 d-inline-block">
+
+        <div class="col-4">
             <div class="card border-0">
                 <p style="font-size: 25px;"><u>@Model.Name</u></p>
                 <p>Category: <b>@Model.Category</b></p>
@@ -27,8 +27,24 @@
                    class="btn btn-success">Reserve</a>
             </div>
         </div>
+
+        <div class="col-4">
+            @if(Model.NoteTitle != null)
+            {
+                <img class="card-img-top" style="width: 20rem;" src="@Model.NoteImageUrl" alt="House Image">
+                <p style="font-size: 25px;"><u>@Model.NoteTitle</u></p>
+                <p>@Model.NoteDescription</p>
+            }
+            
+        </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        initMap();
+    });
+</script>
 
 <div id="map" style="height: 400px; width: 100%;">
     <script>

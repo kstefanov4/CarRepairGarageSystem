@@ -2,6 +2,8 @@
 {
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Web.ViewModels.Garage;
+    using CarRepairGarage.Web.ViewModels.Note;
+
     public interface IGarageService
     {
         Task<IEnumerable<GarageViewModel>> GetAllGaragesAsync(int count);
@@ -14,5 +16,6 @@
         Task<bool> Exists(int id);
         Task Edit(ModifyGarageViewModel model);
         Task Delete(int id);
+        Task CreateNoteAsync(AddNoteViewModel model);
     }
 }

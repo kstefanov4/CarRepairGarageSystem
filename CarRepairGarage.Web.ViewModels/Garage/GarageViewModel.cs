@@ -17,6 +17,10 @@ namespace CarRepairGarage.Web.ViewModels.Garage
         public string City { get; set; } = null!;
         public string StreetName { get; set; } = null!;
         public string StreetNumber { get; set; } = null!;
+        public string? NoteTitle { get; set; }
+        public string? NoteImageUrl { get; set; }
+        public string? NoteDescription { get; set; }
+        public bool? NoteIsVisible { get; set; }
 
         public ICollection<string> Services { get; set; } = new List<string>();
     }

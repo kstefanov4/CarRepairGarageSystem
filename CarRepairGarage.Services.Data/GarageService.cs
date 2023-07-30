@@ -12,6 +12,7 @@
     using CarRepairGarage.Web.ViewModels.Service;
     using System.Net;
     using System.Runtime.Loader;
+    using CarRepairGarage.Web.ViewModels.Note;
 
     public class GarageService : IGarageService
     {
@@ -311,7 +312,7 @@
 
         public async Task<GarageViewModel> GetGarageByIdAsync(int id)
         {
-            GarageViewModel? garage = await _repository.AllReadonly<Garage>()
+            GarageViewModel garage = await _repository.AllReadonly<Garage>()
                 .Where(x => x.Id == id && x.IsDeleted == false)
                 .Select(g => new GarageViewModel()
                 {
@@ -323,10 +324,15 @@
                     StreetName = g.Address.StreetName,
                     StreetNumber = g.Address.StreetNumber.ToString(),
                     Services = g.Services.Select(s => s.Service.Name).ToList(),
-                    Category = g.Category.Name
+                    Category = g.Category.Name,
+                    NoteTitle = g.Note.Title,
+                    NoteDescription = g.Note.Description,
+                    NoteImageUrl = g.Note.ImageUrl,
+                    NoteIsVisible = g.Note.Vissible
+                    
 
                 })
-                .FirstOrDefaultAsync();
+                .FirstAsync();
 
             return garage!;
         }
@@ -367,5 +373,52 @@
             }
         }
 
+        public async Task CreateNoteAsync(AddNoteViewModel model)
+        {
+            /*Note note = new Note()
+            {
+                Title = model.Title,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                Vissible = true
+            };
+
+            *//*try
+            {
+                await _repository.AddAsync(note);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(nameof(Delete), ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }*/
+
+            foreach (var garageId in model.GarageIds)
+            {
+                var garage = await _repository.All<Garage>()
+                    .Include(x => x.Note)
+                    .Where(x => x.Id == garageId)
+                    .FirstAsync();
+                    
+                garage.Note = new Note()
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    ImageUrl = model.ImageUrl,
+                    Vissible = true
+                };
+
+            }
+
+            try
+            {
+                await _repository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(nameof(Delete), ex);
+                throw new ApplicationException("Database failed to save info", ex);
+            }
+        }
     }
 }

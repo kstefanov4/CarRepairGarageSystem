@@ -21,8 +21,6 @@ namespace CarRepairGarage.Data.Seeding
                 return;
             }
 
-            Random rand = new Random();
-
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             Guid userGuid = userManager.FindByNameAsync("user@mail.com").Result.Id;
 
@@ -40,8 +38,6 @@ namespace CarRepairGarage.Data.Seeding
                     .Where(x => x.GarageId == garage.Id)
                     .FirstOrDefaultAsync();
 
-                int carid = rand.Next(carsIds.Count);
-
                 appointments.Add(new Appointment
                 {
                     Date = DateTime.Now.AddDays(15),
@@ -49,7 +45,7 @@ namespace CarRepairGarage.Data.Seeding
                     GarageId = garage.Id,
                     ServiceId = service!.ServiceId,
                     UserId = userGuid,
-                    CarId = carid
+                    CarId = 1
                 }); 
             }
 

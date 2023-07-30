@@ -97,6 +97,7 @@ namespace CarRepairGarage.Data.Migrations
                     Title = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false, comment: "Note Title"),
                     Description = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false, comment: "Note description"),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Note Image"),
+                    Vissible = table.Column<bool>(type: "bit", nullable: false, comment: "Is Note Vissible"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -295,7 +296,7 @@ namespace CarRepairGarage.Data.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Garage Owner"),
                     CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Garage Category"),
                     AddressId = table.Column<int>(type: "int", nullable: false, comment: "Garage address"),
-                    NoteId = table.Column<int>(type: "int", nullable: false, comment: "Garage Note"),
+                    NoteId = table.Column<int>(type: "int", nullable: true, comment: "Garage Note"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -322,8 +323,7 @@ namespace CarRepairGarage.Data.Migrations
                         name: "FK_Garages_Notes_NoteId",
                         column: x => x.NoteId,
                         principalTable: "Notes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 },
                 comment: "Repair Garage");
 

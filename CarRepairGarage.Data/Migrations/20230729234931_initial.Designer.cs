@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRepairGarage.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230729202714_initial")]
+    [Migration("20230729234931_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -375,7 +375,7 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasComment("Garage name");
 
-                    b.Property<int>("NoteId")
+                    b.Property<int?>("NoteId")
                         .HasColumnType("int")
                         .HasComment("Garage Note");
 
@@ -452,6 +452,10 @@ namespace CarRepairGarage.Data.Migrations
                         .HasMaxLength(35)
                         .HasColumnType("nvarchar(35)")
                         .HasComment("Note Title");
+
+                    b.Property<bool>("Vissible")
+                        .HasColumnType("bit")
+                        .HasComment("Is Note Vissible");
 
                     b.HasKey("Id");
 
@@ -678,9 +682,7 @@ namespace CarRepairGarage.Data.Migrations
 
                     b.HasOne("CarRepairGarage.Data.Models.Note", "Note")
                         .WithMany("Garages")
-                        .HasForeignKey("NoteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NoteId");
 
                     b.HasOne("CarRepairGarage.Data.Models.ApplicationUser", "Owner")
                         .WithMany("Garages")

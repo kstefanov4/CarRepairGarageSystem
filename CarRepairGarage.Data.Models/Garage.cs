@@ -50,12 +50,11 @@
         [ForeignKey(nameof(AddressId))]
         public virtual Address Address { get; set; } = null!;
         
-        [Required]
         [Comment("Garage Note")]
-        public int NoteId { get; set; }
+        public int? NoteId { get; set; }
 
         [ForeignKey(nameof(NoteId))]
-        public virtual Note Note { get; set; } = null!;
+        public virtual Note? Note { get; set; }
 
         public virtual ICollection<GarageService> Services { get; set; }
 

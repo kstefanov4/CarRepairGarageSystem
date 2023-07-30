@@ -32,6 +32,10 @@
         [Comment("Note Image")]
         public string ImageUrl { get; set; } = null!;
 
+        [Required]
+        [Comment("Is Note Vissible")]
+        public bool Vissible { get; set; }
+
         public virtual ICollection<Garage> Garages { get; set; }
 
     }

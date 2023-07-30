@@ -1,0 +1,52 @@
+﻿@using CarRepairGarage.Data.Models;
+@using CarRepairGarage.Web.ViewModels.Note;
+@using Microsoft.AspNetCore.Identity;
+@model AddNoteViewModel
+@inject CarRepairGarage.Services.Contracts.IGarageService _garageService;
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Create Node";
+    var user = await UserManager.GetUserAsync(User);
+    var garages = await _garageService.GetAllGaragesByOwnerAsync(user.Id.ToString());
+}
+
+<form asp-action="Index">
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" name="Title" class="form-control"
+               placeholder="Title">
+        <span asp-validation-for="Title" class="small text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl"></label>
+        <input asp-for="ImageUrl" name="ImageUrl" class="form-control"
+               placeholder="ImageUrl">
+        <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" name="Description" class="form-control"
+               placeholder="Description">
+        <span asp-validation-for="Description" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Garages</label>
+        @foreach (var garage in garages)
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="GarageIds" value="@garage.Id">
+                <label class="form-check-label">@garage.Name</label>
+            </div>
+        }
+    </div>
+
+    <input type="submit" value="Add" class="btn btn-primary" />
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
