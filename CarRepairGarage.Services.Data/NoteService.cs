@@ -9,17 +9,16 @@
     using CarRepairGarage.Web.ViewModels.Note;
     using CarRepairGarage.Web.ViewModels.Garage;
 
-    public class NoteService : INoteService
+    public class NoteService : BaseService, INoteService
     {
         private readonly IRepository _repository;
         private readonly ILogger<NoteService> _logger;
 
         public NoteService(
             IRepository repository,
-            ILogger<NoteService> logger)
+            ILogger<NoteService> logger) : base(logger)
         {
             _repository = repository;
-            _logger = logger;
         }
         public async Task CreateNoteAsync(AddNoteViewModel model)
         {
@@ -44,15 +43,10 @@
 
             }
 
-            try
+            await ExecuteDatabaseAction(async () =>
             {
                 await _repository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(nameof(CreateNoteAsync), ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }
+            });
         }
 
         public async Task Delete(int id)
@@ -91,19 +85,6 @@
         {
             return await _repository.AllReadonly<Note>()
                 .AnyAsync(x => x.Id == id);
-        }
-
-        private async Task ExecuteDatabaseAction(Func<Task> databaseAction)
-        {
-            try
-            {
-                await databaseAction.Invoke();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(databaseAction.Method.Name, ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }
         }
 
         private static async Task<string> GetImagePath(AddNoteViewModel model)

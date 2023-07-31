@@ -7,6 +7,7 @@ namespace CarRepairGarage.Web
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Seeding;
     using CarRepairGarage.Services.DIConfiguration;
+    using Microsoft.AspNetCore.Mvc;
 
     public class Program
     {
@@ -38,7 +39,11 @@ namespace CarRepairGarage.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddApplicationServices();
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(op =>
+            {
+                op.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
+
             builder.Services.AddRazorPages();
 
             WebApplication app = builder.Build();

@@ -37,7 +37,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             AddCarViewModel model = new AddCarViewModel();
 
@@ -112,8 +112,17 @@
                 TempData[ErrorMessage] = "You are not the owner of this car. Please contact our support team!";
                 return RedirectToPage("/Account/AccessDenied", new { area = "Identity" });
             }
-
-            await _carService.Edit(id, model);
+            
+            try
+            {
+                await _carService.Edit(id, model);
+                TempData[SuccessMessage] = $"Your Car was successfully edited.";
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
+                return RedirectToAction(nameof(Index));
+            }
             return RedirectToAction(nameof(Index));
         }
 

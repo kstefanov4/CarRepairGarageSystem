@@ -12,7 +12,7 @@
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            Guid userGuid = userManager.FindByNameAsync("user@mail.com").Result.Id;
+            Guid userGuid = userManager.FindByNameAsync(CarRepairGarage.Common.GeneralApplicationConstants.AccountsData.UserEmail).Result.Id;
 
             if (dbContext.Cars.Any())
             {

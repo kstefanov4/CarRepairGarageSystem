@@ -16,15 +16,12 @@
     public class GarageService : BaseService, IGarageService
     {
         private readonly IRepository _repository;
-        private readonly ICityService _cityService;
         public GarageService(
             IRepository repository,
-            ILogger<GarageService> logger,
-            ICityService cityService)
+            ILogger<GarageService> logger)
             :base(logger)
         {
             _repository = repository;
-            _cityService = cityService;
 
         }
 
@@ -266,7 +263,7 @@
                     {
                         await _repository.AddAsync(newCity);
                     });
-                    //await _repository.AddAsync(newCity);
+                    
                     city = newCity;
                 }
             }
@@ -280,7 +277,7 @@
                 {
                     await _repository.AddAsync(newAddress);
                 });
-                //await _repository.AddAsync(newAddress);
+                
                 address = newAddress;
             }
 
@@ -318,6 +315,7 @@
         {
             var garages = await _repository.AllReadonly<Garage>()
                 .Where(x => x.UserId.ToString() == id && x.IsDeleted == false)
+                .OrderByDescending(x => x.Id)
                 .Select(x => new GarageViewModel()
                 {
                     Id = x.Id,

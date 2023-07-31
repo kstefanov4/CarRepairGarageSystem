@@ -4,6 +4,20 @@
     {
         public const int ReleaseYear = 2023;
         public const string ApplicationTitle = "Car Repair Garage";
+
+        public static class Roles
+        {
+            public const string AdminRole = "Admin";
+            public const string ManagerRole = "Manager";
+            public const string UserRole = "User";
+        }
+
+        public static class AccountsData
+        {
+            public const string AdminEmail = "admin@mail.com";
+            public const string UserEmail = "user@mail.com";
+            public const string ManagerEmail = "garageManager@mail.com";
+        }
         public static class Validations
         {
            
@@ -49,11 +63,6 @@
             public const int ServiceNameMaxLenght = 50;
         }
 
-        public static class Roles
-        {
-            public const string AdminRole = "Admin";
-            public const string ManagerRole = "Manager";
-            public const string UserRole = "User";
-        }
+        
     }
 }

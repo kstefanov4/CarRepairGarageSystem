@@ -16,7 +16,7 @@
             }
 
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            Guid userGuid = userManager.FindByNameAsync("garageManager@mail.com").Result.Id;
+            Guid userGuid = userManager.FindByNameAsync(CarRepairGarage.Common.GeneralApplicationConstants.AccountsData.ManagerEmail).Result.Id;
 
             Garage[] garages = new Garage[]
             {

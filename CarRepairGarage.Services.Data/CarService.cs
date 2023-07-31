@@ -12,17 +12,15 @@
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Car;
 
-    public class CarService : ICarService
+    public class CarService : BaseService, ICarService
     {
         private readonly IRepository _repository;
-        private readonly ILogger _logger;
 
         public CarService(
             IRepository repository,
-            ILogger<CarService> logger)
+            ILogger<CarService> logger) : base(logger)
         {
             _repository = repository;
-            _logger = logger;
         }
 
         public async Task AddCarAsync(AddCarViewModel carModel, ApplicationUser user)
@@ -105,19 +103,6 @@
                 Year = car.Year,
                 UserId = car.UserId.ToString()
             };
-        }
-
-        private async Task ExecuteDatabaseAction(Func<Task> databaseAction)
-        {
-            try
-            {
-                await databaseAction.Invoke();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(databaseAction.Method.Name, ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }
         }
     }
 }

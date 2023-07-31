@@ -10,7 +10,7 @@
 
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Seeding.Contracts;
-
+    using CarRepairGarage.Common;
     public class AccountSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
@@ -23,8 +23,8 @@
                 dbContext,
                 userManager,
                 roleManager,
-                "admin@mail.com",
-                "Admin",
+                GeneralApplicationConstants.AccountsData.AdminEmail,
+                GeneralApplicationConstants.Roles.AdminRole,
                 "Admincho",
                 "Adminov");
 
@@ -33,8 +33,8 @@
                 dbContext,
                 userManager,
                 roleManager,
-                "user@mail.com",
-                "User",
+                GeneralApplicationConstants.AccountsData.UserEmail,
+                GeneralApplicationConstants.Roles.UserRole,
                 "Usercho",
                 "Userov");
 
@@ -42,17 +42,8 @@
                 dbContext,
                 userManager,
                 roleManager,
-                "user2@mail.com",
-                "User",
-                "User2",
-                "Userov");
-
-            await CreateUser(
-                dbContext,
-                userManager,
-                roleManager,
-                "garageManager@mail.com",
-                "Manager",
+                GeneralApplicationConstants.AccountsData.ManagerEmail,
+                GeneralApplicationConstants.Roles.ManagerRole,
                 "Garage",
                 "Mladost");
         }
