@@ -15,20 +15,7 @@
 
 <body>
     <partial name="_NotificationsPartial" />
-    @if (!Context.Request.Cookies.ContainsKey("CookieConsent"))
-    {
-        <div class="alert alert-info fixed-bottom mb-0 rounded-0">
-            Our website uses cookies to ensure you get the best experience.
-            <button id="acceptCookies" class="btn btn-info">I accept</button>
-        </div>
-
-        <script>
-            document.getElementById("acceptCookies").onclick = function () {
-                document.cookie = "CookieConsent=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
-                location.reload(true);
-            }
-        </script>
-    }
+    
     <div class="container">
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">

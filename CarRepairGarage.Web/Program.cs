@@ -50,12 +50,6 @@ namespace CarRepairGarage.Web
             builder.Services.AddScoped<ICityService, CityService>();
             builder.Services.AddScoped<INoteService, NoteService>();
 
-            builder.Services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
@@ -80,7 +74,7 @@ namespace CarRepairGarage.Web
                 app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
                 app.UseHsts();
             }
-            app.UseCookiePolicy();
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
