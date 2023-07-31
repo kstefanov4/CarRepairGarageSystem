@@ -46,29 +46,4 @@
     });
 </script>
 
-<div id="map" style="height: 400px; width: 100%;">
-    <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 12
-            });
-
-            var geocoder = new google.maps.Geocoder();
-            var address = "@Model.City, @Model.StreetName @Model.StreetNumber";
-
-            geocoder.geocode({ 'address': address }, function (results, status) {
-                if (status === 'OK') {
-                    var coordinates = results[0].geometry.location;
-                    map.setCenter(coordinates);
-
-                    var marker = new google.maps.Marker({
-                        position: coordinates,
-                        map: map
-                    });
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-        }
-    </script>
-</div>
+<partial name="_GoogleMapsScrypt" />

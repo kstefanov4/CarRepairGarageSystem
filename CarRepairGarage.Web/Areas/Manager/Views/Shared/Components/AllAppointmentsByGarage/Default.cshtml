@@ -11,43 +11,13 @@
         {
             @if (appointment.IsApproved == null)
             {
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <p>Garage: <b>@appointment.GarageName</b></p>
-                            <p>Service: <b>@appointment.ServiceName</b></p>
-                            <p>Car VIN: <b class="vin" style="cursor: pointer;">@appointment.CarVIN</b></p>
-                            <p>Date: <b>@appointment.SelectedDate</b></p>
-                            <p>Time: <b>@appointment.SelectedTime</b></p>
-                            @if (DateTime.Parse(appointment.SelectedDate) < DateTime.UtcNow)
-                            {
-                                <p>Status: <b style="color: red;">Expired</b></p>
-                            }
-                            else
-                            {
-                                if (appointment.IsApproved == null)
-                                {
-                                    <p>Status: <b style="color: yellow;">Pending</b></p>
-                                }
-                                else if (appointment.IsApproved == true)
-                                {
-                                    <p>Status: <b style="color: green;">Approved</b></p>
-                                }
-                                else
-                                {
-                                    <p>Status: <b style="color: red;">Rejected</b></p>
-                                }
-                            }
-                            <a asp-area="Manager" asp-controller="Appointment" asp-action="Approve" asp-route-id="@appointment.Id" asp-route-returnUrl="@ViewBag.RefererUrl" class=" btn btn-success">Approve</a>
-                            <a asp-area="Manager" asp-controller="Appointment" asp-action="Reject" asp-route-id="@appointment.Id" class="btn btn-warning" onclick="return confirmReject()">Reject</a>
-                        </div>
-                    </div>
-                </div>
+                @await Html.PartialAsync("_AppointmentCard", appointment)
             }
-            
         }
     </div>
 </div>
+
+<partial name="_VinScrypt" />
 
 <script>
     function confirmDelete() {

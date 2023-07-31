@@ -16,4 +16,14 @@ html {
 body {
   margin-bottom: 60px;
 }
+.vin {
+    color: blue;
+    cursor: pointer;
+}
+
+.vin-details {
+    margin-top: 10px;
+    color: green;
+    display: none;
+}
 

@@ -6,10 +6,7 @@ namespace CarRepairGarage.Web
     using CarRepairGarage.Data;
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Seeding;
-    using CarRepairGarage.Data.Repositories.Contracts;
-    using CarRepairGarage.Data.Repositories;
-    using CarRepairGarage.Services.Contracts;
-    using CarRepairGarage.Services;
+    using CarRepairGarage.Services.DIConfiguration;
 
     public class Program
     {
@@ -40,16 +37,7 @@ namespace CarRepairGarage.Web
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            builder.Services.AddScoped<Seeder>();
-            builder.Services.AddScoped<IRepository, Repository>();
-            builder.Services.AddScoped<IGarageService, Services.GarageService>();
-            builder.Services.AddScoped<ICategoryService, CategoryService>();
-            builder.Services.AddScoped<IServiceService, ServiceService>();
-            builder.Services.AddScoped<ICarService, CarService>();
-            builder.Services.AddScoped<IAppointmentService, AppointmentService>();
-            builder.Services.AddScoped<ICityService, CityService>();
-            builder.Services.AddScoped<INoteService, NoteService>();
-
+            builder.Services.AddApplicationServices();
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 

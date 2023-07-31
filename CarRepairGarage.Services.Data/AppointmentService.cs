@@ -209,6 +209,7 @@
                     GarageName = x.Garage.Name,
                     GarageId = x.GarageId,
                     ServiceId = x.ServiceId,
+                    CarVIN = x.Car.VIN,
                     ServiceName = x.Service.Name,
                     SelectedDate = x.Date.ToString(@"yyyy-MM-dd"),
                     SelectedTime = x.Time.ToString(@"hh\:mm"),

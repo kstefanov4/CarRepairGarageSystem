@@ -117,42 +117,6 @@
         });
     </script>
 
-    @*<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var selectDate = document.querySelector('#SelectedDate');
-            var selectTime = document.querySelector('#availableTimes');
-            var selectGarage = document.querySelector('#GarageId');
-
-            selectDate.addEventListener('change', function () {
-                var selectedDate = this.value;
-                var selectedGarageId = selectGarage.value; // Get the selected GarageId
-
-                loadAvailableTimes(selectedDate, selectedGarageId);
-            });
-
-            function loadAvailableTimes(selectedDate, selectedGarageId) {
-                // Make an AJAX request to the controller action
-                $.ajax({
-                    url: '@Url.Action("GetAvailableTimes", "Appointment")',
-                    type: 'GET',
-                    data: { selectedDate: selectedDate, garageId: selectedGarageId }, // Pass the selectedGarageId as a parameter
-                    success: function (data) {
-                        // Clear existing options
-                        selectTime.innerHTML = '<option value="">Select Time</option>';
-
-                        // Populate available times
-                        for (var i = 0; i < data.length; i++) {
-                            var time = data[i];
-                            var option = document.createElement('option');
-                            option.value = time;
-                            option.text = time;
-                            selectTime.appendChild(option);
-                        }
-                    }
-                });
-            }
-        });
-    </script>*@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var selectDate = document.querySelector('#SelectedDate');
