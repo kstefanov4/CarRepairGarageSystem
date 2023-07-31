@@ -19,7 +19,7 @@ namespace CarRepairGarage.Web
 
             // Add services to the container.
             string connectionString =
-                builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                builder.Configuration.GetConnectionString("HomeConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -50,6 +50,12 @@ namespace CarRepairGarage.Web
             builder.Services.AddScoped<ICityService, CityService>();
             builder.Services.AddScoped<INoteService, NoteService>();
 
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
@@ -74,7 +80,7 @@ namespace CarRepairGarage.Web
                 app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
                 app.UseHsts();
             }
-
+            app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -94,9 +100,7 @@ namespace CarRepairGarage.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-            /*app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");*/
+
             app.MapRazorPages();
 
             app.Run();

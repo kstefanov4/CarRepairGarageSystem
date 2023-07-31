@@ -17,93 +17,78 @@
                 new GarageService
                 {
                     GarageId = 1,
-                    ServiceId = 1,
-                    Available = true
+                    ServiceId = 1
                 },
                 new GarageService
                 {
                     GarageId = 1,
-                    ServiceId = 2,
-                    Available = true
+                    ServiceId = 2
                 },
                 new GarageService
                 {
                     GarageId = 1,
-                    ServiceId = 3,
-                    Available = true
+                    ServiceId = 3
                 },
                 new GarageService
                 {
                     GarageId = 1,
-                    ServiceId = 4,
-                    Available = true
+                    ServiceId = 4
                 },
                 new GarageService
                 {
                     GarageId = 2,
-                    ServiceId = 5,
-                    Available = true
+                    ServiceId = 5
                 },
                 new GarageService
                 {
                     GarageId = 2,
-                    ServiceId = 6,
-                    Available = true
+                    ServiceId = 6
                 },
                 new GarageService
                 {
                     GarageId = 2,
-                    ServiceId = 7,
-                    Available = true
+                    ServiceId = 7
                 },
                 new GarageService
                 {
                     GarageId = 2,
-                    ServiceId = 8,
-                    Available = true
+                    ServiceId = 8
                 },
                 new GarageService
                 {
                     GarageId = 3,
-                    ServiceId = 9,
-                    Available = true
+                    ServiceId = 9
                 },
                 new GarageService
                 {
                     GarageId = 3,
-                    ServiceId = 10,
-                    Available = true
+                    ServiceId = 10
                 },
                 new GarageService
                 {
                     GarageId = 3,
-                    ServiceId = 11,
-                    Available = true
+                    ServiceId = 11
                 },
                 new GarageService
                 {
                     GarageId = 3,
-                    ServiceId = 12,
-                    Available = true
+                    ServiceId = 12
                 },
                 new GarageService
                 {
                     GarageId = 4,
-                    ServiceId = 13,
-                    Available = true
+                    ServiceId = 13
                 },
                 new GarageService
                 {
                     GarageId = 4,
-                    ServiceId = 14,
-                    Available = true
+                    ServiceId = 14
                 },
 
                 new GarageService
                 {
                     GarageId = 4,
-                    ServiceId = 15,
-                    Available = true
+                    ServiceId = 15
                 }
             };
             await dbContext.GaragesServices.AddRangeAsync(garageServices);
