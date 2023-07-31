@@ -28,8 +28,8 @@
         [ForeignKey(nameof(ServiceId))]
         public virtual Service Service { get; set; } = null!;
 
-        /*[Comment("Is garage service available")]
-        public bool Available { get; set; }*/
+        [Comment("Is garage service available")]
+        public bool Available { get; set; }
 
         //public virtual ICollection<Appointment> Appointments { get; set; }
     }

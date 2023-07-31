@@ -2,8 +2,10 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using CarRepairGarage.Common;
+    using Microsoft.AspNetCore.Http;
 
+    using CarRepairGarage.Common;
+    
     public class ModifyGarageViewModel
     {
         public int Id { get; set; }
@@ -13,7 +15,7 @@
         public string Name { get; set; } = null!;
 
         [Required]
-        public string ImageUrl { get; set; } = null!;
+        public IFormFile Image { get; set; }
 
         [Required]
         public int CategoryId { get; set; }

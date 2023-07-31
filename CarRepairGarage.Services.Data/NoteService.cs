@@ -7,6 +7,7 @@
     using CarRepairGarage.Data.Repositories.Contracts;
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Note;
+    using CarRepairGarage.Web.ViewModels.Garage;
 
     public class NoteService : INoteService
     {
@@ -22,11 +23,13 @@
         }
         public async Task CreateNoteAsync(AddNoteViewModel model)
         {
+            string imageUrl = await GetImagePath(model);
+
             Note note = new Note()
                 {
                     Title = model.Title,
                     Description = model.Description,
-                    ImageUrl = model.ImageUrl,
+                    ImageUrl = imageUrl,
                     Vissible = true
                 };
 
@@ -101,6 +104,25 @@
                 _logger.LogError(databaseAction.Method.Name, ex);
                 throw new ApplicationException("Database failed to save info", ex);
             }
+        }
+
+        private static async Task<string> GetImagePath(AddNoteViewModel model)
+        {
+            string imageUrl = null;
+            if (model.Image != null)
+            {
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images", fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.Image.CopyToAsync(fileStream);
+                }
+
+                imageUrl = "/images/" + fileName;
+            }
+
+            return imageUrl;
         }
     }
 }

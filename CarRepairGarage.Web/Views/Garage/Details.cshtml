@@ -72,25 +72,3 @@
         }
     </script>
 </div>
-
-@*
-<div class="col-md-4">
-    <div class="card mb-3">
-        <img class="card-img-top" src="@Model.ImageUrl" alt="House Image">
-        <div class="card-body text-center">
-            <h4>@Model.Name</h4>
-            <h5>@Model.Category</h5>
-
-            <h6>City: <b>@Model.City</b></h6>
-            <h6>Address: <b>@Model.StreetName</b></h6>
-
-            @foreach (var service in @Model.Services)
-            {
-                <p>@service</p>
-            }
-            <br />
-            <a asp-controller="Appointment" asp-action="Index" asp-route-id="@Model.Id"
-               class="btn btn-success">Reserve</a>
-        </div>
-    </div>
-</div>*@

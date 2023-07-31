@@ -115,16 +115,19 @@
 <div class="row">
     @foreach (var garage in Model.Garages)
     {
-        @*<partial name="_HousePartial" model="@house" />*@
-
         <div class="col-md-4">
             <div class="card mb-3">
-                <img class="card-img-top" src="@garage.ImageUrl" alt="House Image">
-                <div class="card-body text-center">
+                <img class="card-img-top" src="@garage.ImageUrl" alt="Garage Image">
+                <div class="card-body text-left">
                     <h4>@garage.Name</h4>
 
                     <h6>City: <b>@garage.City</b></h6>
-
+                    <div class="form-inline">
+                        @foreach (var service in @garage.Services)
+                        {
+                            <p>-- @service</p>
+                        }
+                    </div>
                     <br />
                     <a asp-controller="Garage" asp-action="Details" asp-route-id="@garage.Id"
                        class="btn btn-success">Details</a>

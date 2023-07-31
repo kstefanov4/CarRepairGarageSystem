@@ -38,15 +38,6 @@
             queryModel.Appointments = serviceModel.Appointments;
 
             return View(queryModel);
-            /*var user = await _userManager.GetUserAsync(User);
-
-            if (user == null)
-            {
-                return RedirectToPage("/Account/Login");
-            }
-
-            var model = await _appointmentService.GetAllAppointmentsByGarageIdAsync(user.Id);
-            return View(model);*/
         }
 
         public async Task<IActionResult> Approve(Guid id)

@@ -11,6 +11,7 @@
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Web.ViewModels.Garage.Enums;
+    using Microsoft.AspNetCore.Http;
 
     public class GarageService : BaseService, IGarageService
     {
@@ -31,7 +32,7 @@
         {
             var city = await CreateCity(model.City);
             var address = CreateAddress(city, model.StreetName, model.StreetNumber);
-            var garage = CreateGarage(model, user, address);
+            var garage = await CreateGarageAsync(model, user, address);
 
             var services = model.ServiceIds
                 .Select(serviceId => CreateGarageService(garage, serviceId))
@@ -39,28 +40,12 @@
 
             await ExecuteDatabaseAction(async () =>
             {
-                /*await _repository.AddAsync(city);
-                await _repository.AddAsync(address);*/
+                
                 await _repository.AddAsync(garage);
-                await _repository.AddRangeAsync(services); // batch add
+                await _repository.AddRangeAsync(services);
 
                 await _repository.SaveChangesAsync();
             });
-
-            /*try
-            {
-                await _repository.AddAsync(city);
-                await _repository.AddAsync(address);
-                await _repository.AddAsync(garage);
-                await _repository.AddRangeAsync(services); // batch add
-
-                await _repository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(nameof(AddGarageAsync), ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }*/
         }
 
         private async Task<City> CreateCity(string cityName)
@@ -82,16 +67,37 @@
             };
         }
 
-        private Garage CreateGarage(AddGarageViewModel model, ApplicationUser user, Address address)
+        private async Task<Garage> CreateGarageAsync(AddGarageViewModel model, ApplicationUser user, Address address)
         {
+            string imageUrl = await GetImagePath(model.Image);
+
             return new Garage
             {
                 Name = model.Name,
                 CategoryId = model.CategoryId,
-                ImageUrl = model.ImageUrl,
+                ImageUrl = imageUrl,
                 Address = address,
                 Owner = user
             };
+        }
+
+        private static async Task<string> GetImagePath(IFormFile image)
+        {
+            string imageUrl = null;
+            if (image != null)
+            {
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images", fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                }
+
+                imageUrl = "/images/" + fileName;
+            }
+
+            return imageUrl;
         }
 
         private Data.Models.GarageService CreateGarageService(Garage garage, int serviceId)
@@ -99,7 +105,8 @@
             return new Data.Models.GarageService
             {
                 Garage = garage,
-                ServiceId = serviceId
+                ServiceId = serviceId,
+                Available = true
             };
         }
 
@@ -186,8 +193,10 @@
 
             await HandleCityAndAddress(model, garage);
 
+            string imageUrl = await GetImagePath(model.Image);
+
             garage.Name = model.Name;
-            garage.ImageUrl = model.ImageUrl;
+            garage.ImageUrl = imageUrl;
             garage.CategoryId = model.CategoryId;
 
             await ExecuteDatabaseAction(async () =>
@@ -379,7 +388,7 @@
                     Name = x.Name,
                     CategoryId = x.CategoryId,
                     City = x.Address.City.Name,
-                    ImageUrl = x.ImageUrl,
+                    /*Image = x.ImageUrl,*/
                     StreetName = x.Address.StreetName,
                     StreetNumber = x.Address.StreetNumber,
                     Services = x.Services.Select(s => s.Service.Id).ToList()
@@ -390,24 +399,14 @@
 
         public async Task Delete(int id)
         {
-            var car = await _repository.GetByIdAsync<Garage>(id);
-            car.IsDeleted = true;
-            car.DeletedOn = DateTime.Now;
+            var garage = await _repository.GetByIdAsync<Garage>(id);
+            garage.IsDeleted = true;
+            garage.DeletedOn = DateTime.Now;
 
             await ExecuteDatabaseAction(async () =>
             {
                 await _repository.SaveChangesAsync();
             });
-
-            /*try
-            {
-                await _repository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(nameof(Delete), ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }*/
         }
 
         

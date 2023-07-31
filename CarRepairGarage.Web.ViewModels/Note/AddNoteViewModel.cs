@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using CarRepairGarage.Common;
+    using Microsoft.AspNetCore.Http;
 
     public class AddNoteViewModel
     {
@@ -11,10 +12,10 @@
         public string Title { get; set; } = null!;
 
         [Required]
-        public string ImageUrl { get; set; } = null!;
+        public IFormFile Image { get; set; }
 
         [Required]
-        [StringLength(GeneralApplicationConstants.Validations.NoteDescriptionMaxLenght, MinimumLength = GeneralApplicationConstants.Validations.NoteDescriptionMaxLenght)]
+        [StringLength(GeneralApplicationConstants.Validations.NoteDescriptionMaxLenght, MinimumLength = GeneralApplicationConstants.Validations.NoteDescriptionMinLenght)]
         public string Description { get; set; } = null!;
 
         public List<int> GarageIds { get; set; } = new List<int>();
