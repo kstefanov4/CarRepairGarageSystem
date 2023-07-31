@@ -6,8 +6,6 @@
     
     using Microsoft.EntityFrameworkCore;
 
-    using CarRepairGarage.Data.Common.Models;
-
     [Comment("User Appointments")]
     public class Appointment
     {

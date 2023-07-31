@@ -1,8 +1,8 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Web.ViewModels.Car;
-
-namespace CarRepairGarage.Services.Contracts
+﻿namespace CarRepairGarage.Services.Contracts
 {
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Web.ViewModels.Car;
+
     public interface ICarService
     {
         Task<IEnumerable<CarViewModel>> GetAllCarsByUserIdAsync(Guid id);

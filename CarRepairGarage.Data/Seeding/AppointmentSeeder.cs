@@ -1,18 +1,15 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Data.Seeding.Contracts;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Data.Seeding
+﻿namespace CarRepairGarage.Data.Seeding
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Data.Seeding.Contracts;
+
     public class AppointmentSeeder : ISeeder
     {
+
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
 
@@ -46,7 +43,7 @@ namespace CarRepairGarage.Data.Seeding
                     ServiceId = service!.ServiceId,
                     UserId = userGuid,
                     CarId = 1
-                }); 
+                });
             }
 
 

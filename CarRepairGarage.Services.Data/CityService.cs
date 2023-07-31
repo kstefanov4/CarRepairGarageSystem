@@ -1,15 +1,11 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Data.Repositories.Contracts;
-using CarRepairGarage.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Services
+﻿namespace CarRepairGarage.Services
 {
+    using Microsoft.EntityFrameworkCore;
+
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Data.Repositories.Contracts;
+    using CarRepairGarage.Services.Contracts;
+
     public class CityService : ICityService
     {
         private readonly IRepository _repository;

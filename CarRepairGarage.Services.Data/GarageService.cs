@@ -2,37 +2,34 @@
 {
     using Microsoft.EntityFrameworkCore;
 
+    using System.Linq;
+
+    using Microsoft.Extensions.Logging;
+    
     using CarRepairGarage.Data.Repositories.Contracts;
     using CarRepairGarage.Web.ViewModels.Garage;
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Data.Models;
-    using System.Linq;
     using CarRepairGarage.Web.ViewModels.Garage.Enums;
-    using Microsoft.Extensions.Logging;
-    using CarRepairGarage.Web.ViewModels.Service;
-    using System.Net;
-    using System.Runtime.Loader;
-    using CarRepairGarage.Web.ViewModels.Note;
 
-    public class GarageService : IGarageService
+    public class GarageService : BaseService, IGarageService
     {
         private readonly IRepository _repository;
-        private readonly ILogger<GarageService> _logger;
         private readonly ICityService _cityService;
         public GarageService(
             IRepository repository,
             ILogger<GarageService> logger,
             ICityService cityService)
+            :base(logger)
         {
             _repository = repository;
-            _logger = logger;
             _cityService = cityService;
 
         }
 
         public async Task AddGarageAsync(AddGarageViewModel model, ApplicationUser user)
         {
-            var city = CreateCity(model.City);
+            var city = await CreateCity(model.City);
             var address = CreateAddress(city, model.StreetName, model.StreetNumber);
             var garage = CreateGarage(model, user, address);
 
@@ -40,7 +37,17 @@
                 .Select(serviceId => CreateGarageService(garage, serviceId))
                 .ToList();
 
-            try
+            await ExecuteDatabaseAction(async () =>
+            {
+                /*await _repository.AddAsync(city);
+                await _repository.AddAsync(address);*/
+                await _repository.AddAsync(garage);
+                await _repository.AddRangeAsync(services); // batch add
+
+                await _repository.SaveChangesAsync();
+            });
+
+            /*try
             {
                 await _repository.AddAsync(city);
                 await _repository.AddAsync(address);
@@ -53,11 +60,15 @@
             {
                 _logger.LogError(nameof(AddGarageAsync), ex);
                 throw new ApplicationException("Database failed to save info", ex);
-            }
+            }*/
         }
 
-        private City CreateCity(string cityName)
+        private async Task<City> CreateCity(string cityName)
         {
+            if (await _repository.AllReadonly<City>().AnyAsync(x => x.Name == cityName))
+            {
+                return await _repository.All<City>().FirstAsync(x => x.Name == cityName);
+            }
             return new City { Name = cityName };
         }
 
@@ -88,15 +99,14 @@
             return new Data.Models.GarageService
             {
                 Garage = garage,
-                ServiceId = serviceId,
-                Available = true
+                ServiceId = serviceId
             };
         }
 
 
         public async Task<AllGaragesFilteredAndPagedServiceModel> AllAsync(AllGaragesQueryModel queryModel)
         {
-            IQueryable<Garage> garagesQuery = _repository.All<Garage>().AsQueryable();
+            IQueryable<Garage> garagesQuery = _repository.All<Garage>().Where(x => x.IsDeleted == false).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(queryModel.Category))
             {
@@ -180,7 +190,12 @@
             garage.ImageUrl = model.ImageUrl;
             garage.CategoryId = model.CategoryId;
 
-            try
+            await ExecuteDatabaseAction(async () =>
+            {
+                await _repository.SaveChangesAsync();
+            });
+
+            /*try
             {
                 await _repository.SaveChangesAsync();
             }
@@ -188,7 +203,7 @@
             {
                 _logger.LogError(nameof(Edit), ex);
                 throw new ApplicationException("Database failed to save info", ex);
-            }
+            }*/
         }
 
         private async Task<List<Data.Models.GarageService>> GetGarageServices(int garageId)
@@ -216,7 +231,11 @@
 
             foreach (var service in addedServices)
             {
-                await _repository.AddAsync(service);
+                await ExecuteDatabaseAction(async () =>
+                {
+                    await _repository.AddAsync(service);
+                });
+                //await _repository.AddAsync(service);
             }
         }
 
@@ -233,8 +252,12 @@
                 }
                 else
                 {
-                    City newCity = CreateCity(model.City);
-                    await _repository.AddAsync(newCity);
+                    City newCity = await CreateCity(model.City);
+                    await ExecuteDatabaseAction(async () =>
+                    {
+                        await _repository.AddAsync(newCity);
+                    });
+                    //await _repository.AddAsync(newCity);
                     city = newCity;
                 }
             }
@@ -244,7 +267,11 @@
                 address.IsDeleted = true;
                 address.DeletedOn = DateTime.UtcNow;
                 Address newAddress = CreateAddress(city!, model.StreetName, model.StreetNumber);
-                await _repository.AddAsync(newAddress);
+                await ExecuteDatabaseAction(async () =>
+                {
+                    await _repository.AddAsync(newAddress);
+                });
+                //await _repository.AddAsync(newAddress);
                 address = newAddress;
             }
 
@@ -367,7 +394,12 @@
             car.IsDeleted = true;
             car.DeletedOn = DateTime.Now;
 
-            try
+            await ExecuteDatabaseAction(async () =>
+            {
+                await _repository.SaveChangesAsync();
+            });
+
+            /*try
             {
                 await _repository.SaveChangesAsync();
             }
@@ -375,7 +407,7 @@
             {
                 _logger.LogError(nameof(Delete), ex);
                 throw new ApplicationException("Database failed to save info", ex);
-            }
+            }*/
         }
 
         

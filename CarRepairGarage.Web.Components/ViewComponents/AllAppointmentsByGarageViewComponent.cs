@@ -1,14 +1,10 @@
-﻿using CarRepairGarage.Services.Contracts;
-using CarRepairGarage.Web.ViewModels.Appointment;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Web.Components.ViewComponents
+﻿namespace CarRepairGarage.Web.Components.ViewComponents
 {
+    using Microsoft.AspNetCore.Mvc;
+    
+    using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Web.ViewModels.Appointment;
+
     public class AllAppointmentsByGarageViewComponent : ViewComponent
     {
         private readonly IAppointmentService _appointmentService;

@@ -1,9 +1,12 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Services.Contracts;
+﻿using CarRepairGarage.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRepairGarage.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
+    using CarRepairGarage.Services.Contracts;
+
     public class ServiceController : Controller
     {
         private readonly IServiceService _serviceService;

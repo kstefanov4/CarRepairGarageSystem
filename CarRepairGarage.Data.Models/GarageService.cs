@@ -1,12 +1,10 @@
 ﻿namespace CarRepairGarage.Data.Models
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     
     using Microsoft.EntityFrameworkCore;
     
-    using CarRepairGarage.Data.Common.Models;
 
     [Comment("Garage Service")]
     public class GarageService
@@ -30,8 +28,8 @@
         [ForeignKey(nameof(ServiceId))]
         public virtual Service Service { get; set; } = null!;
 
-        [Comment("Is garage service available")]
-        public bool Available { get; set; }
+        /*[Comment("Is garage service available")]
+        public bool Available { get; set; }*/
 
         //public virtual ICollection<Appointment> Appointments { get; set; }
     }

@@ -90,4 +90,12 @@
     <Content Include="Areas\Manager\Views\Shared\Components\AllAppointmentsByGarage\Default.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Areas\Manager\Views\Shared\_GarageCard.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Manager\Views\Shared\_Pagination.cshtml" />
+  </ItemGroup>
+
 </Project>

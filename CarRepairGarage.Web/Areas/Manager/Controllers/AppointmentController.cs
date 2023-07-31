@@ -1,14 +1,13 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Services;
-using CarRepairGarage.Services.Contracts;
-using CarRepairGarage.Web.ViewModels.Appointment;
-using CarRepairGarage.Web.ViewModels.Garage;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using static CarRepairGarage.Common.NotificationsMessagesConstants;
-
-namespace CarRepairGarage.Web.Areas.Manager.Controllers
+﻿namespace CarRepairGarage.Web.Areas.Manager.Controllers
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Web.ViewModels.Appointment;
+    using static CarRepairGarage.Common.NotificationsMessagesConstants;
+
     public class AppointmentController : BaseController
     {
         private readonly IAppointmentService _appointmentService;
@@ -50,7 +49,7 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
             return View(model);*/
         }
 
-        public async Task<IActionResult> Approve(Guid id, string returnUrl)
+        public async Task<IActionResult> Approve(Guid id)
         {
 
             if ((await _appointmentService.Exist(id)) == false)
@@ -78,11 +77,6 @@ namespace CarRepairGarage.Web.Areas.Manager.Controllers
             {
                 TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
                 return RedirectToAction(nameof(Index));
-            }
-
-            if (!string.IsNullOrEmpty(returnUrl))
-            {
-                return Redirect(returnUrl);
             }
             return RedirectToAction(nameof(All));
         }

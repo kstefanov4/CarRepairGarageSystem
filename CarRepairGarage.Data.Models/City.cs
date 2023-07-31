@@ -21,7 +21,7 @@
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(GeneralApplicationConstants.DataValidations.NameMaxLenght)]
+        [MaxLength(GeneralApplicationConstants.Validations.AddressStreetNameMaxLenght)]
         [Comment("City name")]
         public string Name { get; set; } = null!;
 

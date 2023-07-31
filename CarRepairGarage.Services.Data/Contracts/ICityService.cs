@@ -1,12 +1,7 @@
-﻿using CarRepairGarage.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Services.Contracts
+﻿namespace CarRepairGarage.Services.Contracts
 {
+    using CarRepairGarage.Data.Models;
+    
     public interface ICityService
     {
         Task<IEnumerable<string>> AllCitiesNameAsync();

@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Web.ViewModels.Note
+﻿namespace CarRepairGarage.Web.ViewModels.Note
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using CarRepairGarage.Common;
+
     public class AddNoteViewModel
     {
         [Required]
-        [StringLength(50, MinimumLength = 2)]
+        [StringLength(GeneralApplicationConstants.Validations.NoteTitleMaxLenght, MinimumLength = GeneralApplicationConstants.Validations.NoteTitleMinLenght)]
         public string Title { get; set; } = null!;
 
         [Required]
-        [StringLength(250)]
         public string ImageUrl { get; set; } = null!;
 
         [Required]
-        [StringLength(2550, MinimumLength = 2)]
+        [StringLength(GeneralApplicationConstants.Validations.NoteDescriptionMaxLenght, MinimumLength = GeneralApplicationConstants.Validations.NoteDescriptionMaxLenght)]
         public string Description { get; set; } = null!;
 
         public List<int> GarageIds { get; set; } = new List<int>();

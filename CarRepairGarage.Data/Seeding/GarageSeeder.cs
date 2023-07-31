@@ -1,9 +1,10 @@
 ﻿namespace CarRepairGarage.Data.Seeding
 {
-    using CarRepairGarage.Data.Models;
-    using CarRepairGarage.Data.Seeding.Contracts;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Data.Seeding.Contracts;
 
     public class GarageSeeder : ISeeder
     {

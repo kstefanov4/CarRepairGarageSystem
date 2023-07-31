@@ -1,8 +1,9 @@
-﻿using CarRepairGarage.Services.Contracts;
-using Microsoft.AspNetCore.Mvc;
-
-namespace CarRepairGarage.Web.Controllers
+﻿namespace CarRepairGarage.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
+    using CarRepairGarage.Services.Contracts;
+
     public class CategoryController : Controller
     {
         private readonly ICategoryService categoryService;

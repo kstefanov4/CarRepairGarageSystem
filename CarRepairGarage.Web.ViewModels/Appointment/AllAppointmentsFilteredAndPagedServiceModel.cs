@@ -1,11 +1,4 @@
-﻿using CarRepairGarage.Web.ViewModels.Garage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Web.ViewModels.Appointment
+﻿namespace CarRepairGarage.Web.ViewModels.Appointment
 {
     public class AllAppointmentsFilteredAndPagedServiceModel
     {

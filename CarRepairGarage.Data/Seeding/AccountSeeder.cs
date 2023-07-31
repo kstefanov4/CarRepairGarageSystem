@@ -3,13 +3,13 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Security.Claims;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
 
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Seeding.Contracts;
-    using System.Security.Claims;
 
     public class AccountSeeder : ISeeder
     {

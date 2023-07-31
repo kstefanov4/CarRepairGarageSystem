@@ -1,11 +1,8 @@
 ﻿namespace CarRepairGarage.Web.Controllers
 {
-    using System.Diagnostics;
-
     using Microsoft.AspNetCore.Mvc;
-
-    using CarRepairGarage.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Authorization;
+
     using CarRepairGarage.Services.Contracts;
 
     [AllowAnonymous]

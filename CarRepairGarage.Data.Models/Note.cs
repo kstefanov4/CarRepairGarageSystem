@@ -19,12 +19,12 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(GeneralApplicationConstants.DataValidations.TitleMaxLength)]
+        [StringLength(GeneralApplicationConstants.Validations.NoteTitleMaxLenght)]
         [Comment("Note Title")]
         public string Title { get; set; } = null!;
 
         [Required]
-        [StringLength(GeneralApplicationConstants.DataValidations.DescriptionMaxLength)]
+        [StringLength(GeneralApplicationConstants.Validations.NoteDescriptionMaxLenght)]
         [Comment("Note description")]
         public string Description { get; set; } = null!;
 

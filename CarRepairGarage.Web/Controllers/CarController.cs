@@ -1,15 +1,15 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Services;
-using CarRepairGarage.Services.Contracts;
-using CarRepairGarage.Web.ViewModels.Car;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using static CarRepairGarage.Common.NotificationsMessagesConstants;
-
-namespace CarRepairGarage.Web.Controllers
+﻿namespace CarRepairGarage.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Web.ViewModels.Car;
+    using static CarRepairGarage.Common.NotificationsMessagesConstants;
+
+
     [Authorize(Roles = Common.GeneralApplicationConstants.Roles.UserRole)]
     public class CarController : BaseController
     {

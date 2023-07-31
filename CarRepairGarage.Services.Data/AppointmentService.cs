@@ -1,42 +1,36 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Data.Repositories.Contracts;
-using CarRepairGarage.Services.Contracts;
-using CarRepairGarage.Web.ViewModels.Appointment;
-using CarRepairGarage.Web.ViewModels.Appointment.Enums;
-using CarRepairGarage.Web.ViewModels.Garage;
-using CarRepairGarage.Web.ViewModels.Garage.Enums;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Services
+﻿namespace CarRepairGarage.Services
 {
-    public class AppointmentService : IAppointmentService
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Data.Repositories.Contracts;
+    using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Web.ViewModels.Appointment;
+    using CarRepairGarage.Web.ViewModels.Appointment.Enums;
+
+    public class AppointmentService : BaseService, IAppointmentService
     {
         private readonly IRepository _repository;
-        private readonly ILogger _logger;
+
         public AppointmentService(
             IRepository repository,
-            ILogger<AppointmentService> logger)
+            ILogger<AppointmentService> logger) : base(logger)
         {
             _repository = repository;
-            _logger = logger;
         }
 
         public async Task CreateAppointmentAsync(CreateAppointmentModel model, ApplicationUser user)
         {
-            Appointment appointment = new Appointment();
-            appointment.User = user;
-            appointment.ServiceId = model.ServiceId;
-            appointment.GarageId = model.GarageId;
-            appointment.CarId = model.CarId;
-            appointment.Date = model.SelectedDate;
-            appointment.Time = model.SelectedTime.TimeOfDay;
+            Appointment appointment = new Appointment()
+            {
+                User = user,
+                ServiceId = model.ServiceId,
+                GarageId = model.GarageId,
+                CarId = model.CarId,
+                Date = model.SelectedDate,
+                Time = model.SelectedTime.TimeOfDay
+            };
 
             await ExecuteDatabaseAction(async () =>
             {
@@ -131,26 +125,6 @@ namespace CarRepairGarage.Services
                 TotalAppointmentCount = totalAppointments,
                 Appointments = allGarages
             };
-
-            /*var appointments = await _repository.AllReadonly<Appointment>()
-                .Include(x => x.Garage)
-                .Where(x => x.UserId == id && x.Garage.IsDeleted == false)
-                .Select( x => new AppointmentDetailsViewModel()
-                {
-                    Id = x.Id.ToString(),
-                    GarageName = x.Garage.Name,
-                    GarageId = x.GarageId,
-                    ServiceId = x.ServiceId,
-                    ServiceName = x.Service.Name,
-                    CarId = x.CarId,
-                    CarVIN = x.Car.VIN,
-                    SelectedDate = x.Date.ToString(@"yyyy-MM-dd"),
-                    SelectedTime = x.Time.ToString(@"hh\:mm"),
-                    IsApproved = x.Confirmed
-                })
-                .ToListAsync();
-
-            return appointments;*/
         }
 
         public async Task<AllAppointmentsFilteredAndPagedServiceModel> GetAllAppointmentsByGarageIdAsync(AllAppointmentsQueryModel queryModel, Guid id)
@@ -222,23 +196,6 @@ namespace CarRepairGarage.Services
                 TotalAppointmentCount = totalAppointments,
                 Appointments = allGarages
             };
-            /*var appointments = await _repository.AllReadonly<Appointment>()
-                .Include(x => x.Garage)
-                .Where(x => x.Garage.UserId == id && x.Garage.IsDeleted == false && x.IsDeleted == false)
-                .Select(x => new AppointmentDetailsViewModel()
-                {
-                    Id = x.Id.ToString(),
-                    GarageName = x.Garage.Name,
-                    GarageId = x.GarageId,
-                    ServiceId = x.ServiceId,
-                    ServiceName = x.Service.Name,
-                    SelectedDate = x.Date.ToString(@"yyyy-MM-dd"),
-                    SelectedTime = x.Time.ToString(@"hh\:mm"),
-                    IsApproved = x.Confirmed
-                })
-                .ToListAsync();
-
-            return appointments;*/
         }
 
         public async Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByGarageIdAsync(int id)
@@ -319,19 +276,6 @@ namespace CarRepairGarage.Services
             {
                 await _repository.SaveChangesAsync();
             });
-        }
-
-        private async Task ExecuteDatabaseAction(Func<Task> databaseAction)
-        {
-            try
-            {
-                await databaseAction.Invoke();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(databaseAction.Method.Name, ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }
         }
     }
 }

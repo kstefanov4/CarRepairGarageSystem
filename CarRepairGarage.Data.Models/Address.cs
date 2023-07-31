@@ -7,7 +7,6 @@
 
     using CarRepairGarage.Common;
     using CarRepairGarage.Data.Common.Models;
-    using CarRepairGarage.Data.Common.Helpers;
 
     [Comment("Address for garage")]
     public class Address : BaseDeletableModel
@@ -30,7 +29,7 @@
 
         [Comment("Address street name")]
         [Required]
-        [StringLength(GeneralApplicationConstants.DataValidations.NameMaxLenght)]
+        [StringLength(GeneralApplicationConstants.Validations.AddressStreetNameMaxLenght)]
         public string StreetName { get; set; } = null!;
 
         [Comment("Address street number")]

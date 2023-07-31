@@ -1,4 +1,5 @@
 ﻿@using CarRepairGarage.Web.ViewModels.Garage;
+@using CarRepairGarage.Web.ViewModels.Pagination;
 @model IEnumerable<GarageViewModel>
 
 @{
@@ -10,40 +11,7 @@
     {
         <div class="container">
             <div class="row">
-                <div class="col-4">
-                    <img class="card-img-top" style="width: 20rem;" src="@garage.ImageUrl" alt="Garage Image">
-                </div>
-
-                <div class="col-4">
-                    <div class="card border-0">
-                        <p style="font-size: 25px;"><u>@garage.Name</u></p>
-                        <p>Category: <b>@garage.Category</b></p>
-                        <p>City: <b>@garage.City</b></p>
-                        <p>Address: <b>@garage.StreetName</b> <b>@garage.StreetNumber</b></p>
-                        <p>Services:</p>
-                        <div class="form-inline">
-                            @foreach (var service in @garage.Services)
-                            {
-                                <p>-- @service</p>
-                            }
-                            <a asp-area="Manager" asp-controller="Dashboard" asp-action="Modify" asp-route-id="@garage.Id" class="btn btn-success">Modify</a>
-                            <a asp-area="Manager" asp-controller="Dashboard" asp-action="Remove" asp-route-id="@garage.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove</a>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    @if (garage.NoteTitle != null)
-                    {
-                        <img class="card-img-top" style="width: 20rem;" src="@garage.NoteImageUrl" alt="Note Image">
-                        <p style="font-size: 25px;"><u>@garage.NoteTitle</u></p>
-                        <p>@garage.NoteDescription</p>
-                        <a asp-area="Manager" asp-controller="Note" asp-action="Remove" asp-route-id="@garage.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove for this Garage</a>
-                        <a asp-area="Manager" asp-controller="Note" asp-action="RemoveAll" asp-route-id="@garage.NoteId" class="btn btn-warning" onclick="return confirmDelete()">Remove for all Garages</a>
-                    }
-
-                </div>
+                @await Html.PartialAsync("_GarageCard", garage)
             </div>
         </div>
         <div>
@@ -55,17 +23,14 @@
 @if (ViewBag.TotalPages > 1)
 {
     <div class="mt-4">
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                @for (int i = 1; i <= ViewBag.TotalPages; i++)
-                {
-                    <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
-                        <a class="page-link" href="/Manager/Dashboard/All?pageIndex=@i">@i</a>
-                    </li>
-                }
-
-            </ul>
-        </nav>
+        @await Html.PartialAsync("_Pagination", new PaginationViewModel
+    {
+    CurrentPage = ViewBag.CurrentPage,
+    TotalPages = ViewBag.TotalPages,
+    Area = "Manager",
+    Controller = "Dashboard",
+    Action = "All"
+    })
     </div>
 }
 <script>

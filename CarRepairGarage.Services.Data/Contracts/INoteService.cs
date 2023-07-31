@@ -1,12 +1,7 @@
-﻿using CarRepairGarage.Web.ViewModels.Note;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Services.Contracts
+﻿namespace CarRepairGarage.Services.Contracts
 {
+    using CarRepairGarage.Web.ViewModels.Note;
+
     public interface INoteService
     {
         Task CreateNoteAsync(AddNoteViewModel model);

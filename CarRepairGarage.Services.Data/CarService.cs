@@ -1,15 +1,16 @@
 ﻿namespace CarRepairGarage.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Repositories.Contracts;
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Car;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Logging;
-    using System;
-    using System.Collections.Generic;
-    using System.Security.AccessControl;
-    using System.Threading.Tasks;
 
     public class CarService : ICarService
     {

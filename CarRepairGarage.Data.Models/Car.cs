@@ -25,12 +25,12 @@
         public string VIN { get; set; } = null!;
 
         [Required]
-        [StringLength(GeneralApplicationConstants.DataValidations.CarMakeMaxLenght)]
+        [StringLength(GeneralApplicationConstants.Validations.CarMakeMaxLenght)]
         [Comment("Car Make")]
         public string Make { get; set; } = null!;
 
         [Required]
-        [StringLength(GeneralApplicationConstants.DataValidations.CarMakeMaxLenght)]
+        [StringLength(GeneralApplicationConstants.Validations.CarMakeMaxLenght)]
         [Comment("Primary Model")]
         public string Model { get; set; } = null!;
 

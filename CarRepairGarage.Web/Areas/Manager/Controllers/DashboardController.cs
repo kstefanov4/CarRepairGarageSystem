@@ -1,15 +1,13 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Services;
-using CarRepairGarage.Services.Contracts;
-using CarRepairGarage.Web.ViewModels.Garage;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using static CarRepairGarage.Common.NotificationsMessagesConstants;
-
-namespace CarRepairGarage.Web.Areas.Manager.Controllers
+﻿namespace CarRepairGarage.Web.Areas.Manager.Controllers
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Web.ViewModels.Garage;
+    using static CarRepairGarage.Common.NotificationsMessagesConstants;
+
     public class DashboardController : BaseController
     {
         private readonly IGarageService _garageService;

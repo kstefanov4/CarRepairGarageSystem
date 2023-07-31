@@ -21,7 +21,7 @@
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(GeneralApplicationConstants.DataValidations.NameMaxLenght)]
+        [MaxLength(GeneralApplicationConstants.Validations.ServiceNameMaxLenght)]
         [Comment("Service name")]
         public string Name { get; set; } = null!;
 

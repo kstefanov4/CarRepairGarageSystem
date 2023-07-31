@@ -1,7 +1,6 @@
-﻿using CarRepairGarage.Web.ViewModels.Garage;
-
-namespace CarRepairGarage.Web.ViewModels.Category
+﻿namespace CarRepairGarage.Web.ViewModels.Category
 {
+    using CarRepairGarage.Web.ViewModels.Garage;
     public class CategoryViewModel
     {
         public int Id { get; set; }

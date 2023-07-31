@@ -1,0 +1,35 @@
+﻿@using CarRepairGarage.Web.ViewModels.Garage;
+@model GarageViewModel
+
+<div class="col-4">
+    <img class="card-img-top" style="width: 20rem;" src="@Model.ImageUrl" alt="Garage Image">
+</div>
+
+<div class="col-4">
+    <div class="card border-0">
+        <p style="font-size: 25px;"><u>@Model.Name</u></p>
+        <p>Category: <b>@Model.Category</b></p>
+        <p>City: <b>@Model.City</b></p>
+        <p>Address: <b>@Model.StreetName</b> <b>@Model.StreetNumber</b></p>
+        <p>Services:</p>
+        <div class="form-inline">
+            @foreach (var service in @Model.Services)
+            {
+                <p>-- @service</p>
+            }
+            <a asp-area="Manager" asp-controller="Dashboard" asp-action="Modify" asp-route-id="@Model.Id" class="btn btn-success">Modify</a>
+            <a asp-area="Manager" asp-controller="Dashboard" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove</a>
+        </div>
+    </div>
+</div>
+
+<div class="col-4">
+    @if (Model.NoteTitle != null)
+    {
+        <img class="card-img-top" style="width: 20rem;" src="@Model.NoteImageUrl" alt="Note Image">
+        <p style="font-size: 25px;"><u>@Model.NoteTitle</u></p>
+        <p>@Model.NoteDescription</p>
+        <a asp-area="Manager" asp-controller="Note" asp-action="Remove" asp-route-id="@Model.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove for this Garage</a>
+        <a asp-area="Manager" asp-controller="Note" asp-action="RemoveAll" asp-route-id="@Model.NoteId" class="btn btn-warning" onclick="return confirmDelete()">Remove for all Garages</a>
+    }
+</div>

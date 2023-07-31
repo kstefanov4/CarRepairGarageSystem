@@ -1,7 +1,4 @@
-﻿using CarRepairGarage.Common;
-using System.ComponentModel.DataAnnotations;
-
-namespace CarRepairGarage.Web.ViewModels.Car
+﻿namespace CarRepairGarage.Web.ViewModels.Car
 {
     public class CarViewModel
     {

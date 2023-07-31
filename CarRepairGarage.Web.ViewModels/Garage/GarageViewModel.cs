@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
-
-namespace CarRepairGarage.Web.ViewModels.Garage
+﻿namespace CarRepairGarage.Web.ViewModels.Garage
 {
     public class GarageViewModel
     {

@@ -1,16 +1,9 @@
-﻿using CarRepairGarage.Web.ViewModels.Garage.Enums;
-using CarRepairGarage.Web.ViewModels.Garage;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using CarRepairGarage.Web.ViewModels.Appointment.Enums;
-
-namespace CarRepairGarage.Web.ViewModels.Appointment
+﻿namespace CarRepairGarage.Web.ViewModels.Appointment
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using CarRepairGarage.Web.ViewModels.Appointment.Enums;
+
     public class AllAppointmentsQueryModel
     {
         public AllAppointmentsQueryModel()

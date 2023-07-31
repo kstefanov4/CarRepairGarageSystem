@@ -21,12 +21,12 @@
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(GeneralApplicationConstants.DataValidations.NameMaxLenght)]
+        [MaxLength(GeneralApplicationConstants.Validations.CategoryNameMaxLenght)]
         [Comment("Category Name")]
         public string Name { get; set; } = null!;
 
         [Required]
-        [MaxLength(GeneralApplicationConstants.DataValidations.DescriptionMaxLength)]
+        [MaxLength(GeneralApplicationConstants.Validations.CategoryDescriptionMaxLenght)]
         [Comment("Category Description")]
         public string Description { get; set; } = null!;
 

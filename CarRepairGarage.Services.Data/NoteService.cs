@@ -1,18 +1,13 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Data.Repositories.Contracts;
-using CarRepairGarage.Services.Contracts;
-using CarRepairGarage.Web.ViewModels.Note;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Services
+﻿namespace CarRepairGarage.Services
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
+
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Data.Repositories.Contracts;
+    using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Web.ViewModels.Note;
+
     public class NoteService : INoteService
     {
         private readonly IRepository _repository;

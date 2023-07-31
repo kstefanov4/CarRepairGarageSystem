@@ -2,18 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Threading.Tasks;
-using CarRepairGarage.Data.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using static CarRepairGarage.Common.NotificationsMessagesConstants;
-
 namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
 {
+    using CarRepairGarage.Data.Models;
+
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+
+    using static CarRepairGarage.Common.NotificationsMessagesConstants;
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;

@@ -1,11 +1,11 @@
 ﻿namespace CarRepairGarage.Data
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
     using CarRepairGarage.Data.Configurations;
     using CarRepairGarage.Data.Models;
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

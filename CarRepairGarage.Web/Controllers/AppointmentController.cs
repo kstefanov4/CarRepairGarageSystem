@@ -1,15 +1,17 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Services;
-using CarRepairGarage.Services.Contracts;
-using CarRepairGarage.Web.ViewModels.Appointment;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using static CarRepairGarage.Common.NotificationsMessagesConstants;
-
-namespace CarRepairGarage.Web.Controllers
+﻿namespace CarRepairGarage.Web.Controllers
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+
+    using Newtonsoft.Json;
+    
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Web.ViewModels.Appointment;
+    using static CarRepairGarage.Common.NotificationsMessagesConstants;
+
+
     [Authorize(Roles = Common.GeneralApplicationConstants.Roles.UserRole)]
     public class AppointmentController : BaseController
     {

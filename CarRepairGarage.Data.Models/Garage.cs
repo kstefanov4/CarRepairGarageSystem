@@ -23,7 +23,7 @@
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(GeneralApplicationConstants.DataValidations.NameMaxLenght)]
+        [MaxLength(GeneralApplicationConstants.Validations.GarageNameMaxLenght)]
         [Comment("Garage name")]
         public string Name { get; set; } = null!;
 

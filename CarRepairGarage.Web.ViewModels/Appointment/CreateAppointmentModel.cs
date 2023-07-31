@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace CarRepairGarage.Web.ViewModels.Appointment
+﻿namespace CarRepairGarage.Web.ViewModels.Appointment
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class CreateAppointmentModel
     {
         [Required]

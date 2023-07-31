@@ -1,35 +1,29 @@
-﻿using CarRepairGarage.Web.ViewModels.Service;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Web.ViewModels.Garage
+﻿namespace CarRepairGarage.Web.ViewModels.Garage
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using CarRepairGarage.Common;
+
     public class ModifyGarageViewModel
     {
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 2)]
+        [StringLength(GeneralApplicationConstants.Validations.GarageNameMaxLenght, MinimumLength = GeneralApplicationConstants.Validations.GarageNameMinLenght)]
         public string Name { get; set; } = null!;
 
         [Required]
-        [StringLength(250)]
         public string ImageUrl { get; set; } = null!;
 
         [Required]
-        [Range(1, 3)]
         public int CategoryId { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 2)]
+        [StringLength(GeneralApplicationConstants.Validations.GarageCityMaxLenght, MinimumLength = GeneralApplicationConstants.Validations.GarageCityMinLenght)]
         public string City { get; set; } = null!;
 
         [Required]
-        [StringLength(50, MinimumLength = 2)]
+        [StringLength(GeneralApplicationConstants.Validations.GarageStreetNameMaxLenght, MinimumLength = GeneralApplicationConstants.Validations.GarageStreetNameLenght)]
         public string StreetName { get; set; } = null!;
 
         [Required]

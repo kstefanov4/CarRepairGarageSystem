@@ -1,10 +1,11 @@
 ﻿namespace CarRepairGarage.Data.Repositories
 {
-    using CarRepairGarage.Data.Repositories.Contracts;
+    using System.Linq.Expressions;
+
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-    using System.Linq.Expressions;
+    using CarRepairGarage.Data.Repositories.Contracts;
 
     /// <summary>
     /// Implementation of repository access methods

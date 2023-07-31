@@ -1,10 +1,11 @@
 ﻿namespace CarRepairGarage.Web.Controllers
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Garage;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
 
     public class GarageController : Controller
     {

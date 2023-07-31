@@ -1,14 +1,8 @@
-﻿using CarRepairGarage.Common;
-using CarRepairGarage.Web.ViewModels.Garage;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace CarRepairGarage.Web.ViewModels.Service
 {
+    using CarRepairGarage.Web.ViewModels.Garage;
+    
     public class ServiceViewModel
     {
         public int Id { get; set; }

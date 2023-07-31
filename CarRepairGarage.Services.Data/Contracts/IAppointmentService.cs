@@ -1,14 +1,8 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Web.ViewModels.Appointment;
-using CarRepairGarage.Web.ViewModels.Garage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarRepairGarage.Services.Contracts
+﻿namespace CarRepairGarage.Services.Contracts
 {
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Web.ViewModels.Appointment;
+
     public interface IAppointmentService
     {
         Task<List<string>> GetAllAvailableHours(DateTime dateTime, int garageId, int serviceId);
