@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Authorization;
 
     using CarRepairGarage.Services.Contracts;
+    using Common;
 
     /// <summary>
     /// Controller responsible for handling home-related actions.
@@ -32,6 +33,10 @@
         /// <returns>The view containing the list of garages.</returns>
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole(GeneralApplicationConstants.Roles.ManagerRole))
+            {
+                return RedirectToAction("All","Dashboard", new { Area = GeneralApplicationConstants.Roles.ManagerRole });
+            }
             var model = await garageService.GetAllGaragesAsync(3);
             return View(model);
         }
