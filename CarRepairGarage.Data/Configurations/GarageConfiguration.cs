@@ -23,9 +23,6 @@
                 .WithOne(x => x.Garage)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // Configure the relationship between Garage and Appointments.
-            // A Garage can have many Appointments, and each Appointment belongs to one Garage.
-            builder
             builder
                 .HasMany(x => x.Appointments)
                 .WithOne(x => x.Garage)
