@@ -45,7 +45,7 @@
         /// <summary>
         /// Gets or sets whether the service is available at the garage.
         /// </summary>
-        [Comment("Is garage service available")]
-        public bool Available { get; set; }
+        /*[Comment("Is garage service available")]
+        public bool Available { get; set; }*/
     }
 }

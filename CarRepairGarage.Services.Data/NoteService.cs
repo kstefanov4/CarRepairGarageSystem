@@ -46,7 +46,7 @@
             foreach (var garageId in model.GarageIds)
             {
                 var garage = await _repository.All<Garage>()
-                    .Include(x => x.Note)
+                    /*.Include(x => x.Note)*/
                     .Where(x => x.Id == garageId)
                     .FirstAsync();
 

@@ -39,9 +39,9 @@
         /// <summary>
         /// Gets or sets the URL of the garage's image.
         /// </summary>
-        [Required]
+        
         [Comment("Garage Image")]
-        public string ImageUrl { get; set; } = null!;
+        public string? ImageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the owner (user) of the garage.

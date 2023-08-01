@@ -22,7 +22,7 @@
         /// Gets or sets the image of the note.
         /// </summary>
         [Required]
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the note.

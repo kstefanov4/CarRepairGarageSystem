@@ -117,6 +117,7 @@
                     Make = x.Make,
                     CarModel = x.Model,
                     Year = x.Year,
+                    UserId = x.UserId.ToString()
                 }).ToListAsync();
 
             return cars;

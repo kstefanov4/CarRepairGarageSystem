@@ -117,8 +117,7 @@
             return new Data.Models.GarageService
             {
                 Garage = garage,
-                ServiceId = serviceId,
-                Available = true
+                ServiceId = serviceId
             };
         }
 

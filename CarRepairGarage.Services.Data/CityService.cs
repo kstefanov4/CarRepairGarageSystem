@@ -42,7 +42,7 @@
         public async Task<bool> Exist(string name)
         {
             return await _repository.AllReadonly<City>()
-                .AnyAsync(x => x.Name == name);
+                .AnyAsync(x => x.Name.ToLower() == name.ToLower());
         }
 
         /// <summary>
@@ -53,7 +53,7 @@
         public async Task<City> GetCityByNameAsync(string name)
         {
             return await _repository.AllReadonly<City>()
-                .Where(x => x.Name == name)
+                .Where(x => x.Name.ToLower() == name.ToLower())
                 .FirstAsync();
         }
     }

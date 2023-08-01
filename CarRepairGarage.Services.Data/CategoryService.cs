@@ -41,7 +41,7 @@
         /// <returns>A collection of <see cref="CategoryViewModel"/> representing the categories.</returns>
         public async Task<IEnumerable<CategoryViewModel>> GetAllCategoryAsync()
         {
-            var model = await this._repository.AllReadonly<Category>()
+            var model = await _repository.AllReadonly<Category>()
                 .Where(x => x.IsDeleted == false)
                 .Include(x => x.Garages)
                 .Select(x => new CategoryViewModel

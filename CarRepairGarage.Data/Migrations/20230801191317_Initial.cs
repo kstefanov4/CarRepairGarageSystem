@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CarRepairGarage.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,9 +94,9 @@ namespace CarRepairGarage.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Primary key")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false, comment: "Note Title"),
-                    Description = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false, comment: "Note description"),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Note Image"),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Note Title"),
+                    Description = table.Column<string>(type: "nvarchar(2550)", maxLength: 2550, nullable: false, comment: "Note description"),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Note Image"),
                     Vissible = table.Column<bool>(type: "bit", nullable: false, comment: "Is Note Vissible"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -292,7 +292,7 @@ namespace CarRepairGarage.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Primary key")
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Garage name"),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Garage Image"),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Garage Image"),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Garage Owner"),
                     CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Garage Category"),
                     AddressId = table.Column<int>(type: "int", nullable: false, comment: "Garage address"),
@@ -372,8 +372,7 @@ namespace CarRepairGarage.Data.Migrations
                 columns: table => new
                 {
                     GarageId = table.Column<int>(type: "int", nullable: false, comment: "Garage"),
-                    ServiceId = table.Column<int>(type: "int", nullable: false, comment: "Service"),
-                    Available = table.Column<bool>(type: "bit", nullable: false, comment: "Is garage service available")
+                    ServiceId = table.Column<int>(type: "int", nullable: false, comment: "Service")
                 },
                 constraints: table =>
                 {

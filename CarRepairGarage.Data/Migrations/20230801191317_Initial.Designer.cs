@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRepairGarage.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230731045934_initial")]
-    partial class initial
+    [Migration("20230801191317_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -362,7 +362,6 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Garage Image");
 
@@ -408,10 +407,6 @@ namespace CarRepairGarage.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("Garage");
 
-                    b.Property<bool>("Available")
-                        .HasColumnType("bit")
-                        .HasComment("Is garage service available");
-
                     b.HasKey("ServiceId", "GarageId");
 
                     b.HasIndex("GarageId");
@@ -435,12 +430,11 @@ namespace CarRepairGarage.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)")
+                        .HasMaxLength(2550)
+                        .HasColumnType("nvarchar(2550)")
                         .HasComment("Note description");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Note Image");
 
@@ -449,8 +443,8 @@ namespace CarRepairGarage.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("Note Title");
 
                     b.Property<bool>("Vissible")

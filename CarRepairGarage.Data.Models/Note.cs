@@ -44,9 +44,9 @@
         /// <summary>
         /// Gets or sets the URL of the image associated with the note.
         /// </summary>
-        [Required]
+        
         [Comment("Note Image")]
-        public string ImageUrl { get; set; } = null!;
+        public string? ImageUrl { get; set; }
 
         /// <summary>
         /// Gets or sets whether the note is visible.
