@@ -3,8 +3,16 @@
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Seeding.Contracts;
 
+    /// <summary>
+    /// Seeder class responsible for seeding the database with initial data for services.
+    /// </summary>
     public class ServiceSeeder : ISeeder
     {
+        /// <summary>
+        /// Seeds the database with initial data for services.
+        /// </summary>
+        /// <param name="dbContext">The application's <see cref="ApplicationDbContext"/>.</param>
+        /// <param name="serviceProvider">The <see cref="IServiceProvider"/> instance used for dependency injection.</param>
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext.Services.Any())

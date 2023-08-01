@@ -2,12 +2,12 @@ namespace CarRepairGarage.Web
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.AspNetCore.Mvc;
 
     using CarRepairGarage.Data;
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Seeding;
     using CarRepairGarage.Services.DIConfiguration;
-    using Microsoft.AspNetCore.Mvc;
 
     public class Program
     {
@@ -17,7 +17,7 @@ namespace CarRepairGarage.Web
 
             // Add services to the container.
             string connectionString =
-                builder.Configuration.GetConnectionString("HomeConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));

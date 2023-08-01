@@ -11,8 +11,17 @@
     using CarRepairGarage.Common;
     using CarRepairGarage.Data.Seeding.Contracts;
 
+    /// <summary>
+    /// Class responsible for seeding the application database with initial Role data.
+    /// </summary>
     internal class RoleSeeder : ISeeder
     {
+        /// <summary>
+        /// Seeds the application database with initial Role data for Admin, Manager, and User roles.
+        /// </summary>
+        /// <param name="dbContext">The application's database context.</param>
+        /// <param name="serviceProvider">The service provider for resolving services and dependencies.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();

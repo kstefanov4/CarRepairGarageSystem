@@ -9,10 +9,18 @@
     using CarRepairGarage.Web.ViewModels.Appointment;
     using CarRepairGarage.Web.ViewModels.Appointment.Enums;
 
+    /// <summary>
+    /// Service class responsible for managing appointments.
+    /// </summary>
     public class AppointmentService : BaseService, IAppointmentService
     {
         private readonly IRepository _repository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppointmentService"/> class.
+        /// </summary>
+        /// <param name="repository">The repository used for data access.</param>
+        /// <param name="logger">The logger for logging messages.</param>
         public AppointmentService(
             IRepository repository,
             ILogger<AppointmentService> logger) : base(logger)
@@ -20,6 +28,12 @@
             _repository = repository;
         }
 
+        /// <summary>
+        /// Creates a new appointment for a user.
+        /// </summary>
+        /// <param name="model">The appointment details to create.</param>
+        /// <param name="user">The application user for whom the appointment is created.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task CreateAppointmentAsync(CreateAppointmentModel model, ApplicationUser user)
         {
             Appointment appointment = new Appointment()
@@ -39,6 +53,11 @@
             });
         }
 
+        /// <summary>
+        /// Deletes an appointment by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the appointment to delete.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task Delete(Guid id)
         {
             //TODO check if the user is the owner
@@ -50,12 +69,23 @@
             });
         }
 
+        /// <summary>
+        /// Checks if an appointment with the specified ID exists.
+        /// </summary>
+        /// <param name="id">The ID of the appointment to check.</param>
+        /// <returns><c>true</c> if the appointment exists; otherwise, <c>false</c>.</returns>
         public async Task<bool> Exist(Guid id)
         {
             return await _repository.AllReadonly<Appointment>()
                 .AnyAsync(x => x.Id == id.ToString());
         }
 
+        /// <summary>
+        /// Retrieves all appointments for a user with optional filtering and pagination.
+        /// </summary>
+        /// <param name="queryModel">The query model containing filter and pagination information.</param>
+        /// <param name="id">The ID of the user.</param>
+        /// <returns>A model containing the filtered and paginated appointments.</returns>
         public async Task<AllAppointmentsFilteredAndPagedServiceModel> GetAllAppointmentsByUserIdAsync(AllAppointmentsQueryModel queryModel, Guid id)
         {
             IQueryable<Appointment> appointmentQuery = _repository.All<Appointment>()
@@ -127,6 +157,12 @@
             };
         }
 
+        /// <summary>
+        /// Retrieves all appointments for a garage with optional filtering and pagination.
+        /// </summary>
+        /// <param name="queryModel">The query model containing filter and pagination information.</param>
+        /// <param name="id">The ID of the garage.</param>
+        /// <returns>A model containing the filtered and paginated appointments.</returns>
         public async Task<AllAppointmentsFilteredAndPagedServiceModel> GetAllAppointmentsByGarageIdAsync(AllAppointmentsQueryModel queryModel, Guid id)
         {
             IQueryable<Appointment> appointmentQuery = _repository.All<Appointment>()
@@ -198,6 +234,11 @@
             };
         }
 
+        /// <summary>
+        /// Retrieves all appointments for a garage without filtering and pagination.
+        /// </summary>
+        /// <param name="id">The ID of the garage.</param>
+        /// <returns>A collection of appointment view models.</returns>
         public async Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByGarageIdAsync(int id)
         {
             var appointments = await _repository.AllReadonly<Appointment>()
@@ -220,6 +261,13 @@
             return appointments;
         }
 
+        /// <summary>
+        /// Retrieves all available appointment hours for a specific garage and service on a given date.
+        /// </summary>
+        /// <param name="dateTime">The date for which to check the available hours.</param>
+        /// <param name="garageId">The ID of the garage.</param>
+        /// <param name="serviceId">The ID of the service.</param>
+        /// <returns>A list of available appointment hours.</returns>
         public async Task<List<string>> GetAllAvailableHours(DateTime dateTime, int garageId, int serviceId)
         {
             List<string> hours = await _repository.AllReadonly<Appointment>()
@@ -230,6 +278,11 @@
             return hours;
         }
 
+        /// <summary>
+        /// Retrieves an appointment by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the appointment to retrieve.</param>
+        /// <returns>An appointment model containing the details of the appointment.</returns>
         public async Task<AppointmentModel> GetAppointmentByIdAsync(string id)
         {
             var appointment = await _repository.GetByIdAsync<Appointment>(id);
@@ -251,6 +304,11 @@
             };
         }
 
+        /// <summary>
+        /// Approves an appointment by changing its confirmation status to true.
+        /// </summary>
+        /// <param name="id">The ID of the appointment to approve.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task Approve(string id)
         {
             var appointent = await _repository.All<Appointment>()
@@ -265,6 +323,11 @@
             });
         }
 
+        /// <summary>
+        /// Rejects an appointment by changing its confirmation status to false.
+        /// </summary>
+        /// <param name="id">The ID of the appointment to reject.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task Reject(string id)
         {
             var appointent = await _repository.All<Appointment>()

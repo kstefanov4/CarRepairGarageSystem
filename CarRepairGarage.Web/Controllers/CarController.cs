@@ -16,6 +16,10 @@
         private readonly ICarService _carService;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        /// <summary>
+        /// Controller responsible for handling car-related actions, such as adding, editing, and removing cars.
+        /// Users must be authenticated and have the "User" role to access these actions.
+        /// </summary>
         public CarController(
             ICarService carService, 
             UserManager<ApplicationUser> userManager)
@@ -23,6 +27,11 @@
             _carService = carService; 
             _userManager = userManager;
         }
+
+        /// <summary>
+        /// Displays the list of cars owned by the currently logged-in user.
+        /// </summary>
+        /// <returns>The view containing the list of cars.</returns>
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -36,6 +45,10 @@
             return View(model);
         }
 
+        /// <summary>
+        /// Displays the form to add a new car.
+        /// </summary>
+        /// <returns>The view containing the form to add a new car.</returns>
         [HttpGet]
         public IActionResult Add()
         {
@@ -44,6 +57,11 @@
             return View(model);
         }
 
+        /// <summary>
+        /// Handles the submission of the form to add a new car.
+        /// </summary>
+        /// <param name="model">The data submitted from the form.</param>
+        /// <returns>Redirects to the car list view if successful, otherwise returns the form view with validation errors.</returns>
         [HttpPost]
         public async Task<IActionResult> Add(AddCarViewModel model)
         {
@@ -68,6 +86,11 @@
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Displays the form to edit an existing car.
+        /// </summary>
+        /// <param name="id">The ID of the car to edit.</param>
+        /// <returns>The view containing the form to edit the car.</returns>
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -90,6 +113,12 @@
             
         }
 
+        /// <summary>
+        /// Handles the submission of the form to edit an existing car.
+        /// </summary>
+        /// <param name="id">The ID of the car to edit.</param>
+        /// <param name="model">The data submitted from the form.</param>
+        /// <returns>Redirects to the car list view if successful, otherwise returns the form view with validation errors.</returns>
         [HttpPost]
         public async Task<IActionResult> Edit(int id, AddCarViewModel model)
         {
@@ -126,7 +155,11 @@
             return RedirectToAction(nameof(Index));
         }
 
-        
+        /// <summary>
+        /// Removes an existing car.
+        /// </summary>
+        /// <param name="id">The ID of the car to remove.</param>
+        /// <returns>Redirects to the car list view if successful, otherwise returns the car list view with an error message.</returns>
         public async Task<IActionResult> Remove(int id)
         {
             if ((await _carService.Exist(id)) == false)

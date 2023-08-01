@@ -8,12 +8,21 @@
     using CarRepairGarage.Web.ViewModels.Appointment;
     using static CarRepairGarage.Common.NotificationsMessagesConstants;
 
+    /// <summary>
+    /// Controller for managing appointment-related operations in the Manager area.
+    /// </summary>
     public class AppointmentController : BaseController
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IGarageService _garageService;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppointmentController"/> class.
+        /// </summary>
+        /// <param name="appointmentService">The appointment service.</param>
+        /// <param name="garageService">The garage service.</param>
+        /// <param name="userManager">The user manager.</param>
         public AppointmentController(
             IAppointmentService appointmentService,
             IGarageService garageService,
@@ -24,6 +33,11 @@
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// Displays all appointments associated with the current garage.
+        /// </summary>
+        /// <param name="queryModel">The query model containing filters and pagination details.</param>
+        /// <returns>The view displaying all appointments for the current garage.</returns>
         public async Task<IActionResult> All([FromQuery] AllAppointmentsQueryModel queryModel)
         {
             var user = await _userManager.GetUserAsync(User);
@@ -40,6 +54,11 @@
             return View(queryModel);
         }
 
+        /// <summary>
+        /// Approves an appointment with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the appointment to approve.</param>
+        /// <returns>A redirect to the view displaying all appointments for the current garage.</returns>
         public async Task<IActionResult> Approve(Guid id)
         {
 
@@ -72,6 +91,11 @@
             return RedirectToAction(nameof(All));
         }
 
+        /// <summary>
+        /// Rejects an appointment with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the appointment to reject.</param>
+        /// <returns>A redirect to the view displaying all appointments for the current garage.</returns>
         public async Task<IActionResult> Reject(Guid id)
         {
             if ((await _appointmentService.Exist(id)) == false)

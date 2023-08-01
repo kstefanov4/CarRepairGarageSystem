@@ -8,8 +8,8 @@
     using CarRepairGarage.Data.Common.Models;
 
     /// <summary>
-    /// This is custome role class that works with the defoult ASP.NET Core Identity.
-    /// You can add additional info to the build-in users.
+    /// Represents an extended Identity role that works with the default ASP.NET Core Identity.
+    /// Allows adding additional information to the built-in roles.
     /// </summary>
 
     [Comment("Extended Identity Role")]
@@ -26,9 +26,15 @@
             
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the application role is deleted.
+        /// </summary>
         [Comment("Is Application role deleted")]
         public bool IsDeleted { get; set; }
 
+        /// <summary>
+        /// Gets or sets the date of deletion of the application role.
+        /// </summary>
         [Comment("Date of deletion")]
         public DateTime? DeletedOn { get; set; }
     }

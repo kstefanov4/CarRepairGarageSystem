@@ -8,11 +8,19 @@
     using CarRepairGarage.Web.ViewModels.Garage;
     using static CarRepairGarage.Common.NotificationsMessagesConstants;
 
+    /// <summary>
+    /// Controller for managing garages in the manager's dashboard.
+    /// </summary>
     public class DashboardController : BaseController
     {
         private readonly IGarageService _garageService;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DashboardController"/> class.
+        /// </summary>
+        /// <param name="garageService">The garage service.</param>
+        /// <param name="userManager">The user manager.</param>
         public DashboardController(
             IGarageService garageService,
             UserManager<ApplicationUser> userManager)
@@ -21,6 +29,12 @@
             _userManager = userManager;
 
         }
+
+        /// <summary>
+        /// Action to display all garages owned by the current manager.
+        /// </summary>
+        /// <param name="pageIndex">The page index for pagination.</param>
+        /// <returns>The view with a list of garages owned by the manager.</returns>
         [HttpGet]
         public async Task<IActionResult> All(int pageIndex = 1)
         {
@@ -47,6 +61,11 @@
 
         }
 
+        /// <summary>
+        /// Action to display the garage modification form.
+        /// </summary>
+        /// <param name="id">The ID of the garage to modify.</param>
+        /// <returns>The view with the garage modification form.</returns>
         [HttpGet]
         public async Task<IActionResult> Modify(int id)
         {
@@ -69,6 +88,11 @@
             return View(model);
         }
 
+        /// <summary>
+        /// Action to handle the garage modification form submission.
+        /// </summary>
+        /// <param name="model">The view model containing modified garage data.</param>
+        /// <returns>The view with the result of the modification attempt.</returns>
         [HttpPost]
         public async Task<IActionResult> Modify(ModifyGarageViewModel model)
         {
@@ -106,6 +130,10 @@
             return RedirectToAction(nameof(All));
         }
 
+        /// <summary>
+        /// Action to display the form for adding a new garage.
+        /// </summary>
+        /// <returns>The view with the form for adding a new garage.</returns>
         [HttpGet]
         public IActionResult Add()
         {
@@ -113,6 +141,11 @@
             return View(model);
         }
 
+        /// <summary>
+        /// Action to handle the new garage form submission.
+        /// </summary>
+        /// <param name="model">The view model containing new garage data.</param>
+        /// <returns>The view with the result of the garage addition attempt.</returns>
         [HttpPost]
         public async Task<IActionResult> Add(AddGarageViewModel model)
         {
@@ -136,6 +169,12 @@
 
             return RedirectToAction(nameof(All));
         }
+
+        /// <summary>
+        /// Action to handle garage removal.
+        /// </summary>
+        /// <param name="id">The ID of the garage to remove.</param>
+        /// <returns>The view with the result of the garage removal attempt.</returns>
         public async Task<IActionResult> Remove(int id)
         {
             if ((await _garageService.Exists(id)) == false)

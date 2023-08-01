@@ -1,10 +1,10 @@
 ﻿namespace CarRepairGarage.Services
 {
-    using Microsoft.EntityFrameworkCore;
 
     using System.Linq;
 
     using Microsoft.Extensions.Logging;
+    using Microsoft.EntityFrameworkCore;
     
     using CarRepairGarage.Data.Repositories.Contracts;
     using CarRepairGarage.Web.ViewModels.Garage;
@@ -13,9 +13,19 @@
     using CarRepairGarage.Web.ViewModels.Garage.Enums;
     using Microsoft.AspNetCore.Http;
 
+    /// <summary>
+    /// Service class for managing garage-related operations.
+    /// </summary>
+
     public class GarageService : BaseService, IGarageService
     {
         private readonly IRepository _repository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GarageService"/> class.
+        /// </summary>
+        /// <param name="repository">The repository for data access.</param>
+        /// <param name="logger">The logger for logging.</param>
         public GarageService(
             IRepository repository,
             ILogger<GarageService> logger)
@@ -25,6 +35,11 @@
 
         }
 
+        /// <summary>
+        /// Adds a new garage to the database with the provided information.
+        /// </summary>
+        /// <param name="model">The <see cref="AddGarageViewModel"/> containing the garage information.</param>
+        /// <param name="user">The application user associated with the garage.</param>
         public async Task AddGarageAsync(AddGarageViewModel model, ApplicationUser user)
         {
             var city = await CreateCity(model.City);
@@ -181,6 +196,10 @@
             };
         }
 
+        /// <summary>
+        /// Edits an existing garage in the database with the provided information.
+        /// </summary>
+        /// <param name="model">The <see cref="ModifyGarageViewModel"/> containing the modified garage information.</param>
         public async Task Edit(ModifyGarageViewModel model)
         {
             var garage = await _repository.GetByIdAsync<Garage>(model.Id);
@@ -200,16 +219,6 @@
             {
                 await _repository.SaveChangesAsync();
             });
-
-            /*try
-            {
-                await _repository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(nameof(Edit), ex);
-                throw new ApplicationException("Database failed to save info", ex);
-            }*/
         }
 
         private async Task<List<Data.Models.GarageService>> GetGarageServices(int garageId)
@@ -284,13 +293,22 @@
             garage.Address = address;
         }
 
-
+        /// <summary>
+        /// Checks if a garage with the specified ID exists in the database.
+        /// </summary>
+        /// <param name="id">The ID of the garage to check.</param>
+        /// <returns><c>true</c> if the garage exists; otherwise, <c>false</c>.</returns>
         public async Task<bool> Exists(int id)
         {
             return await _repository.AllReadonly<Garage>()
                 .AnyAsync(x => x.Id == id && x.IsDeleted == false);
         }
 
+        /// <summary>
+        /// Gets a list of all garages with a maximum count.
+        /// </summary>
+        /// <param name="count">The maximum number of garages to retrieve.</param>
+        /// <returns>A list of <see cref="GarageViewModel"/> containing garage information.</returns>
         public async Task<IEnumerable<GarageViewModel>> GetAllGaragesAsync(int count)
         {
             var garages = await _repository
@@ -311,6 +329,11 @@
             return garages;
         }
 
+        /// <summary>
+        /// Gets a list of all garages owned by the user with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the user whose garages to retrieve.</param>
+        /// <returns>A list of <see cref="GarageViewModel"/> containing garage information.</returns>
         public async Task<IEnumerable<GarageViewModel>> GetAllGaragesByOwnerAsync(string id)
         {
             var garages = await _repository.AllReadonly<Garage>()
@@ -336,6 +359,11 @@
             return garages;
         }
 
+        /// <summary>
+        /// Gets a list of all services offered by the garage with the specified ID.
+        /// </summary>
+        /// <param name="garageId">The ID of the garage whose services to retrieve.</param>
+        /// <returns>A list of <see cref="GarageServicesModel"/> containing service information.</returns>
         public async Task<List<GarageServicesModel>> GetAllServicesByGarageIdAsync(int garageId)
         {
             var services = await _repository.AllReadonly<Data.Models.GarageService>()
@@ -349,6 +377,11 @@
             return services;
         }
 
+        /// <summary>
+        /// Gets a specific garage by its ID from the database.
+        /// </summary>
+        /// <param name="id">The ID of the garage to retrieve.</param>
+        /// <returns>The <see cref="GarageViewModel"/> containing garage information.</returns>
         public async Task<GarageViewModel> GetGarageByIdAsync(int id)
         {
             GarageViewModel garage = await _repository.AllReadonly<Garage>()
@@ -376,6 +409,11 @@
             return garage!;
         }
 
+        /// <summary>
+        /// Gets a <see cref="ModifyGarageViewModel"/> for modifying an existing garage with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the garage to retrieve for modification.</param>
+        /// <returns>The <see cref="ModifyGarageViewModel"/> containing garage information for modification.</returns>
         public async Task<ModifyGarageViewModel> ModifyGarageByIdAsync(int id)
         {
             ModifyGarageViewModel? garage = await _repository.AllReadonly<Garage>()
@@ -395,6 +433,10 @@
             return garage;
         }
 
+        /// <summary>
+        /// Deletes the garage with the specified ID from the database.
+        /// </summary>
+        /// <param name="id">The ID of the garage to delete.</param>
         public async Task Delete(int id)
         {
             var garage = await _repository.GetByIdAsync<Garage>(id);

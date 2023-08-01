@@ -7,19 +7,30 @@
     using CarRepairGarage.Data.Repositories.Contracts;
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Note;
-    using CarRepairGarage.Web.ViewModels.Garage;
 
+    /// <summary>
+    /// Service class for managing notes-related operations.
+    /// </summary>
     public class NoteService : BaseService, INoteService
     {
         private readonly IRepository _repository;
-        private readonly ILogger<NoteService> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NoteService"/> class.
+        /// </summary>
+        /// <param name="repository">The repository for data access.</param>
+        /// <param name="logger">The logger for logging.</param>
         public NoteService(
             IRepository repository,
             ILogger<NoteService> logger) : base(logger)
         {
             _repository = repository;
         }
+
+        /// <summary>
+        /// Creates a new note with the provided information and associates it with one or more garages.
+        /// </summary>
+        /// <param name="model">The <see cref="AddNoteViewModel"/> containing the note information.</param>
         public async Task CreateNoteAsync(AddNoteViewModel model)
         {
             string imageUrl = await GetImagePath(model);
@@ -49,6 +60,10 @@
             });
         }
 
+        /// <summary>
+        /// Deletes the note associated with the specified garage ID.
+        /// </summary>
+        /// <param name="id">The ID of the garage whose note to delete.</param>
         public async Task Delete(int id)
         {
             var garage = await _repository.All<Garage>()
@@ -63,6 +78,10 @@
             });
         }
 
+        /// <summary>
+        /// Deletes the association of the note with all the garages.
+        /// </summary>
+        /// <param name="id">The ID of the note whose associations to delete.</param>
         public async Task DeleteAll(int id)
         {
             var note = await _repository.All<Note>()
@@ -81,12 +100,22 @@
             });
         }
 
+        /// <summary>
+        /// Checks if a note with the specified ID exists in the database.
+        /// </summary>
+        /// <param name="id">The ID of the note to check.</param>
+        /// <returns><c>true</c> if the note exists; otherwise, <c>false</c>.</returns>
         public async Task<bool> Exist(int id)
         {
             return await _repository.AllReadonly<Note>()
                 .AnyAsync(x => x.Id == id);
         }
 
+        /// <summary>
+        /// Gets the image path for the note from the provided <see cref="AddNoteViewModel"/>.
+        /// </summary>
+        /// <param name="model">The <see cref="AddNoteViewModel"/> containing the image file.</param>
+        /// <returns>The URL of the uploaded image.</returns>
         private static async Task<string> GetImagePath(AddNoteViewModel model)
         {
             string imageUrl = null;

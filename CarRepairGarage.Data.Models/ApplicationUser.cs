@@ -9,8 +9,8 @@
     using CarRepairGarage.Data.Common.Models;
 
     /// <summary>
-    /// This is custome user class that works with the defoult ASP.NET Core Identity.
-    /// You can add additional info to the build-in users.
+    /// Represents an extended Identity user that works with the default ASP.NET Core Identity.
+    /// Allows adding additional information to the built-in users.
     /// </summary>
 
     [Comment("Extended Identity User")]
@@ -25,9 +25,15 @@
             Cars = new HashSet<Car>();
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the user is deleted.
+        /// </summary>
         [Comment("Is User Deleted")]
         public bool IsDeleted { get; set; }
 
+        /// <summary>
+        /// Gets or sets the date of deletion of the user.
+        /// </summary>
         [Comment("Date of deletion")]
         public DateTime? DeletedOn { get; set; }
 

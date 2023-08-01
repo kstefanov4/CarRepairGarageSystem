@@ -11,8 +11,18 @@
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Seeding.Contracts;
     using CarRepairGarage.Common;
+
+    /// <summary>
+    /// Class responsible for seeding the application database with initial user accounts.
+    /// </summary>
     public class AccountSeeder : ISeeder
     {
+        /// <summary>
+        /// Seeds the application database with initial user accounts.
+        /// </summary>
+        /// <param name="dbContext">The application's database context.</param>
+        /// <param name="serviceProvider">The service provider for resolving services and dependencies.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -38,6 +48,7 @@
                 "Usercho",
                 "Userov");
 
+            // Create Manager
             await CreateUser(
                 dbContext,
                 userManager,
