@@ -94,6 +94,162 @@ namespace CarRepairGarage.Services.Tests
             _mockRepository.Verify(r => r.SaveChangesAsync(), Times.Once);
         }
 
+        [Test]
+        public async Task Exists_ShouldReturnTrue_WhenGarageExistsAndIsNotDeleted()
+        {
+            // Arrange
+            var garage = new Garage { Id = 1, Note = null, AddressId = 1, Name = "Test Name", CategoryId = 1, ImageUrl = null, UserId = Guid.NewGuid(), IsDeleted = false };
+            _applicationDbContext.Garages.Add(garage);
+            await _applicationDbContext.SaveChangesAsync();
+
+            _mockRepository.Setup(r => r.AllReadonly<Garage>())
+                .Returns(_applicationDbContext.Garages.AsQueryable());
+
+            // Act
+            var exists = await _garageService.Exists(garage.Id);
+
+            // Assert
+            Assert.IsTrue(exists);
+        }
+
+        [Test]
+        public async Task GetAllGaragesAsync_ShouldReturnCorrectGarages_WhenCalledWithValidCount()
+        {
+            // Arrange
+            var garages = new List<Garage>
+            {
+                new Garage { 
+                    Id = 1, 
+                    IsDeleted = false, 
+                    Name = "Garage1", 
+                    Category = new Category { 
+                        Name = "Category1", 
+                        ImageUrl = "Url1", 
+                        Description = "TestDescription" }, 
+                    Address = new Address { 
+                        City = new City { 
+                            Name = "City1" }, 
+                        StreetName = "StreetName", 
+                        StreetNumber = 2 }, 
+                    Services = new List<Data.Models.GarageService> { 
+                        new Data.Models.GarageService { 
+                            Service = new Service { 
+                                Name = "Service1" } } }, 
+                    ImageUrl = "Url1" },
+
+                new Garage { 
+                    Id = 2, 
+                    IsDeleted = true, 
+                    Name = "Garage2", 
+                    Category = new Category { 
+                        Name = "Category2", 
+                        ImageUrl = "Url1", 
+                        Description = "TestDescription" }, 
+                    Address = new Address { 
+                        City = new City { 
+                            Name = "City2" }, 
+                        StreetName = "StreetName", 
+                        StreetNumber = 2 }, 
+                    Services = new List<Data.Models.GarageService> { 
+                        new Data.Models.GarageService { 
+                            Service = new Service { 
+                                Name = "Service2" } } }, 
+                    ImageUrl = "Url2" },
+                new Garage { 
+                    Id = 3, 
+                    IsDeleted = false, 
+                    Name = "Garage3", 
+                    Category = new Category { 
+                        Name = "Category3", 
+                        ImageUrl = "Url1", 
+                        Description = "TestDescription" }, 
+                    Address = new Address { 
+                        City = new City { 
+                            Name = "City3" }, 
+                        StreetName = "StreetName", 
+                        StreetNumber = 2 }, 
+                    Services = new List<Data.Models.GarageService> { 
+                        new Data.Models.GarageService { 
+                            Service = new Service { 
+                                Name = "Service3" } } }, 
+                    ImageUrl = "Url3" }
+            };
+
+            foreach (var garage in garages)
+            {
+                _applicationDbContext.Garages.Add(garage);
+            }
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            _mockRepository.Setup(r => r.AllReadonly<Garage>())
+                .Returns(_applicationDbContext.Garages.Include(x => x.Services).AsQueryable());
+
+            var expectedCount = 2; // Only two garages are not marked as deleted
+
+            // Act
+            var resultGarages = await _garageService.GetAllGaragesAsync(expectedCount);
+
+            // Assert
+            Assert.IsNotNull(resultGarages);
+            Assert.AreEqual(expectedCount, resultGarages.Count());
+            Assert.AreEqual("Garage3", resultGarages.First().Name); // Expect the garage with the highest ID
+            Assert.AreEqual("Category3", resultGarages.First().Category);
+            Assert.AreEqual("City3", resultGarages.First().City);
+            Assert.AreEqual("Service3", resultGarages.First().Services.First());
+            Assert.AreEqual("Url3", resultGarages.First().ImageUrl);
+
+        }
+
+        [Test]
+        public async Task Delete_ShouldMarkGarageAsDeleted_WhenCalledWithValidId()
+        {
+            // Arrange
+            var garageId = 1;
+            var garage = new Garage
+            {
+                Id = 1,
+                IsDeleted = false,
+                Name = "Garage1",
+                Category = new Category
+                {
+                    Name = "Category1",
+                    ImageUrl = "Url1",
+                    Description = "TestDescription"
+                },
+                Address = new Address
+                {
+                    City = new City
+                    {
+                        Name = "City1"
+                    },
+                    StreetName = "StreetName",
+                    StreetNumber = 2
+                },
+                Services = new List<Data.Models.GarageService> {
+                        new Data.Models.GarageService {
+                            Service = new Service {
+                                Name = "Service1" } } },
+                ImageUrl = "Url1"
+            };
+
+            _mockRepository.Setup(r => r.GetByIdAsync<Garage>(garageId))
+            .ReturnsAsync(garage);
+            _mockRepository.Setup(r => r.SaveChangesAsync())
+                .ReturnsAsync(1) // assuming SaveChangesAsync returns the number of affected rows
+                .Verifiable();
+
+            // Act
+            await _garageService.Delete(garageId);
+
+            // Assert
+            Assert.IsTrue(garage.IsDeleted);
+            Assert.IsNotNull(garage.DeletedOn);
+            _mockRepository.Verify(r => r.SaveChangesAsync(), Times.Once);
+        }
+
+
+
     }
 }
 
