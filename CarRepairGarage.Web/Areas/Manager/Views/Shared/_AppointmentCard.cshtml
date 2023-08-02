@@ -9,7 +9,7 @@
             <p>Car VIN: <b class="vin" style="cursor: pointer;">@Model.CarVIN</b></p>
             <p>Date: <b>@Model.SelectedDate</b></p>
             <p>Time: <b>@Model.SelectedTime</b></p>
-            @if (DateTime.Parse(Model.SelectedDate) < DateTime.UtcNow)
+            @if (DateTime.Parse(Model.SelectedDate).DayOfYear < DateTime.Now.DayOfYear)
             {
                 <p>Status: <b style="color: red;">Expired</b></p>
             }

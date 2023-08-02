@@ -1,19 +1,16 @@
-﻿using CarRepairGarage.Data.Repositories.Contracts;
-using CarRepairGarage.Data;
-using CarRepairGarage.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CarRepairGarage.Data.Models;
-using CarRepairGarage.Web.ViewModels.Car;
-
-namespace CarRepairGarage.Services.Tests
+﻿namespace CarRepairGarage.Services.Tests
 {
+    using Microsoft.Extensions.Logging;
+    using Microsoft.EntityFrameworkCore;
+    
+    using Moq;
+    
+    using CarRepairGarage.Data.Repositories.Contracts;
+    using CarRepairGarage.Data;
+    using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Web.ViewModels.Car;
+
     public class CarServiceTests
     {
         private Mock<IRepository> _mockRepository;

@@ -2,17 +2,20 @@
 using CarRepairGarage.Data;
 using CarRepairGarage.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CarRepairGarage.Data.Models;
 
 namespace CarRepairGarage.Services.Tests
 {
+    using Microsoft.EntityFrameworkCore;
+    
+    using Moq;
+    
+    using CarRepairGarage.Data.Repositories.Contracts;
+    using CarRepairGarage.Data;
+    using CarRepairGarage.Services.Contracts;
+    using CarRepairGarage.Data.Models;
+
     [TestFixture]
     public class ServiseServiseTests
     {

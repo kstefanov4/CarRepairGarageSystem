@@ -5,11 +5,6 @@
     ViewData["Title"] = "Appointments Page";
 }
 
-@if (Model.Appointments.Count() < 1)
-{
-    <p>Your do not have any appointments!</p>
-}
-
 <hr />
 <form method="get">
     <div class="row">
@@ -81,7 +76,7 @@
 
 @if (!Model.Appointments.Any())
 {
-    <h2 class="text-center">No appointments found by the given criteria!</h2>
+    <p>Your do not have any appointments!</p>
 }
 <div class="container">
     <div class="row">

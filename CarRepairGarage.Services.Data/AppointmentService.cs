@@ -95,22 +95,22 @@
 
             if (!string.IsNullOrWhiteSpace(queryModel.Status) && queryModel.Status == "Approved")
             {
-                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == true);
+                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == true && x.Date.DayOfYear >= DateTime.Now.DayOfYear);
             }
 
             if (!string.IsNullOrWhiteSpace(queryModel.Status) && queryModel.Status == "Rejected")
             {
-                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == false);
+                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == false && x.Date.DayOfYear >= DateTime.Now.DayOfYear);
             }
 
             if (!string.IsNullOrWhiteSpace(queryModel.Status) && queryModel.Status == "Pending")
             {
-                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == null && x.Date >= DateTime.UtcNow);
+                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == null && x.Date.DayOfYear >= DateTime.Now.DayOfYear);
             }
 
             if (!string.IsNullOrWhiteSpace(queryModel.Status) && queryModel.Status == "Expired")
             {
-                appointmentQuery = appointmentQuery.Where(x => x.Date < DateTime.UtcNow);
+                appointmentQuery = appointmentQuery.Where(x => x.Date.DayOfYear < DateTime.Now.DayOfYear);
             }
             // Sorting
             switch (queryModel.AppointmentSorting)
@@ -172,22 +172,22 @@
 
             if (!string.IsNullOrWhiteSpace(queryModel.Status) && queryModel.Status == "Approved")
             {
-                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == true);
+                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == true && x.Date.DayOfYear >= DateTime.Now.DayOfYear);
             }
 
             if (!string.IsNullOrWhiteSpace(queryModel.Status) && queryModel.Status == "Rejected")
             {
-                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == false);
+                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == false && x.Date.DayOfYear >= DateTime.Now.DayOfYear );
             }
 
             if (!string.IsNullOrWhiteSpace(queryModel.Status) && queryModel.Status == "Pending")
             {
-                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == null && x.Date >= DateTime.UtcNow);
+                appointmentQuery = appointmentQuery.Where(x => x.Confirmed == null && x.Date.DayOfYear >= DateTime.Now.DayOfYear);
             }
 
             if (!string.IsNullOrWhiteSpace(queryModel.Status) && queryModel.Status == "Expired")
             {
-                appointmentQuery = appointmentQuery.Where(x => x.Date < DateTime.UtcNow);
+                appointmentQuery = appointmentQuery.Where(x => x.Date.DayOfYear < DateTime.Now.DayOfYear);
             }
             // Sorting
             switch (queryModel.AppointmentSorting)
@@ -242,6 +242,7 @@
         public async Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByGarageIdAsync(int id)
         {
             var appointments = await _repository.AllReadonly<Appointment>()
+                .Where(a => a.Date >= DateTime.UtcNow)
                 .Include(x => x.Garage)
                 .Where(x => x.Garage.Id == id && x.Garage.IsDeleted == false)
                 .Select(x => new AppointmentDetailsViewModel()

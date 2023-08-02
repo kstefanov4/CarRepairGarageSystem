@@ -147,6 +147,12 @@
                 return View(model);
             }
 
+            if (model.SelectedDate.DayOfYear < DateTime.Now.DayOfYear)
+            {
+                TempData[ErrorMessage] = $"It`s not possible to shedule a date older than today!";
+                return RedirectToAction("Index");
+            }
+
             var user = await _userManager.GetUserAsync(User);
 
             try
@@ -157,7 +163,7 @@
             catch (Exception)
             {
                 TempData[ErrorMessage] = $"Something went wrong, please try once again or contact our support team!";
-                return View(model);
+                return RedirectToAction("Index");
             }
 
             return RedirectToAction(nameof(All));

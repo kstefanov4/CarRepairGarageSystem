@@ -5,11 +5,6 @@
     ViewData["Title"] = "Appointments Page";
 }
 
-@if (Model.Appointments.Count() < 1)
-{
-    <p>Your do not have any appointments!</p>
-}
-
 <hr />
 <form method="get">
     <div class="row">
@@ -93,17 +88,24 @@
                         <p>Car VIN: <b>@appointment.CarVIN</b></p>
                         <p>Date: <b>@appointment.SelectedDate</b></p>
                         <p>Time: <b>@appointment.SelectedTime</b></p>
-                        @if (appointment.IsApproved == null)
+                        @if (DateTime.Parse(appointment.SelectedDate).DayOfYear < DateTime.Now.DayOfYear)
                         {
-                            <p>Status: <b style="color: yellow;">Pending</b></p>
-                        }
-                        else if (appointment.IsApproved == true)
-                        {
-                            <p>Status: <b style="color: green;">Approved</b></p>
+                            <p>Status: <b style="color: red;">Expired</b></p>
                         }
                         else
                         {
-                            <p>Status: <b style="color: red;">Rejected</b></p>
+                            if (appointment.IsApproved == null)
+                            {
+                                <p>Status: <b style="color: yellow;">Pending</b></p>
+                            }
+                            else if (appointment.IsApproved == true)
+                            {
+                                <p>Status: <b style="color: green;">Approved</b></p>
+                            }
+                            else
+                            {
+                                <p>Status: <b style="color: red;">Rejected</b></p>
+                            }
                         }
                         <a asp-controller="Appointment" asp-action="Remove" asp-route-id="@appointment.Id" class="btn btn-warning" onclick="return confirmDelete()">Remove</a>
                     </div>

@@ -4,14 +4,8 @@ using CarRepairGarage.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CarRepairGarage.Data.Models;
 using CarRepairGarage.Web.ViewModels.Garage;
-using CarRepairGarage.Web.ViewModels.Garage.Enums;
 
 namespace CarRepairGarage.Services.Tests
 {

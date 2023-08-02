@@ -1,13 +1,15 @@
-﻿using CarRepairGarage.Data.Models;
-using CarRepairGarage.Data.Repositories.Contracts;
-using CarRepairGarage.Data;
-using CarRepairGarage.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Moq;
-
-namespace CarRepairGarage.Services.Tests
+﻿namespace CarRepairGarage.Services.Tests
 {
+    using Microsoft.EntityFrameworkCore;
+    
+    using Moq;
+    
+    using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Data.Repositories.Contracts;
+    using CarRepairGarage.Data;
+    using CarRepairGarage.Services.Contracts;
+
+
     [TestFixture]
     public class CityServiceTests
     {
