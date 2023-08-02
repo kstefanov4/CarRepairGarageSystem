@@ -73,7 +73,7 @@ Acknowledgments
  - part of the MVC Template of Nikolay Kostov
  - Stamo Petkov`s Lectures
  - Part of the code is copyed from Kristiyan Ivanov Workshops.
- - Some help from CharGPT
+ - Some help from ChatGPT
 
 
 
