@@ -43,7 +43,8 @@ namespace CarRepairGarage.Web
             {
                 op.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
-
+            
+            builder.Services.AddCors();
             builder.Services.AddRazorPages();
 
             WebApplication app = builder.Build();
