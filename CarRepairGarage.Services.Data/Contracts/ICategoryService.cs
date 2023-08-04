@@ -7,6 +7,7 @@
     /// </summary>
     public interface ICategoryService
     {
+
         /// <summary>
         /// Retrieves a collection of category view models representing all available categories.
         /// </summary>

@@ -16,6 +16,12 @@
         Task<IEnumerable<CarViewModel>> GetAllCarsByUserIdAsync(Guid id);
 
         /// <summary>
+        /// Retrieves a collection of car view models.
+        /// </summary>
+        /// <returns>An asynchronous task that represents the operation and returns a collection of car view models.</returns>
+        Task<IEnumerable<CarViewModel>> GetAllCarsAsync();
+
+        /// <summary>
         /// Adds a new car to the user's collection of cars.
         /// </summary>
         /// <param name="carModel">The view model containing car information.</param>

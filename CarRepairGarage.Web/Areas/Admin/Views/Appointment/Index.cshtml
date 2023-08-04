@@ -1,0 +1,45 @@
+﻿@using CarRepairGarage.Web.ViewModels.Appointment;
+@model IEnumerable<AppointmentDetailsViewModel>
+
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<h2>
+    Total Appointments: (@Model.Count())
+</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Garage Name</th>
+            <th scope="col">Car VIN</th>
+            <th scope="col">Service Name</th>
+            <th scope="col">IsApproved</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in this.Model)
+        {
+            <tr>
+                <th scope="row">@appointment.SelectedDate</th>
+                <td>@appointment.SelectedTime</td>
+                <td>@appointment.GarageName</td>
+                <td>@appointment.CarVIN</td>
+                <td>@appointment.ServiceName</td>
+                <td>@appointment.IsApproved</td>
+                <td>
+                    <form method="post">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                asp-area="Admin" asp-controller="Appointment" asp-action="Delete" asp-route-id="@appointment.Id">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

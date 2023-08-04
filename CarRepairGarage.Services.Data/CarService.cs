@@ -123,6 +123,28 @@
             return cars;
         }
 
+
+        /// <summary>
+        /// Retrieves all cars
+        /// </summary>
+        /// <returns>A collection of <see cref="CarViewModel"/> representing the cars.</returns>
+        public async Task<IEnumerable<CarViewModel>> GetAllCarsAsync()
+        {
+            var cars = await _repository.AllReadonly<Car>()
+                .Where(x => x.IsDeleted == false)
+                .Select(x => new CarViewModel
+                {
+                    Id = x.Id,
+                    VIN = x.VIN,
+                    Make = x.Make,
+                    CarModel = x.Model,
+                    Year = x.Year,
+                    UserId = x.UserId.ToString()
+                }).ToListAsync();
+
+            return cars;
+        }
+
         /// <summary>
         /// Retrieves the car with the specified ID.
         /// </summary>

@@ -1,0 +1,48 @@
+﻿@using CarRepairGarage.Web.ViewModels.Garage;
+@model IEnumerable<GarageViewModel>
+
+@{
+    ViewData["Title"] = "Garages";
+}
+
+<h2>
+    Total Garages: (@Model.Count())
+</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Category</th>
+            <th scope="col">City</th>
+            <th scope="col">Street Name</th>
+            <th scope="col">Street Number</th>
+            <th scope="col">Services</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var garage in this.Model)
+        {
+            <tr>
+                <th scope="row">@garage.Name</th>
+                <td>
+                    <img class="align-self-center" src="@garage.ImageUrl" style="width:180px;height:120px;">
+                </td>
+                <td>@garage.Category</td>
+                <td>@garage.City</td>
+                <td>@garage.StreetName</td>
+                <td>@garage.StreetNumber</td>
+                <td>@garage.Services.Count()</td>
+                <td>
+                    <form method="post">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                asp-area="Admin" asp-controller="Garage" asp-action="Delete" asp-route-id="@garage.Id">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -323,7 +323,9 @@
                                 Category = x.Category.Name,
                                 City = x.Address.City.Name,
                                 Services = x.Services.Select(x => x.Service.Name).ToList(),
-                                ImageUrl = x.ImageUrl
+                                ImageUrl = x.ImageUrl,
+                                StreetName = x.Address.StreetName,
+                                StreetNumber = x.Address.StreetNumber.ToString()
                             }).ToListAsync();
             return garages;
         }

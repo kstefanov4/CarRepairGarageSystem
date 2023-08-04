@@ -37,6 +37,11 @@
             {
                 return RedirectToAction("All","Dashboard", new { Area = GeneralApplicationConstants.Roles.ManagerRole });
             }
+
+            if (User.IsInRole(GeneralApplicationConstants.Roles.AdminRole))
+            {
+                return RedirectToAction("Index", "Dashboard", new { Area = GeneralApplicationConstants.Roles.AdminRole });
+            }
             var model = await garageService.GetAllGaragesAsync(3);
             return View(model);
         }

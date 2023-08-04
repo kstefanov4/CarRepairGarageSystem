@@ -4,16 +4,16 @@
 
 @model CreateAppointmentModel
 
-@inject CarRepairGarage.Services.Contracts.IGarageService _garageService;
-@inject CarRepairGarage.Services.Contracts.ICarService _carService;
-@inject UserManager<ApplicationUser> UserManager
+@inject CarRepairGarage.Services.Contracts.IGarageService _garageService
+@inject CarRepairGarage.Services.Contracts.ICarService _carService
+@inject UserManager<ApplicationUser> _userManager
 
 @{
     ViewData["Title"] = "Appointment Page";
 
     var garages = await _garageService.GetAllGaragesAsync(int.MaxValue);
 
-    var user = await UserManager.GetUserAsync(User);
+    var user = await _userManager.GetUserAsync(User);
     var cars = await _carService.GetAllCarsByUserIdAsync(user.Id);
 }
 

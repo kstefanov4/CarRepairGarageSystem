@@ -44,6 +44,9 @@
 
             // Add a scoped instance of the NoteService class as the implementation of the INoteService interface.
             services.AddScoped<INoteService, NoteService>();
+
+            // Add a scoped instance of the UserService class as the implementation of the IUserService interface.
+            services.AddScoped<IUserService, UserService>();
         }
     }
 

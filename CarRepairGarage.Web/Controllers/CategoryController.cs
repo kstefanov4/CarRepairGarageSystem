@@ -9,7 +9,7 @@
     /// </summary>
     public class CategoryController : Controller
     {
-        private readonly ICategoryService categoryService;
+        private readonly ICategoryService _categoryService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryController"/> class.
@@ -17,7 +17,7 @@
         /// <param name="categoryService">The category service.</param>
         public CategoryController(ICategoryService categoryService)
         {
-            this.categoryService = categoryService;
+            this._categoryService = categoryService;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@
         /// <returns>The view containing the list of categories.</returns>
         public async Task<IActionResult> Index()
         {
-            var model = await categoryService.GetAllCategoryAsync();
+            var model = await _categoryService.GetAllCategoryAsync();
             return View(model);
         }
     }

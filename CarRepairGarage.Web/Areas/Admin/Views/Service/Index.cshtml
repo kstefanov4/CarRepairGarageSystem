@@ -1,0 +1,42 @@
+﻿@using CarRepairGarage.Web.ViewModels.Service;
+@model IEnumerable<ServiceViewModel>
+
+@{
+    ViewData["Title"] = "Services";
+}
+
+<h2>
+    Total Services: (@Model.Count())
+    <span>
+        <a class="btn btn-info" asp-area="Admin" asp-controller="Service" asp-action="AddService">Add New Service</a>
+    </span>
+</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Garages</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in this.Model)
+        {
+            <tr>
+                <th scope="row">@service.Name</th>
+                <td>@service.Description</td>
+                <td>@service.Garages.Count()</td>
+                <td>
+                    <form method="post">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                asp-area="Admin" asp-controller="Service" asp-action="Delete" asp-route-id="@service.Id">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

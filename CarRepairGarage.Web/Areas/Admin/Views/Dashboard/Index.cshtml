@@ -1,0 +1,32 @@
+﻿@{
+    this.ViewData["Title"] = "Admin Dashboard";
+}
+
+<h3>Admin Dashboard!</h3>
+<div>
+    <a asp-area="Admin" asp-controller="Service" asp-action="Index"
+       class="list-group-item list-group-item-action bg-light">Services</a>
+
+    <div class="ml-5 my-2">
+        <a class="btn btn-outline-info btn-sm" asp-area="Admin" asp-controller="Service" asp-action="AddService">Add New Service</a>
+    </div>
+
+    <a asp-area="Admin" asp-controller="Category" asp-action="Index"
+       class="list-group-item list-group-item-action bg-light">Categories</a>
+
+    <dvi class="ml-5 my-2">
+        <a class="btn btn-outline-info btn-sm" asp-area="Admin" asp-controller="Category" asp-action="AddCategory">Add New Category</a>
+    </dvi>
+
+    <a asp-area="Admin" asp-controller="Garage" asp-action="Index"
+       class="list-group-item list-group-item-action bg-light">Garages</a>
+
+    <a asp-area="Admin" asp-controller="Car" asp-action="Index"
+       class="list-group-item list-group-item-action bg-light">Cars</a>
+
+    <a asp-area="Admin" asp-controller="Appointment" asp-action="Index"
+       class="list-group-item list-group-item-action bg-light">Appointments</a>
+
+    <a asp-area="Admin" asp-controller="User" asp-action="Index"
+       class="list-group-item list-group-item-action bg-light">Users</a>
+</div>

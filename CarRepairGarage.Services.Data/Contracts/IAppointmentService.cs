@@ -29,6 +29,11 @@
         Task<AllAppointmentsFilteredAndPagedServiceModel> GetAllAppointmentsByGarageIdAsync(AllAppointmentsQueryModel queryModel, Guid id);
 
         /// <summary>
+        /// Gets all appointments
+        /// </summary>
+        Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsAsync();
+
+        /// <summary>
         /// Gets all appointments for a specific garage.
         /// </summary>
         Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsByGarageIdAsync(int id);

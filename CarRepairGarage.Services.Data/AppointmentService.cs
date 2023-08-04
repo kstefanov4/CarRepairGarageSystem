@@ -8,6 +8,7 @@
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Appointment;
     using CarRepairGarage.Web.ViewModels.Appointment.Enums;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Service class responsible for managing appointments.
@@ -232,6 +233,29 @@
                 TotalAppointmentCount = totalAppointments,
                 Appointments = allGarages
             };
+        }
+
+        /// <summary>
+        /// Retrieves all appointments
+        /// </summary>
+        /// <returns>A collection of appointment view models.</returns>
+        public async Task<IEnumerable<AppointmentDetailsViewModel>> GetAllAppointmentsAsync()
+        {
+            return await _repository.AllReadonly<Appointment>()
+                .Select(x => new AppointmentDetailsViewModel()
+                {
+                    Id = x.Id.ToString(),
+                    GarageName = x.Garage.Name,
+                    GarageId = x.GarageId,
+                    CarId = x.CarId,
+                    CarVIN = x.Car.VIN,
+                    ServiceId = x.ServiceId,
+                    ServiceName = x.Service.Name,
+                    SelectedDate = x.Date.ToString(@"yyyy-MM-dd"),
+                    SelectedTime = x.Time.ToString(@"hh\:mm"),
+                    IsApproved = x.Confirmed
+                })
+                .ToArrayAsync();
         }
 
         /// <summary>

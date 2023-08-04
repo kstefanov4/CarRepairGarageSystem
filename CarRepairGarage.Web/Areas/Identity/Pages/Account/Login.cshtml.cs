@@ -77,6 +77,12 @@ namespace CarRepairGarage.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                if (_userManager.FindByNameAsync(Input.Email).Result.IsDeleted)
+                {
+                    _logger.LogWarning("User account locked out.");
+                    TempData[WarningMessage] = "User logged in.";
+                    return RedirectToPage("./Lockout");
+                }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
