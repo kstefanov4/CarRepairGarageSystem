@@ -7,11 +7,12 @@
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Garage;
     using CarRepairGarage.Web.ViewModels.Service;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// Service class for managing service-related operations.
     /// </summary>
-    public class ServiceService : IServiceService
+    public class ServiceService : BaseService, IServiceService
     {
         protected readonly IRepository _repository;
 
@@ -19,7 +20,9 @@
         /// Initializes a new instance of the <see cref="ServiceService"/> class.
         /// </summary>
         /// <param name="repository">The repository for data access.</param>
-        public ServiceService(IRepository repository)
+        public ServiceService(
+            IRepository repository,
+            ILogger<ServiceService> logger) : base(logger)
         {
             _repository = repository;
         }
@@ -69,6 +72,41 @@
                 .Where(x => x.Id == id && x.IsDeleted == false)
                 .Select(x => x.Name)
                 .FirstAsync();
+        }
+
+
+        public async Task AddServiceAsync(AddServiceViewModel model)
+        {
+            Service service = new Service()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                IsDeleted = false
+            };
+
+            await ExecuteDatabaseAction(async () =>
+            {
+                await _repository.AddAsync(service);
+                await _repository.SaveChangesAsync();
+            });
+        }
+
+        public async Task DeleteServiceAsync(int id)
+        {
+            var car = await _repository.GetByIdAsync<Service>(id);
+            car.IsDeleted = true;
+            car.DeletedOn = DateTime.Now;
+
+            await ExecuteDatabaseAction(async () =>
+            {
+                await _repository.SaveChangesAsync();
+            });
+        }
+
+        public async Task<bool> Exist(int id)
+        {
+            return await _repository.AllReadonly<Service>()
+                .AnyAsync(x => x.Id == id);
         }
     }
 }

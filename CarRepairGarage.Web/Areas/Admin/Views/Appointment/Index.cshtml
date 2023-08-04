@@ -17,7 +17,7 @@
             <th scope="col">Garage Name</th>
             <th scope="col">Car VIN</th>
             <th scope="col">Service Name</th>
-            <th scope="col">IsApproved</th>
+            <th scope="col">Status</th>
             <th scope="col">Delete</th>
         </tr>
     </thead>
@@ -30,7 +30,25 @@
                 <td>@appointment.GarageName</td>
                 <td>@appointment.CarVIN</td>
                 <td>@appointment.ServiceName</td>
-                <td>@appointment.IsApproved</td>
+                @if (DateTime.Parse(appointment.SelectedDate).DayOfYear < DateTime.Now.DayOfYear)
+                {
+                    <td><b style="color: red;">Expired</b></td>
+                }
+                else
+                {
+                    if (appointment.IsApproved == null)
+                    {
+                        <td><b style="color: yellow;">Pending</b></td>
+                    }
+                    else if (appointment.IsApproved == true)
+                    {
+                        <td><b style="color: green;">Approved</b></td>
+                    }
+                    else
+                    {
+                        <td><b style="color: red;">Rejected</b></td>
+                    }
+                }
                 <td>
                     <form method="post">
                         <button type="submit" class="btn btn-danger btn-sm"

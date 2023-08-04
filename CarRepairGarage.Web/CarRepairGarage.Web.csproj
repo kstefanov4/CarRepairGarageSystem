@@ -148,6 +148,7 @@
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Garage\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Service\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Service\AddService.cshtml" />
     <None Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml.css" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
   </ItemGroup>

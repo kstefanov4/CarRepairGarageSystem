@@ -102,6 +102,10 @@
 
             //Services
             public const int ServiceNameMaxLenght = 50;
+            public const int ServiceNameMinLenght = 2;
+
+            public const int ServiceDescriptionMaxLenght = 250;
+
         }
     }
 }

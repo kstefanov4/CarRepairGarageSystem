@@ -38,7 +38,7 @@
         /// <summary>
         /// Gets or sets the description of the service.
         /// </summary>
-        [MaxLength(250)]
+        [MaxLength(GeneralApplicationConstants.Validations.ServiceDescriptionMaxLenght)]
         [Comment("Service Description")]
         public string? Description { get; set; }
 

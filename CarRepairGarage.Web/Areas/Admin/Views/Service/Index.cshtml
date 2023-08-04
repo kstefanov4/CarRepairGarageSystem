@@ -31,7 +31,7 @@
                 <td>
                     <form method="post">
                         <button type="submit" class="btn btn-danger btn-sm"
-                                asp-area="Admin" asp-controller="Service" asp-action="Delete" asp-route-id="@service.Id">
+                                asp-area="Admin" asp-controller="Service" asp-action="Delete" asp-route-id="@service.Id" onclick="return confirmDelete()">
                             Delete
                         </button>
                     </form>
@@ -40,3 +40,9 @@
         }
     </tbody>
 </table>
+
+<script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this element?");
+    }
+</script>
