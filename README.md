@@ -1,5 +1,6 @@
-It`s my personal project for SoftUni ASP.NET Advance course August 2023
-Car Repair Garage application is for users who want to shedule a Repair Services for their cars. Also, it provides an opportunity to Garages to register their Services and manage the appointments.
+This project is a personal endeavor developed for the SoftUni ASP.NET Advance course in August 2023.
+
+The Car Repair Garage application aims to facilitate users in scheduling repair services for their vehicles. Additionally, the platform offers garages the opportunity to register their services and efficiently manage customer appointments.
 
 Usings
 -----------------------------------------
@@ -22,12 +23,9 @@ Implemented with
 
 How to start it
 ---------------------------------------
-The connection string for DB is located in appsettings.Development.json. ASPNETCORE-ENVIRONMENT is set to Development. 
-Please replace the server string with yours. 
-You should aplly the migrations by yourself to create the DB. There is no a setting for auto migration!
+The connection string for the database is stored in the appsettings.Development.json file. The ASPNETCORE-ENVIRONMENT is set to Development. To proceed, please update the server string in the appsettings.Development.json file with your respective database connection details. However, please note that there is no automatic migration setting in place, so you will need to apply the migrations manually to create the database.
 
-Once started the application will populate the DB with test data automatically using Seeder implementation. 
-You can use the following test account:
+Once you start the application, it will automatically populate the database with test data using the Seeder implementation. For testing purposes, you can utilize the following test account:
  - User
    - Username: user@mail.com
    - Pass: 123456
@@ -73,7 +71,7 @@ Acknowledgments
  - part of the MVC Template of Nikolay Kostov
  - Stamo Petkov`s Lectures
  - Part of the code is copyed from Kristiyan Ivanov Workshops.
- - Some help from CharGPT
+ - Some help from ChatGPT
 
 
 
