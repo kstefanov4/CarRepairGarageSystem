@@ -208,10 +208,13 @@
 
             await HandleCityAndAddress(model, garage);
 
-            string imageUrl = await GetImagePath(model.Image);
+            if(model.Image != null)
+            {
+                string imageUrl = await GetImagePath(model.Image);
+                garage.ImageUrl = imageUrl;
+            }
 
             garage.Name = model.Name;
-            garage.ImageUrl = imageUrl;
             garage.CategoryId = model.CategoryId;
 
             await ExecuteDatabaseAction(async () =>
@@ -425,7 +428,6 @@
                     Name = x.Name,
                     CategoryId = x.CategoryId,
                     City = x.Address.City.Name,
-                    /*Image = x.ImageUrl,*/
                     StreetName = x.Address.StreetName,
                     StreetNumber = x.Address.StreetNumber,
                     Services = x.Services.Select(s => s.Service.Id).ToList()

@@ -26,8 +26,7 @@
         /// <summary>
         /// Gets or sets the image file for the garage.
         /// </summary>
-        [Required]
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the category for the garage.
