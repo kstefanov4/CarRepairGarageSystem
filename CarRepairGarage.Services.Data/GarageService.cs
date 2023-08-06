@@ -12,6 +12,7 @@
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Web.ViewModels.Garage.Enums;
     using Microsoft.AspNetCore.Http;
+    using CarRepairGarage.Services.Helpers;
 
     /// <summary>
     /// Service class for managing garage-related operations.
@@ -81,7 +82,7 @@
 
         private async Task<Garage> CreateGarageAsync(AddGarageViewModel model, ApplicationUser user, Address address)
         {
-            string imageUrl = await GetImagePath(model.Image);
+            string imageUrl = await ImageUtility.GetImagePath(model.Image);
 
             return new Garage
             {
@@ -91,25 +92,6 @@
                 Address = address,
                 Owner = user
             };
-        }
-
-        private static async Task<string> GetImagePath(IFormFile image)
-        {
-            string imageUrl = null;
-            if (image != null)
-            {
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images", fileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await image.CopyToAsync(fileStream);
-                }
-
-                imageUrl = "/images/" + fileName;
-            }
-
-            return imageUrl;
         }
 
         private Data.Models.GarageService CreateGarageService(Garage garage, int serviceId)
@@ -210,7 +192,7 @@
 
             if(model.Image != null)
             {
-                string imageUrl = await GetImagePath(model.Image);
+                string imageUrl = await ImageUtility.GetImagePath(model.Image);
                 garage.ImageUrl = imageUrl;
             }
 
@@ -300,7 +282,7 @@
         /// </summary>
         /// <param name="id">The ID of the garage to check.</param>
         /// <returns><c>true</c> if the garage exists; otherwise, <c>false</c>.</returns>
-        public async Task<bool> Exists(int id)
+        public async Task<bool> Exist(int id)
         {
             return await _repository.AllReadonly<Garage>()
                 .AnyAsync(x => x.Id == id && x.IsDeleted == false);

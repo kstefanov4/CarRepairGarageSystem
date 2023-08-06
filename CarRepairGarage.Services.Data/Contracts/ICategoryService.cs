@@ -26,6 +26,9 @@
         /// <param name="id">The ID of the category to retrieve the name for.</param>
         /// <returns>An asynchronous task that represents the operation and returns the name of the category with the specified ID.</returns>
         Task<string> GetCategoryByIdAsync(int id);
+        Task AddAsync(AddCategoryViewModel model);
+        Task<bool> Exist(int id);
+        Task DeleteAsync(int id);
     }
 
 }

@@ -64,7 +64,7 @@
         /// </summary>
         /// <param name="id">The ID of the garage to check for existence.</param>
         /// <returns>An asynchronous task that represents the operation and returns true if the garage exists, otherwise false.</returns>
-        Task<bool> Exists(int id);
+        Task<bool> Exist(int id);
 
         /// <summary>
         /// Updates an existing garage in the database based on the provided modify garage view model.

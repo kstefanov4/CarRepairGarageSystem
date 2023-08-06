@@ -25,9 +25,9 @@
         /// <param name="id">The ID of the service.</param>
         /// <returns>An asynchronous task that represents the operation and returns the name of the service as a string.</returns>
         Task<string> GetServiceByIdAsync(int id);
-        Task AddServiceAsync(AddServiceViewModel model);
+        Task AddAsync(AddServiceViewModel model);
 
-        Task DeleteServiceAsync(int id);
+        Task DeleteAsync(int id);
         Task<bool> Exist(int id);
     }
 

@@ -81,7 +81,7 @@
             _mockRepository.Setup(r => r.SaveChangesAsync()).Callback(() => _applicationDbContext.SaveChangesAsync());
 
             // Act
-            await _carService.Delete(car.Id);
+            await _carService.DeleteAsync(car.Id);
 
             // Assert
             var deletedCar = await _applicationDbContext.Cars.FirstOrDefaultAsync(c => c.Id == car.Id);

@@ -100,7 +100,7 @@ namespace CarRepairGarage.Services.Tests
                 .Returns(_applicationDbContext.Garages.AsQueryable());
 
             // Act
-            var exists = await _garageService.Exists(garage.Id);
+            var exists = await _garageService.Exist(garage.Id);
 
             // Assert
             Assert.IsTrue(exists);

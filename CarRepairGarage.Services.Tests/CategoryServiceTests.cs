@@ -1,6 +1,7 @@
 ﻿namespace CarRepairGarage.Services.Tests
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     
     using Moq;
     
@@ -14,6 +15,7 @@
         private Mock<IRepository> _mockRepository;
         private ICategoryService _categoryService;
         private ApplicationDbContext _applicationDbContext;
+        private ILogger<CategoryService> _logger;
 
         [SetUp]
         public void Setup()
@@ -27,8 +29,11 @@
             _applicationDbContext.Database.EnsureDeleted();
             _applicationDbContext.Database.EnsureCreated();
 
+            var loggerMock = new Mock<ILogger<CategoryService>>();
+            _logger = loggerMock.Object;
+
             _mockRepository = new Mock<IRepository>();
-            _categoryService = new CategoryService(_mockRepository.Object);
+            _categoryService = new CategoryService(_mockRepository.Object, _logger);
         }
 
         [Test]

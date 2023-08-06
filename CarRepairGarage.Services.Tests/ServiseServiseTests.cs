@@ -15,12 +15,14 @@ namespace CarRepairGarage.Services.Tests
     using CarRepairGarage.Data;
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Data.Models;
+    using Microsoft.Extensions.Logging;
 
     [TestFixture]
     public class ServiseServiseTests
     {
         private Mock<IRepository> _mockRepository;
         private IServiceService _serviceService;
+        private ILogger<ServiceService> _logger;
         private ApplicationDbContext _applicationDbContext;
 
         [SetUp]
@@ -35,8 +37,11 @@ namespace CarRepairGarage.Services.Tests
             _applicationDbContext.Database.EnsureDeleted();
             _applicationDbContext.Database.EnsureCreated();
 
+            var loggerMock = new Mock<ILogger<ServiceService>>();
+            _logger = loggerMock.Object;
+
             _mockRepository = new Mock<IRepository>();
-            _serviceService = new ServiceService(_mockRepository.Object);
+            _serviceService = new ServiceService(_mockRepository.Object, _logger);
         }
 
         [Test]

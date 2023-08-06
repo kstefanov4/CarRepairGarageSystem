@@ -58,7 +58,7 @@
         /// Deletes a car from the database.
         /// </summary>
         /// <param name="id">The ID of the car to delete.</param>
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var car = await _repository.GetByIdAsync<Car>(id);
             car.IsDeleted = true;

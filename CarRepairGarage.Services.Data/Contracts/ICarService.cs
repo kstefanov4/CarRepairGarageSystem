@@ -56,7 +56,7 @@
         /// </summary>
         /// <param name="id">The ID of the car to delete.</param>
         /// <returns>An asynchronous task representing the operation.</returns>
-        Task Delete(int id);
+        Task DeleteAsync(int id);
     }
 
 }

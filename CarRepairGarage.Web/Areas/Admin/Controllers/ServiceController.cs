@@ -1,9 +1,7 @@
 ﻿namespace CarRepairGarage.Web.Areas.Admin.Controllers
 {
-    using CarRepairGarage.Services;
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Service;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using static CarRepairGarage.Common.NotificationsMessagesConstants;
 
@@ -38,7 +36,7 @@
 
             try
             {
-                await _serviceService.AddServiceAsync(model);
+                await _serviceService.AddAsync(model);
                 TempData[SuccessMessage] = $"Your service {model.Name} was successfully created.";
             }
             catch (Exception)
@@ -60,7 +58,7 @@
 
             try
             {
-                await _serviceService.DeleteServiceAsync(id);
+                await _serviceService.DeleteAsync(id);
                 TempData[SuccessMessage] = $"Your Service was successfully deleted.";
             }
             catch (Exception)

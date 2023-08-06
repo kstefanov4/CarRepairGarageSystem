@@ -180,7 +180,7 @@
 
             try
             {
-                await _carService.Delete(id);
+                await _carService.DeleteAsync(id);
                 TempData[SuccessMessage] = $"Your Car was successfully deleted.";
             }
             catch (Exception)

@@ -30,7 +30,7 @@
                 <td>
                     <form method="post">
                         <button type="submit" class="btn btn-danger btn-sm"
-                                asp-area="Admin" asp-controller="Car" asp-action="Delete" asp-route-id="@car.Id">
+                                asp-area="Admin" asp-controller="Car" asp-action="Delete" asp-route-id="@car.Id" onclick="return confirmDelete()">
                             Delete
                         </button>
                     </form>
@@ -39,3 +39,5 @@
         }
     </tbody>
 </table>
+
+<partial name="~/Views/Shared/_DeleteConfirmPartial.cshtml" />

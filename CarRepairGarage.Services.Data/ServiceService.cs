@@ -75,7 +75,7 @@
         }
 
 
-        public async Task AddServiceAsync(AddServiceViewModel model)
+        public async Task AddAsync(AddServiceViewModel model)
         {
             Service service = new Service()
             {
@@ -91,7 +91,7 @@
             });
         }
 
-        public async Task DeleteServiceAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             var car = await _repository.GetByIdAsync<Service>(id);
             car.IsDeleted = true;

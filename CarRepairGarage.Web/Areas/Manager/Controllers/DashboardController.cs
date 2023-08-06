@@ -69,7 +69,7 @@
         [HttpGet]
         public async Task<IActionResult> Modify(int id)
         {
-            if ((await _garageService.Exists(id)) == false)
+            if ((await _garageService.Exist(id)) == false)
             {
                 TempData[ErrorMessage] = $"You are trying to modify non existing garage!";
                 return RedirectToAction(nameof(All));
@@ -101,7 +101,7 @@
                 return View(model);
             }
 
-            if ((await _garageService.Exists(model.Id)) == false)
+            if ((await _garageService.Exist(model.Id)) == false)
             {
                 TempData[ErrorMessage] = $"You are trying to modify non existing garage!";
                 return RedirectToAction(nameof(All));
@@ -177,7 +177,7 @@
         /// <returns>The view with the result of the garage removal attempt.</returns>
         public async Task<IActionResult> Remove(int id)
         {
-            if ((await _garageService.Exists(id)) == false)
+            if ((await _garageService.Exist(id)) == false)
             {
                 TempData[ErrorMessage] = "This garage does not exist!";
                 return RedirectToAction(nameof(All));

@@ -98,7 +98,10 @@
 
             //Category
             public const int CategoryNameMaxLenght = 50;
+            public const int CategoryNameMinLenght = 2;
+
             public const int CategoryDescriptionMaxLenght = 350;
+            public const int CategoryDescriptionMinLenght = 2;
 
             //Services
             public const int ServiceNameMaxLenght = 50;
