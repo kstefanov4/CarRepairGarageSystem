@@ -1,7 +1,7 @@
 ﻿namespace CarRepairGarage.Services
 {
     using Microsoft.EntityFrameworkCore;
-    
+
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Repositories.Contracts;
     using CarRepairGarage.Services.Contracts;
@@ -21,13 +21,19 @@
         /// Initializes a new instance of the <see cref="CategoryService"/> class.
         /// </summary>
         /// <param name="repository">The repository for data access.</param>
+        /// <param name="logger">The logger for logging service events.</param>
         public CategoryService(
             IRepository repository,
-            ILogger<CategoryService> _logger) : base(_logger)
+            ILogger<CategoryService> logger) : base(logger)
         {
             _repository = repository;
         }
 
+        /// <summary>
+        /// Adds a new category to the database based on the provided <paramref name="model"/>.
+        /// </summary>
+        /// <param name="model">The <see cref="AddCategoryViewModel"/> containing the data for the new category.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task AddAsync(AddCategoryViewModel model)
         {
             var image = await ImageUtility.GetImagePath(model.ImageUrl);
@@ -36,7 +42,7 @@
             {
                 Name = model.Name,
                 Description = model.Description,
-                ImageUrl = image, 
+                ImageUrl = image,
                 IsDeleted = false
             };
 
@@ -58,6 +64,11 @@
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Deletes a category from the database based on the provided <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The ID of the category to be deleted.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task DeleteAsync(int id)
         {
             var car = await _repository.GetByIdAsync<Category>(id);
@@ -70,6 +81,11 @@
             });
         }
 
+        /// <summary>
+        /// Checks if a category with the specified <paramref name="id"/> exists in the database.
+        /// </summary>
+        /// <param name="id">The ID of the category to check.</param>
+        /// <returns>True if the category exists; otherwise, false.</returns>
         public async Task<bool> Exist(int id)
         {
             return await _repository.AllReadonly<Category>()
@@ -102,7 +118,7 @@
         }
 
         /// <summary>
-        /// Retrieves the name of the category with the specified ID from the database.
+        /// Retrieves the name of the category with the specified <paramref name="id"/> from the database.
         /// </summary>
         /// <param name="id">The ID of the category to retrieve.</param>
         /// <returns>The name of the category as a string.</returns>
@@ -114,5 +130,4 @@
                 .FirstAsync();
         }
     }
-
 }

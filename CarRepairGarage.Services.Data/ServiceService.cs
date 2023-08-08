@@ -76,6 +76,11 @@
         }
 
 
+        /// <summary>
+        /// Adds a new service to the database based on the provided <paramref name="model"/>.
+        /// </summary>
+        /// <param name="model">The <see cref="AddServiceViewModel"/> containing the data for the new service.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task AddAsync(AddServiceViewModel model)
         {
             Service service = new Service()
@@ -92,11 +97,16 @@
             });
         }
 
+        /// <summary>
+        /// Deletes a service from the database based on the provided <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The ID of the service to be deleted.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task DeleteAsync(int id)
         {
-            var car = await _repository.GetByIdAsync<Service>(id);
-            car.IsDeleted = true;
-            car.DeletedOn = DateTime.Now;
+            var service = await _repository.GetByIdAsync<Service>(id);
+            service.IsDeleted = true;
+            service.DeletedOn = DateTime.Now;
 
             await ExecuteDatabaseAction(async () =>
             {
@@ -104,6 +114,11 @@
             });
         }
 
+        /// <summary>
+        /// Checks if a service with the specified <paramref name="id"/> exists in the database.
+        /// </summary>
+        /// <param name="id">The ID of the service to check.</param>
+        /// <returns>True if the service exists; otherwise, false.</returns>
         public async Task<bool> Exist(int id)
         {
             return await _repository.AllReadonly<Service>()

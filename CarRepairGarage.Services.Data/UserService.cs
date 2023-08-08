@@ -23,7 +23,8 @@
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
         /// <param name="userManager">The user manager.</param>
-        /// /// <param name="repository">The repository for data access.</param>
+        /// <param name="repository">The repository for data access.</param>
+        /// <param name="logger">The logger for logging service events.</param>
         public UserService(
             UserManager<ApplicationUser> userManager,
             IRepository repository,
@@ -33,9 +34,14 @@
             _repository = repository;
         }
 
+        /// <summary>
+        /// Deletes a user by their ID.
+        /// </summary>
+        /// <param name="id">The ID of the user to be deleted.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task DeleteAsync(Guid id)
         {
-            ApplicationUser user  = await _repository.All<ApplicationUser>()
+            ApplicationUser user = await _repository.All<ApplicationUser>()
                 .Where(x => x.Id == id).FirstAsync();
 
             user.IsDeleted = true;
@@ -47,6 +53,11 @@
             });
         }
 
+        /// <summary>
+        /// Checks if a user with the specified ID exists.
+        /// </summary>
+        /// <param name="id">The ID of the user to check.</param>
+        /// <returns>True if the user exists; otherwise, false.</returns>
         public async Task<bool> Exist(Guid id)
         {
             return await _repository.AllReadonly<ApplicationUser>()

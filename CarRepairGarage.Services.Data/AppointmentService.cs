@@ -3,12 +3,13 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
 
+    using System.Collections.Generic;
+    
     using CarRepairGarage.Data.Models;
     using CarRepairGarage.Data.Repositories.Contracts;
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.Appointment;
     using CarRepairGarage.Web.ViewModels.Appointment.Enums;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Service class responsible for managing appointments.
