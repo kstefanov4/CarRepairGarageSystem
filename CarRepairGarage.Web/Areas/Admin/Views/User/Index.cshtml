@@ -33,11 +33,12 @@
                 <td>@user.DeleteOn</td>
                 <td>
                     <form method="post">
-                        <button type="submit" class="btn btn-danger btn-sm"
-                                asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-id="@user.Id">
+                         <button type="submit" class="btn btn-danger" @if (@user.Role == "Admin") { @("disabled") }
+                                asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-id="@user.Id" onclick="return confirmDelete()">
                             Delete
                         </button>
                     </form>
+                    
                 </td>
             </tr>
         }

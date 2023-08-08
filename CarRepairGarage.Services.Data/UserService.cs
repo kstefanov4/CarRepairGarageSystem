@@ -1,10 +1,12 @@
 ﻿namespace CarRepairGarage.Services
 {
     using CarRepairGarage.Data.Models;
+    using CarRepairGarage.Data.Repositories.Contracts;
     using CarRepairGarage.Services.Contracts;
     using CarRepairGarage.Web.ViewModels.User;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -12,17 +14,43 @@
     /// <summary>
     /// Represents a service for managing users in the application.
     /// </summary>
-    public class UserService : IUserService
+    public class UserService : BaseService, IUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRepository _repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
         /// <param name="userManager">The user manager.</param>
-        public UserService(UserManager<ApplicationUser> userManager)
+        /// /// <param name="repository">The repository for data access.</param>
+        public UserService(
+            UserManager<ApplicationUser> userManager,
+            IRepository repository,
+            ILogger<UserService> logger) : base(logger)
         {
             _userManager = userManager;
+            _repository = repository;
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            ApplicationUser user  = await _repository.All<ApplicationUser>()
+                .Where(x => x.Id == id).FirstAsync();
+
+            user.IsDeleted = true;
+            user.DeletedOn = DateTime.Now;
+
+            await ExecuteDatabaseAction(async () =>
+            {
+                await _repository.SaveChangesAsync();
+            });
+        }
+
+        public async Task<bool> Exist(Guid id)
+        {
+            return await _repository.AllReadonly<ApplicationUser>()
+                .AnyAsync(x => x.Id == id);
         }
 
         /// <summary>

@@ -9,6 +9,9 @@
     /// </summary>
     public interface IUserService
     {
+        Task DeleteAsync(Guid id);
+        Task<bool> Exist(Guid id);
+
         /// <summary>
         /// Asynchronously retrieves all registered users in the system.
         /// </summary>

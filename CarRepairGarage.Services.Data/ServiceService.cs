@@ -14,12 +14,13 @@
     /// </summary>
     public class ServiceService : BaseService, IServiceService
     {
-        protected readonly IRepository _repository;
+        private readonly IRepository _repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceService"/> class.
         /// </summary>
         /// <param name="repository">The repository for data access.</param>
+        /// <param name="logger">The logger for logging.</param>
         public ServiceService(
             IRepository repository,
             ILogger<ServiceService> logger) : base(logger)
