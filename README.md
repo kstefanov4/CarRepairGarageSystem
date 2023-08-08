@@ -32,6 +32,9 @@ Once you start the application, it will automatically populate the database with
  - Manager
    - Username: garageManager@mail.com
    - Pass 123456
+ - Admin
+   - Username: admin@mail.com
+   - Pass 123456
 
 Screenshots
 ------------------------------------
@@ -65,6 +68,9 @@ Manager can add garage
 
 The Managar has all appointments dashboard
 ![image](https://github.com/kstefanov4/CarRepairGarageSystem/assets/103167025/816753c0-acc1-452f-a773-d862d377b359)
+
+Admin area
+![image](https://github.com/kstefanov4/CarRepairGarageSystem/assets/103167025/13490f68-ecc7-4893-9f0f-aca2dcf8e577)
 
 Acknowledgments
 ------------------------------
