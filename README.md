@@ -13,7 +13,7 @@ Usings
 
 Implemented with
 ----------------------------------------
- - MVC Areas - Implemented Manager Area
+ - MVC Areas - Implemented Manager and Admin Areas
  - Repository Pattern
  - Dependency Injection
  - Razor pages
